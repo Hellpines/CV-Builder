@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html lang="en" className={cn(roboto.className, 'font-sans', geist.variable)}>
-      <body className="bg-primary-light text-primary-text flex min-h-screen max-w-360">
+      <body className="bg-background text-primary-text flex min-h-screen max-w-360">
         <Sidebar />
 
         <main className="flex-1 p-8">{children}</main>

@@ -36,7 +36,7 @@ export default function Sidebar() {
           {isOpen && (
             <nav className="space-y-2">
               <Link
-                href="/employees"
+                href="/users"
                 className="hover:bg-primary-hover hover:text-primary-bold flex cursor-pointer items-center gap-4 rounded-r-[200px] p-4"
               >
                 <Users />
