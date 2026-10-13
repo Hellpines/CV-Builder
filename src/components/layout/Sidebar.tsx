@@ -16,8 +16,8 @@ import { useState } from 'react';
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(true);
 
-  const handleOpenSidebar = () => {
-    setIsOpen(true);
+  const handleSidebar = () => {
+    setIsOpen((prevState) => !prevState);
   };
 
   return (
@@ -75,25 +75,23 @@ export default function Sidebar() {
         </div>
       </aside>
 
-      {!isOpen && (
+      {isOpen ? (
         <button
           type="button"
-          onClick={handleOpenSidebar}
-          className="hover:bg-primary-hover/80 absolute top-1/2 left-4 z-20 flex h-8 w-8 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full"
-          aria-label="Open sidebar"
-        >
-          <ChevronRight size={24} />
-        </button>
-      )}
-
-      {isOpen && (
-        <button
-          type="button"
-          onClick={() => setIsOpen(false)}
+          onClick={handleSidebar}
           className="hover:bg-primary-hover/80 absolute top-10 -right-3.5 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full"
           aria-label="Hide sidebar"
         >
           <ChevronLeft size={24} />
+        </button>
+      ) : (
+        <button
+          type="button"
+          onClick={handleSidebar}
+          className="hover:bg-primary-hover/80 absolute top-10 -right-8 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full"
+          aria-label="Open sidebar"
+        >
+          <ChevronRight size={24} />
         </button>
       )}
     </div>
