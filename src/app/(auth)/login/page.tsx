@@ -2,19 +2,41 @@
 
 import Link from 'next/link';
 import { useState, type FormEvent } from 'react';
+import { useMutation } from '@apollo/client/react';
+import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { AuthPage } from '@/features/auth/ui/AuthPage';
 import { PasswordInput } from '@/features/auth/ui/PasswordInput';
+import { LOGIN_MUTATION } from '@/features/auth/api/AuthMutations';
+import { useAuthStore } from '@/features/auth/model/useAuthStore';
+import { LoginResponse, LoginVariables } from '@/features/auth/types/AuthTypes';
 
 export default function LoginPage() {
+  const router = useRouter();
+  const setAuth = useAuthStore((state) => state.setAuth);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const [login, { loading, error }] = useMutation<LoginResponse, LoginVariables>(LOGIN_MUTATION, {
+    onCompleted: (data) => {
+      const { access_token, refresh_token, user } = data.login;
+      setAuth(access_token, refresh_token, user);
+      router.push('/users');
+    },
+    onError: (err) => {
+      console.error('Login error:', err.message);
+    },
+  });
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log({ email, password });
+    login({
+      variables: {
+        auth: { email, password },
+      },
+    });
   };
 
   return (
@@ -23,8 +45,8 @@ export default function LoginPage() {
       subtitle="Hello again! Sign in to continue"
       onSubmit={handleSubmit}
       submitButton={
-        <Button type="submit" variant="primary" className="w-40 py-4">
-          SIGN IN
+        <Button type="submit" variant="primary" className="w-40 py-4" disabled={loading}>
+          {loading ? 'LOADING...' : 'SIGN IN'}
         </Button>
       }
       footer={
@@ -49,6 +71,8 @@ export default function LoginPage() {
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
       />
+
+      {error && <p className="text-center text-sm text-red-500">{error.message}</p>}
     </AuthPage>
   );
 }

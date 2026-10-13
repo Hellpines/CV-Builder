@@ -1,3 +1,5 @@
+export const instant = false;
+
 export default function Users() {
   return (
     <div>

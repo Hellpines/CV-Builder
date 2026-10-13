@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { AuthPageProps } from '../types/AuthPageProps';
+import { AuthPageProps } from '../types/AuthTypes';
 
 const tabs = [
   { href: '/login', label: 'SIGN IN' },
