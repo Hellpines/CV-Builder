@@ -11,7 +11,6 @@ import { AuthPage } from '@/features/auth/ui/AuthPage';
 import { PasswordInput } from '@/features/auth/ui/PasswordInput';
 import { SIGNUP_MUTATION } from '@/features/auth/api/AuthMutations';
 import { useAuthStore } from '@/features/auth/model/useAuthStore';
-import { SignupResponse, SignupVariables } from '@/features/auth/types/AuthTypes';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -20,21 +19,18 @@ export default function RegisterPage() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const [signup, { loading, error }] = useMutation<SignupResponse, SignupVariables>(
-    SIGNUP_MUTATION,
-    {
-      onCompleted: (data) => {
-        const { access_token, refresh_token, user } = data.signup;
-        setAuth(access_token, refresh_token, user);
-        router.push('/users');
-      },
-      onError: (err) => {
-        console.error('Signup error:', err.message);
-      },
-    }
-  );
+  const [signup, { loading, error }] = useMutation(SIGNUP_MUTATION, {
+    onCompleted: (data) => {
+      const { access_token, refresh_token, user } = data.signup;
+      setAuth(access_token, refresh_token, user);
+      router.push('/users');
+    },
+    onError: (err) => {
+      console.error('Signup error:', err.message);
+    },
+  });
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     signup({
       variables: {
@@ -82,7 +78,7 @@ export default function RegisterPage() {
         placeholder="Confirm Password"
       />
 
-      {error && <p className="text-center text-sm text-red-500">{error.message}</p>}
+      {error && <p className="text-primary text-center text-sm">{error.message}</p>}
     </AuthPage>
   );
 }

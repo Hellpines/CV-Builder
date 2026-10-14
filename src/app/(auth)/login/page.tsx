@@ -11,7 +11,6 @@ import { AuthPage } from '@/features/auth/ui/AuthPage';
 import { PasswordInput } from '@/features/auth/ui/PasswordInput';
 import { LOGIN_MUTATION } from '@/features/auth/api/AuthMutations';
 import { useAuthStore } from '@/features/auth/model/useAuthStore';
-import { LoginResponse, LoginVariables } from '@/features/auth/types/AuthTypes';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -19,7 +18,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const [login, { loading, error }] = useMutation<LoginResponse, LoginVariables>(LOGIN_MUTATION, {
+  const [login, { loading, error }] = useMutation(LOGIN_MUTATION, {
     onCompleted: (data) => {
       const { access_token, refresh_token, user } = data.login;
       setAuth(access_token, refresh_token, user);
@@ -30,7 +29,7 @@ export default function LoginPage() {
     },
   });
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     login({
       variables: {
@@ -72,7 +71,7 @@ export default function LoginPage() {
         placeholder="Password"
       />
 
-      {error && <p className="text-center text-sm text-red-500">{error.message}</p>}
+      {error && <p className="text-primary text-center text-sm">{error.message}</p>}
     </AuthPage>
   );
 }
