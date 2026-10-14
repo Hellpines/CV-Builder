@@ -8,7 +8,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          'bg-primary text-primary-foreground hover:bg-transparent hover:border-primary hover:text-primary active:bg-primary-active active:text-primary disabled:bg-primary-disabled disabled:text-primary-hover',
+          'bg-primary text-primary-foreground hover:bg-transparent hover:border-primary hover:text-primary active:bg-primary-active active:text-primary disabled:bg-primary-disabled disabled:text-primary-hover disabled:border-0',
         primaryV2:
           'bg-transparent text-primary hover:border-primary active:bg-primary-active disabled:bg-muted disabled:text-muted-foreground',
         secondary:

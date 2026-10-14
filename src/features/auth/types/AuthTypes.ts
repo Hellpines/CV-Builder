@@ -1,4 +1,4 @@
-import { FormEvent, ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 export interface User {
   id: string;
@@ -18,6 +18,7 @@ export interface AuthState {
 export type AuthPageProps = {
   title: string;
   subtitle: string;
+  type?: 'sign' | 'forgot';
   onSubmit: (event: React.SyntheticEvent<HTMLFormElement>) => void;
   children: ReactNode;
   submitButton: ReactNode;

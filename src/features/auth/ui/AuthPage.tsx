@@ -11,6 +11,7 @@ const tabs = [
 
 export function AuthPage({
   title,
+  type = 'sign',
   subtitle,
   onSubmit,
   children,
@@ -21,28 +22,30 @@ export function AuthPage({
 
   return (
     <div className="flex min-h-screen w-full flex-col">
-      <div className="pt-6">
-        <div className="mx-auto flex w-full max-w-140 justify-center text-sm font-medium">
-          {tabs.map(({ href, label }) => {
-            const isActive = pathname === href;
+      {type === 'sign' ? (
+        <div className="pt-6">
+          <div className="mx-auto flex w-full max-w-140 justify-center text-sm font-medium">
+            {tabs.map(({ href, label }) => {
+              const isActive = pathname === href;
 
-            return (
-              <Link
-                key={href}
-                href={href}
-                className={[
-                  'flex w-37.5 justify-center pb-4 transition-colors',
-                  isActive
-                    ? 'border-primary text-primary border-b-2 font-semibold'
-                    : 'text-primary-text hover:text-primary',
-                ].join(' ')}
-              >
-                {label}
-              </Link>
-            );
-          })}
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  className={[
+                    'flex w-37.5 justify-center pb-4 transition-colors',
+                    isActive
+                      ? 'border-primary text-primary border-b-2 font-semibold'
+                      : 'text-primary-text hover:text-primary',
+                  ].join(' ')}
+                >
+                  {label}
+                </Link>
+              );
+            })}
+          </div>
         </div>
-      </div>
+      ) : null}
 
       <div className="flex flex-1 items-center justify-center px-4 pb-8">
         <div className="w-full max-w-140">
