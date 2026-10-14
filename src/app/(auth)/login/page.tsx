@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, type FormEvent } from 'react';
+import { useState } from 'react';
 import { useMutation } from '@apollo/client/react';
 import { useRouter } from 'next/navigation';
 
@@ -17,6 +17,9 @@ export default function LoginPage() {
   const setAuth = useAuthStore((state) => state.setAuth);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+  const [touchedEmail, setTouchedEmail] = useState(false);
+  const [touchedPassword, setTouchedPassword] = useState(false);
 
   const [login, { loading, error }] = useMutation(LOGIN_MUTATION, {
     onCompleted: (data) => {
@@ -31,12 +34,30 @@ export default function LoginPage() {
 
   const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setSubmitted(true);
+    setTouchedEmail(true);
+    setTouchedPassword(true);
+
+    if (!email || !password) {
+      return;
+    }
+
     login({
       variables: {
         auth: { email, password },
       },
     });
   };
+
+  const emailInvalid = (submitted || touchedEmail) && !email;
+  const passwordInvalid = (submitted || touchedPassword) && (!password || !!error);
+  const emailHelperText = emailInvalid ? 'Email is required' : undefined;
+  const passwordHelperText =
+    submitted && password.length === 0
+      ? 'Password is required'
+      : error
+        ? 'Password is incorrect'
+        : undefined;
 
   return (
     <AuthPage
@@ -60,18 +81,25 @@ export default function LoginPage() {
         type="email"
         placeholder="Email"
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        className="text-primary-bold placeholder:text-muted h-12"
-        required
+        onChange={(e) => {
+          setEmail(e.target.value);
+          setTouchedEmail(true);
+        }}
+        invalid={emailInvalid}
+        helperText={emailHelperText}
+        className="h-12"
       />
 
       <PasswordInput
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={(e) => {
+          setPassword(e.target.value);
+          setTouchedPassword(true);
+        }}
         placeholder="Password"
+        invalid={passwordInvalid}
+        helperText={passwordHelperText}
       />
-
-      {error && <p className="text-primary text-center text-sm">{error.message}</p>}
     </AuthPage>
   );
 }

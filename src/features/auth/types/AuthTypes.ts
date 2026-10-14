@@ -18,7 +18,7 @@ export interface AuthState {
 export type AuthPageProps = {
   title: string;
   subtitle: string;
-  onSubmit: (event: FormEvent<HTMLFormElement>) => void;
+  onSubmit: (event: React.SyntheticEvent<HTMLFormElement>) => void;
   children: ReactNode;
   submitButton: ReactNode;
   footer?: ReactNode;

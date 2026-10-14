@@ -6,7 +6,14 @@ import { cn } from 'cn';
 import { Input } from '@/components/ui/input';
 import { PasswordInputProps } from '../types/PasswordInputProps';
 
-export function PasswordInput({ value, onChange, placeholder, className }: PasswordInputProps) {
+export function PasswordInput({
+  value,
+  onChange,
+  placeholder,
+  className,
+  invalid = false,
+  helperText,
+}: PasswordInputProps) {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -16,13 +23,18 @@ export function PasswordInput({ value, onChange, placeholder, className }: Passw
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className={cn('text-primary-bold placeholder:text-muted h-12 pr-10', className)}
-        required
+        invalid={invalid}
+        className={cn('h-12 pr-10', className)}
+        helperText={helperText}
       />
       <button
         type="button"
         onClick={() => setShowPassword((prev) => !prev)}
-        className="text-primary-text hover:text-primary-bold absolute top-1/2 right-3 -translate-y-1/2 transition-colors"
+        className={cn(
+          'absolute top-1/2 right-3 transition-colors',
+          invalid ? 'text-primary hover:text-primary' : 'text-primary-text hover:text-primary-bold'
+        )}
+        style={{ transform: 'translateY(-50%)' }}
       >
         {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
       </button>

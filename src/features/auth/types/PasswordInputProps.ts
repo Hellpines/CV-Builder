@@ -5,4 +5,6 @@ export type PasswordInputProps = {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
   className?: string;
+  invalid?: boolean;
+  helperText?: string;
 };
