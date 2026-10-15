@@ -40,7 +40,7 @@ export function VerifyForm() {
       }
     >
       <div className="my-8 flex flex-col items-center">
-        <div className="flex justify-center gap-3">
+        <div className="relative flex justify-center gap-3">
           {code.map((digit, index) => (
             <input
               key={index}
@@ -60,11 +60,13 @@ export function VerifyForm() {
               }`}
             />
           ))}
-        </div>
 
-        {helperText && (
-          <p className="text-primary mt-4 text-center text-sm font-medium">{helperText}</p>
-        )}
+          {helperText && (
+            <p className="text-primary absolute -bottom-8 text-center text-sm font-medium">
+              {helperText}
+            </p>
+          )}
+        </div>
       </div>
     </AuthPage>
   );
