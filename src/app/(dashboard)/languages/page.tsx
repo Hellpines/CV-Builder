@@ -1,3 +1,5 @@
+export const instant = false;
+
 export default function Languages() {
   return (
     <div>
