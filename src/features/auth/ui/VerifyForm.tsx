@@ -33,12 +33,7 @@ export function VerifyForm() {
           >
             {loading ? 'CONFIRMING...' : 'CONFIRM'}
           </Button>
-          <Button
-            type="button"
-            variant="ghost"
-            onClick={handleLater}
-            className="px-14 text-xs font-semibold"
-          >
+          <Button variant="ghost" onClick={handleLater} className="px-14 text-xs font-semibold">
             LATER
           </Button>
         </div>
@@ -68,7 +63,7 @@ export function VerifyForm() {
         </div>
 
         {helperText && (
-          <p className="mt-4 text-center text-sm font-medium text-red-500">{helperText}</p>
+          <p className="text-primary mt-4 text-center text-sm font-medium">{helperText}</p>
         )}
       </div>
     </AuthPage>
