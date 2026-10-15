@@ -10,10 +10,12 @@ import {
   Languages,
   Settings,
   TrendingUp,
+  User,
   Users,
 } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '../ui/button';
+import { useAuthStore } from '@/features/auth/model/useAuthStore';
 
 const navItems = [
   { href: '/users', label: 'Employees', Icon: Users },
@@ -26,6 +28,7 @@ const navItems = [
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(true);
   const pathname = usePathname();
+  const { user } = useAuthStore();
 
   const handleSidebar = () => {
     setIsOpen((prevState) => !prevState);
@@ -34,7 +37,7 @@ export default function Sidebar() {
   return (
     <div className="relative min-h-screen">
       <aside
-        className={`relative overflow-hidden transition-all duration-400 ${
+        className={`relative min-h-full overflow-hidden transition-all duration-400 ${
           isOpen ? 'w-50' : 'w-0'
         }`}
       >
@@ -66,6 +69,12 @@ export default function Sidebar() {
             })}
           </nav>
         </div>
+        <Link href="#" className="absolute bottom-16 left-2 flex items-center gap-2 pl-2">
+          <div className="bg-primary text-secondary rounded-full p-1">
+            <User width={24} height={24} />
+          </div>
+          <p className="text-primary-bold">{user?.email}</p>
+        </Link>
       </aside>
 
       <Button
