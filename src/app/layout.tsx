@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ru" className={roboto.className}>
-      <body className="bg-background text-primary-text min-h-screen antialiased">
+      <body className="bg-background text-primary-foreground min-h-screen antialiased">
         <ApolloProvider>{children}</ApolloProvider>
       </body>
     </html>

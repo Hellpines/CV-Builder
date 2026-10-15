@@ -32,7 +32,9 @@ export function PasswordInput({
         onClick={() => setShowPassword((prev) => !prev)}
         className={cn(
           'absolute top-1/2 right-3 transition-colors',
-          invalid ? 'text-primary hover:text-primary' : 'text-primary-text hover:text-primary-bold'
+          invalid
+            ? 'text-primary hover:text-primary'
+            : 'text-primary-foreground hover:text-primary-bold'
         )}
         style={{ transform: 'translateY(-50%)' }}
       >

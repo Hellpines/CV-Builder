@@ -45,7 +45,7 @@ function Input({
           isInvalid
             ? 'border-primary text-primary'
             : 'border-muted text-primary-bold hover:border-border',
-          disabled && 'border-muted bg-input-disabled text-primary-text cursor-not-allowed',
+          disabled && 'border-muted bg-input-disabled text-primary-foreground cursor-not-allowed',
           className
         )}
         {...props}
@@ -56,7 +56,7 @@ function Input({
           className={cn(
             'pointer-events-none absolute left-3 leading-none transition-all duration-200',
             shouldFloat ? '-top-5 text-[12px]' : 'top-1/2 -translate-y-1/2 text-[14px]',
-            isInvalid ? 'text-primary' : 'text-primary-text'
+            isInvalid ? 'text-primary' : 'text-primary-foreground'
           )}
         >
           {placeholder}

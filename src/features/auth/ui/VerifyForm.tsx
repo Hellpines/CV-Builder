@@ -53,9 +53,9 @@ export function VerifyForm() {
               value={digit}
               onChange={(e) => handleChange(e.target.value, index)}
               onKeyDown={(e) => handleKeyDown(e, index)}
-              className={`text-primary-text border-muted h-12 w-12 border text-center text-xl font-semibold transition-all focus:ring-2 focus:outline-none ${
+              className={`text-primary-foreground border-muted h-12 w-12 border text-center text-xl font-semibold transition-all focus:ring-2 focus:outline-none ${
                 hasError
-                  ? 'border-red-500 focus:ring-red-500'
+                  ? 'border-border-error focus:ring-border-error'
                   : 'border-muted bg-background focus:ring-primary'
               }`}
             />

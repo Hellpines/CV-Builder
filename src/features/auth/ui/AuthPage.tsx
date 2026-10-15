@@ -36,7 +36,7 @@ export function AuthPage({
                     'flex w-37.5 justify-center pb-4 transition-colors',
                     isActive
                       ? 'border-primary text-primary border-b-2 font-semibold'
-                      : 'text-primary-text hover:text-primary',
+                      : 'text-primary-foreground hover:text-primary',
                   ].join(' ')}
                 >
                   {label}
