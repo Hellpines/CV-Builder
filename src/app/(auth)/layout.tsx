@@ -1,9 +1,9 @@
 'use client';
 
 import { useAuthStore } from '@/features/auth/model/useAuthStore';
-import { Loader2 } from 'lucide-react';
+import { AuthLoader } from '@/features/auth/ui/AuthLoader';
 import { useRouter } from 'next/navigation';
-import { Suspense, useEffect } from 'react';
+import { useEffect } from 'react';
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -17,17 +17,11 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
     }
   }, [_hasHydrated, accessToken, router]);
 
+  if (!_hasHydrated || accessToken) {
+    return <AuthLoader />;
+  }
+
   return (
-    <div className="bg-background flex min-h-screen items-center justify-center">
-      <Suspense
-        fallback={
-          <div className="flex min-h-screen items-center justify-center">
-            <Loader2 className="text-primary h-8 w-8 animate-spin" />
-          </div>
-        }
-      >
-        {children}
-      </Suspense>
-    </div>
+    <div className="bg-background flex min-h-screen items-center justify-center">{children}</div>
   );
 }
