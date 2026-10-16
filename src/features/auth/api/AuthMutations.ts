@@ -7,19 +7,64 @@ import type {
   SignupVariables,
 } from '../types/AuthTypes';
 
+export const USER_FIELDS = gql`
+  fragment UserFields on User {
+    id
+    created_at
+    email
+    role
+    is_verified
+    profile {
+      id
+      created_at
+      first_name
+      last_name
+      full_name
+      avatar
+      email
+      is_verified
+      role
+      skills {
+        name
+        categoryId
+        mastery
+      }
+      languages {
+        name
+        proficiency
+      }
+    }
+    department {
+      id
+      created_at
+      name
+    }
+    position {
+      id
+      created_at
+      name
+    }
+    cvs {
+      id
+      created_at
+      name
+      education
+      description
+    }
+  }
+`;
+
 export const LOGIN_MUTATION: TypedDocumentNode<LoginResponse, LoginVariables> = gql`
   mutation Login($auth: AuthInput!) {
     login(auth: $auth) {
       access_token
       refresh_token
       user {
-        id
-        email
-        role
-        is_verified
+        ...UserFields
       }
     }
   }
+  ${USER_FIELDS}
 `;
 
 export const SIGNUP_MUTATION: TypedDocumentNode<SignupResponse, SignupVariables> = gql`
@@ -28,13 +73,11 @@ export const SIGNUP_MUTATION: TypedDocumentNode<SignupResponse, SignupVariables>
       access_token
       refresh_token
       user {
-        id
-        email
-        role
-        is_verified
+        ...UserFields
       }
     }
   }
+  ${USER_FIELDS}
 `;
 
 export const FORGOT_PASSWORD_MUTATION: TypedDocumentNode<
@@ -52,6 +95,23 @@ export const RESET_PASSWORD_MUTATION: TypedDocumentNode<
 > = gql`
   mutation ResetPassword($auth: ResetPasswordInput!) {
     resetPassword(auth: $auth)
+  }
+`;
+
+export const UPDATE_TOKEN_MUTATION: TypedDocumentNode<
+  {
+    updateToken: {
+      access_token: string;
+      refresh_token: string;
+    };
+  },
+  Record<string, never>
+> = gql`
+  mutation UpdateToken {
+    updateToken {
+      access_token
+      refresh_token
+    }
   }
 `;
 

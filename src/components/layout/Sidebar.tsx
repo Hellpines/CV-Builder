@@ -30,6 +30,10 @@ export default function Sidebar() {
   const pathname = usePathname();
   const { user } = useAuthStore();
 
+  const avatar = user?.profile?.avatar || '';
+  const fullName = user?.profile?.full_name || '';
+  const initials = `${fullName[0]}`.toUpperCase() || 'U';
+
   const handleSidebar = () => {
     setIsOpen((prevState) => !prevState);
   };
@@ -70,10 +74,27 @@ export default function Sidebar() {
           </nav>
         </div>
         <Link href="#" className="absolute bottom-16 left-2 flex items-center gap-2 pl-2">
-          <div className="bg-primary text-secondary rounded-full p-1">
-            <User width={24} height={24} />
+          <div className="flex items-center justify-center">
+            {avatar ? (
+              <Image
+                src={avatar}
+                alt={`${fullName}`}
+                width={40}
+                height={40}
+                className="rounded-full object-cover"
+              />
+            ) : (
+              <div className="bg-muted text-l text-secondary flex h-10 w-10 items-center justify-center rounded-full font-medium">
+                {initials}
+              </div>
+            )}
           </div>
-          <p className="text-primary-bold">{user?.email}</p>
+          <p className="text-primary-bold">
+            {user?.profile?.full_name ||
+              user?.profile?.first_name ||
+              user?.profile?.last_name ||
+              'No name'}
+          </p>
         </Link>
       </aside>
 
@@ -81,7 +102,7 @@ export default function Sidebar() {
         onClick={handleSidebar}
         variant="icon"
         className={[
-          'absolute top-9 cursor-pointer p-1 transition-all duration-400',
+          'absolute top-9 p-1 transition-all duration-400',
           isOpen ? '-right-4' : '-right-9',
         ].join(' ')}
         aria-label={isOpen ? 'Hide sidebar' : 'Open sidebar'}
