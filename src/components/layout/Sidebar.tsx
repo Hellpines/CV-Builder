@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '../ui/button';
-import { useAuthStore } from '@/features/auth/model/useAuthStore';
+import { UserMenu } from './UserMenu';
 
 const navItems = [
   { href: '/users', label: 'Employees', Icon: Users },
@@ -27,14 +27,6 @@ const navItems = [
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(true);
   const pathname = usePathname();
-  const { user } = useAuthStore();
-
-  const profile = user?.profile;
-  const id = user?.id;
-  const avatar = profile?.avatar || '';
-  const profileFirstName = profile?.first_name || '';
-  const profileLastName = profile?.last_name || '';
-  const initials = `${profileFirstName[0] || ''}${profileLastName[0] || ''}`.toUpperCase() || 'U';
 
   const handleSidebar = () => {
     setIsOpen((prevState) => !prevState);
@@ -75,32 +67,10 @@ export default function Sidebar() {
             })}
           </nav>
         </div>
-        <Link
-          href={`/users/${id}`}
-          className="absolute bottom-16 left-2 flex items-center gap-2 pl-2"
-        >
-          <div className="flex items-center justify-center">
-            {avatar ? (
-              <Image
-                src={avatar}
-                alt={`${profileFirstName} ${profileLastName}`}
-                width={40}
-                height={40}
-                className="h-10 rounded-full object-cover"
-              />
-            ) : (
-              <div className="bg-muted text-l text-secondary flex h-10 w-10 items-center justify-center rounded-full font-medium">
-                {initials}
-              </div>
-            )}
-          </div>
-          <p className="text-primary-bold">
-            {user?.profile?.full_name ||
-              user?.profile?.first_name ||
-              user?.profile?.last_name ||
-              'No name'}
-          </p>
-        </Link>
+
+        <div className="absolute bottom-16 left-0 w-50">
+          <UserMenu />
+        </div>
       </aside>
 
       <Button
