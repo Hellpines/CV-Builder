@@ -1,8 +1,7 @@
 'use client';
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { AuthPageProps } from '../types/AuthTypes';
+import { Tabs } from '@/components/ui/tabs';
 
 const tabs = [
   { href: '/login', label: 'SIGN IN' },
@@ -18,32 +17,16 @@ export function AuthPage({
   submitButton,
   footer,
 }: AuthPageProps) {
-  const pathname = usePathname();
-
   return (
     <div className="flex min-h-screen w-full flex-col">
       {type === 'sign' ? (
         <div className="pt-6">
-          <div className="mx-auto flex w-full max-w-140 justify-center text-sm font-medium">
-            {tabs.map(({ href, label }) => {
-              const isActive = pathname === href;
-
-              return (
-                <Link
-                  key={href}
-                  href={href}
-                  className={[
-                    'flex w-37.5 justify-center pb-4 transition-colors',
-                    isActive
-                      ? 'border-primary text-primary border-b-2 font-semibold'
-                      : 'text-primary-foreground hover:text-primary',
-                  ].join(' ')}
-                >
-                  {label}
-                </Link>
-              );
-            })}
-          </div>
+          <Tabs
+            items={tabs}
+            className="mx-auto w-full max-w-140 justify-center"
+            tabClassName="pb-4"
+            inactiveClassName="text-primary-foreground"
+          />
         </div>
       ) : null}
 

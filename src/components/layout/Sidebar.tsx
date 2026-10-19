@@ -10,7 +10,6 @@ import {
   Languages,
   Settings,
   TrendingUp,
-  User,
   Users,
 } from 'lucide-react';
 import { useState } from 'react';
@@ -30,9 +29,12 @@ export default function Sidebar() {
   const pathname = usePathname();
   const { user } = useAuthStore();
 
-  const avatar = user?.profile?.avatar || '';
-  const fullName = user?.profile?.full_name || '';
-  const initials = `${fullName[0]}`.toUpperCase() || 'U';
+  const profile = user?.profile;
+  const id = user?.id;
+  const avatar = profile?.avatar || '';
+  const profileFirstName = profile?.first_name || '';
+  const profileLastName = profile?.last_name || '';
+  const initials = `${profileFirstName[0] || ''}${profileLastName[0] || ''}`.toUpperCase() || 'U';
 
   const handleSidebar = () => {
     setIsOpen((prevState) => !prevState);
@@ -53,7 +55,7 @@ export default function Sidebar() {
 
           <nav className="space-y-2">
             {navItems.map(({ href, label, Icon }) => {
-              const isActive = pathname === href;
+              const isActive = pathname === href || pathname.startsWith(href);
 
               return (
                 <Link
@@ -73,15 +75,18 @@ export default function Sidebar() {
             })}
           </nav>
         </div>
-        <Link href="#" className="absolute bottom-16 left-2 flex items-center gap-2 pl-2">
+        <Link
+          href={`/users/${id}`}
+          className="absolute bottom-16 left-2 flex items-center gap-2 pl-2"
+        >
           <div className="flex items-center justify-center">
             {avatar ? (
               <Image
                 src={avatar}
-                alt={`${fullName}`}
+                alt={`${profileFirstName} ${profileLastName}`}
                 width={40}
                 height={40}
-                className="rounded-full object-cover"
+                className="h-10 rounded-full object-cover"
               />
             ) : (
               <div className="bg-muted text-l text-secondary flex h-10 w-10 items-center justify-center rounded-full font-medium">

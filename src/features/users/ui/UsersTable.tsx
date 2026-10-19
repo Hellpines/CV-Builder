@@ -4,8 +4,8 @@ import { ArrowUp, ArrowDown, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
-import { User } from '../types/UserTypes';
 import { Button } from '@/components/ui/button';
+import { User } from '@/shared/types/user';
 
 type SortKey = 'firstName' | 'lastName' | 'email' | 'department' | 'position';
 
@@ -124,7 +124,7 @@ export default function UsersTable({ data }: { data: User[] }) {
                           alt={`${firstName} ${lastName}`}
                           width={40}
                           height={40}
-                          className="rounded-full object-cover"
+                          className="h-10 rounded-full object-cover"
                         />
                       ) : (
                         <div className="bg-muted text-l text-secondary flex h-10 w-10 items-center justify-center rounded-full font-medium">

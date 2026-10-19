@@ -55,8 +55,12 @@ function Input({
         <label
           className={cn(
             'pointer-events-none absolute left-3 leading-none transition-all duration-200',
-            shouldFloat ? '-top-5 text-[12px]' : 'top-1/2 -translate-y-1/2 text-[14px]',
-            isInvalid ? 'text-primary' : 'text-primary-foreground'
+            shouldFloat ? '-top-4 text-[12px]' : 'top-1/2 -translate-y-1/2 text-[14px]',
+            isInvalid
+              ? 'text-primary'
+              : shouldFloat
+                ? 'text-primary-foreground'
+                : 'text-placeholder'
           )}
         >
           {placeholder}

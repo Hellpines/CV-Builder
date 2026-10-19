@@ -1,6 +1,5 @@
-import type { User, UserRole } from '@/features/users/types/UserTypes';
+import type { User } from '@/shared/types/user';
 import type { ReactNode, SyntheticEvent } from 'react';
-import type { Department, Position, Profile, Cv } from '@/features/users/types/UserTypes';
 
 export interface AuthState {
   accessToken: string | null;
@@ -10,19 +9,8 @@ export interface AuthState {
   setHasHydrated: (hydrated: boolean) => void;
   setAuth: (accessToken: string, refreshToken: string, user: User) => void;
   logout: () => void;
+  updateUser: (patch: Partial<User>) => void;
 }
-
-export type AuthUser = {
-  id: string;
-  created_at: string;
-  email: string;
-  role: UserRole;
-  is_verified: boolean;
-  profile: Profile;
-  department: Department | null;
-  position: Position | null;
-  cvs: Cv[] | null;
-};
 
 export type AuthPageProps = {
   title: string;
@@ -38,7 +26,7 @@ export interface LoginResponse {
   login: {
     access_token: string;
     refresh_token: string;
-    user: AuthUser;
+    user: User;
   };
 }
 
@@ -46,7 +34,7 @@ export interface SignupResponse {
   signup: {
     access_token: string;
     refresh_token: string;
-    user: AuthUser;
+    user: User;
   };
 }
 

@@ -5,7 +5,8 @@ import { useMemo, useState } from 'react';
 import UsersTable from './UsersTable';
 import { useQuery } from '@apollo/client/react';
 import { GET_USERS } from '../api/UserQueries';
-import { PaginatedUsers, User } from '../types/UserTypes';
+import { User } from '@/shared/types/user';
+import { PaginatedUsers } from '../types/UserTypes';
 
 interface GetUsersQueryResponse {
   users: PaginatedUsers;
@@ -23,8 +24,10 @@ export function UsersPage() {
     },
   });
 
-  const typedData = data as GetUsersQueryResponse | undefined;
-  const users: User[] = typedData?.users?.items || [];
+  const users = useMemo<User[]>(
+    () => (data as GetUsersQueryResponse | undefined)?.users?.items ?? [],
+    [data]
+  );
 
   const filteredUsers = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
@@ -42,8 +45,6 @@ export function UsersPage() {
   return (
     <div className="flex min-h-full flex-col gap-2.5">
       <div className="flex flex-col gap-5 pt-4 pl-10">
-        <p className="text-m text-primary-foreground">Employees</p>
-
         <div className="relative">
           <Search
             className="text-primary-foreground absolute top-1/2 left-4 -translate-y-1/2"

@@ -15,6 +15,9 @@ export const useAuthStore = create<AuthState>()(
       setAuth: (accessToken, refreshToken, user) => set({ accessToken, refreshToken, user }),
 
       logout: () => set({ accessToken: null, refreshToken: null, user: null }),
+
+      updateUser: (patch) =>
+        set((state) => (state.user ? { user: { ...state.user, ...patch } } : state)),
     }),
     {
       name: 'auth-storage',

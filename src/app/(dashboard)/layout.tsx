@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/features/auth/model/useAuthStore';
 import Sidebar from '@/components/layout/Sidebar';
 import { AuthLoader } from '@/features/auth/ui/AuthLoader';
+import { Breadcrumbs } from '@/components/layout/Breadcrumbs';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -25,7 +26,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   return (
     <div className="bg-background flex min-h-screen w-full">
       <Sidebar />
-      <main className="flex-1 p-6">{children}</main>
+      <main className="flex-1 p-6">
+        <Breadcrumbs />
+        <div className="mt-4">{children}</div>
+      </main>
     </div>
   );
 }
