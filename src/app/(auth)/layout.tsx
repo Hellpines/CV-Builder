@@ -11,21 +11,26 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
 
   const { accessToken, user, _hasHydrated } = useAuthStore();
 
-  const isVerified = Boolean(user?.is_verified);
+  const isVerifyEmailPage = pathname === '/verify-email';
+  const isVerified = user?.is_verified === true;
 
-  const redirectTo = !accessToken
-    ? null
-    : isVerified
-      ? '/users'
-      : pathname !== '/verify-email'
-        ? '/verify-email'
-        : null;
+  let redirectTo: string | null = null;
+
+  if (_hasHydrated) {
+    if (!accessToken && pathname !== '/login') {
+      redirectTo = '/login';
+    } else if (accessToken && isVerifyEmailPage && isVerified) {
+      redirectTo = '/users';
+    } else if (accessToken && !isVerifyEmailPage && pathname !== '/users') {
+      redirectTo = '/users';
+    }
+  }
 
   useEffect(() => {
-    if (_hasHydrated && redirectTo) {
+    if (redirectTo) {
       router.replace(redirectTo);
     }
-  }, [_hasHydrated, redirectTo, router]);
+  }, [redirectTo, router]);
 
   if (!_hasHydrated || redirectTo) {
     return <AuthLoader />;
