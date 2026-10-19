@@ -36,13 +36,13 @@ export default function Sidebar() {
     <div className="relative min-h-screen">
       <aside
         className={`relative min-h-full overflow-hidden transition-all duration-400 ${
-          isOpen ? 'w-50' : 'w-0'
+          isOpen ? 'w-50' : 'w-14'
         }`}
       >
-        <div className="flex h-full min-w-50 flex-col">
+        <div className="flex h-full flex-col">
           <div className="flex items-center gap-4 p-4">
             <Image src="/icon.svg" alt="CV Builder Logo" width={24} height={24} />
-            <h2 className="text-primary-bold text-lg whitespace-nowrap">CV Builder</h2>
+            {isOpen && <h2 className="text-primary-bold text-lg whitespace-nowrap">CV Builder</h2>}
           </div>
 
           <nav className="space-y-2">
@@ -61,15 +61,15 @@ export default function Sidebar() {
                   ].join(' ')}
                 >
                   <Icon className={isActive ? 'text-primary-bold' : ''} />
-                  <span>{label}</span>
+                  {isOpen ? <span>{label}</span> : null}
                 </Link>
               );
             })}
           </nav>
         </div>
 
-        <div className="absolute bottom-16 left-0 w-50">
-          <UserMenu />
+        <div className="absolute bottom-16 left-0 w-50 px-3">
+          <UserMenu isOpen={isOpen} />
         </div>
       </aside>
 

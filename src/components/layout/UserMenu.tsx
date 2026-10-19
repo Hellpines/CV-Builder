@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useAuthStore } from '@/features/auth/model/useAuthStore';
 
-export function UserMenu() {
+export function UserMenu({ isOpen }: { isOpen: boolean }) {
   const router = useRouter();
   const client = useApolloClient();
   const user = useAuthStore((state) => state.user);
@@ -35,7 +35,11 @@ export function UserMenu() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="flex w-full items-center gap-2 px-4 text-left">
+      <DropdownMenuTrigger
+        className={`flex items-center gap-2 text-left outline-none ${
+          isOpen ? 'w-full' : 'w-10 justify-center'
+        }`}
+      >
         {avatar ? (
           <Image
             src={avatar}
@@ -49,22 +53,22 @@ export function UserMenu() {
             {initials}
           </div>
         )}
-        <p className="text-primary-bold truncate">{displayName}</p>
+        {isOpen && <p className="text-primary-bold truncate">{displayName}</p>}
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent side="top" align="start" sideOffset={8}>
+      <DropdownMenuContent side="top" align="center" sideOffset={8}>
         <DropdownMenuItem render={<Link href={`/users/${user?.id}`} />}>
-          <User />
-          Profile
+          <User size={20} />
+          {isOpen && <span>Profile</span>}
         </DropdownMenuItem>
         <DropdownMenuItem render={<Link href="/settings" />}>
-          <Settings />
-          Settings
+          <Settings size={20} />
+          {isOpen && <span>Settings</span>}
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleLogout}>
-          <LogOut />
-          Logout
+          <LogOut size={20} />
+          {isOpen && <span>Logout</span>}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
