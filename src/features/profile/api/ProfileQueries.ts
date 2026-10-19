@@ -8,6 +8,7 @@ export const GET_USER_PROFILE: TypedDocumentNode<{ user: User }, { userId: strin
       created_at
       email
       role
+      is_verified
       department {
         id
         name

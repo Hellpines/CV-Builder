@@ -1,13 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useProfileForm } from '../model/useProfileForm';
 import { User } from '@/shared/types/user';
 import { FormSelect, Option } from './FormSelect';
 import { AvatarUpload } from './AvatarUpload';
+import { useAuthStore } from '@/features/auth/model/useAuthStore';
+import { useVerifyEmail } from '../model/useVerifyEmail';
 
 interface ProfileFormProps {
   userData?: User;
@@ -22,7 +23,6 @@ export default function ProfileForm({
   positions,
   isEditable,
 }: ProfileFormProps) {
-  const router = useRouter();
   const {
     firstName,
     setFirstName,
@@ -38,6 +38,9 @@ export default function ProfileForm({
     avatarError,
     selectAvatar,
   } = useProfileForm(userData, isEditable);
+
+  const { handleVerifyEmail, sendingCode } = useVerifyEmail(userData?.email);
+  const authIsVerified = useAuthStore((state) => state.user?.is_verified);
   const [submitted, setSubmitted] = useState(false);
 
   const departmentInvalid = submitted && !departmentId;
@@ -59,7 +62,8 @@ export default function ProfileForm({
   const initials = `${profileFirstName[0] || ''}${profileLastName[0] || ''}`.toUpperCase() || 'U';
   const avatar = profile?.avatar;
 
-  const showVerifyButton = isEditable && userData.is_verified === false;
+  const isVerified = isEditable ? authIsVerified : userData.is_verified;
+  const showVerifyButton = isEditable && isVerified === false;
 
   return (
     <div className="relative flex w-full flex-col items-start justify-center pt-6 pb-20">
@@ -131,8 +135,12 @@ export default function ProfileForm({
       {isEditable && (
         <div className="mx-auto mt-9 flex w-full max-w-212.5 items-center justify-end gap-6">
           {showVerifyButton && (
-            <Button variant="secondary" onClick={() => router.push('/verify-email')}>
-              VERIFY EMAIL
+            <Button
+              variant="secondary"
+              onClick={handleVerifyEmail}
+              disabled={sendingCode || loading}
+            >
+              {sendingCode ? 'Sending...' : 'Verify email'}
             </Button>
           )}
           <Button variant="primary" onClick={onUpdate} disabled={loading}>
