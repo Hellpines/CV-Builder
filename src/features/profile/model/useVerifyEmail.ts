@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client/react';
 import { useRouter } from 'next/navigation';
 import { SEND_VERIFICATION_MUTATION } from '@/features/auth/api/AuthMutations';
+import { useAuthStore } from '@/features/auth/model/useAuthStore';
 
 export function useVerifyEmail(email?: string) {
   const router = useRouter();
@@ -11,6 +12,7 @@ export function useVerifyEmail(email?: string) {
 
     try {
       await sendVerification({ variables: { email } });
+      useAuthStore.getState().startVerification();
       router.push('/verify-email');
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';

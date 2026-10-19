@@ -9,6 +9,7 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export function useRegisterForm() {
   const router = useRouter();
   const setAuth = useAuthStore((state) => state.setAuth);
+  const startVerification = useAuthStore((state) => state.startVerification);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -24,6 +25,7 @@ export function useRegisterForm() {
   const [signup, { loading }] = useMutation(SIGNUP_MUTATION, {
     onCompleted: (data) => {
       const { access_token, refresh_token, user } = data.signup;
+      startVerification();
       setAuth(access_token, refresh_token, user);
       router.push('/verify-email');
     },

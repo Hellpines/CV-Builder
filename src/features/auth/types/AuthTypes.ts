@@ -6,6 +6,9 @@ export interface AuthState {
   refreshToken: string | null;
   user: User | null;
   _hasHydrated: boolean;
+  verificationRequested: boolean;
+  startVerification: () => void;
+  clearVerification: () => void;
   setHasHydrated: (hydrated: boolean) => void;
   setAuth: (accessToken: string, refreshToken: string, user: User) => void;
   logout: () => void;

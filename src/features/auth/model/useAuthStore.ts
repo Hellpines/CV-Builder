@@ -8,13 +8,18 @@ export const useAuthStore = create<AuthState>()(
       accessToken: null,
       refreshToken: null,
       user: null,
+      verificationRequested: false,
       _hasHydrated: false,
 
       setHasHydrated: (hydrated) => set({ _hasHydrated: hydrated }),
 
       setAuth: (accessToken, refreshToken, user) => set({ accessToken, refreshToken, user }),
 
-      logout: () => set({ accessToken: null, refreshToken: null, user: null }),
+      startVerification: () => set({ verificationRequested: true }),
+      clearVerification: () => set({ verificationRequested: false }),
+
+      logout: () =>
+        set({ accessToken: null, refreshToken: null, user: null, verificationRequested: false }),
 
       updateUser: (patch) =>
         set((state) => (state.user ? { user: { ...state.user, ...patch } } : state)),

@@ -27,12 +27,8 @@ export function useVerifyForm() {
   const [verifyMail, { loading }] = useMutation(VERIFY_MAIL_MUTATION, {
     onCompleted: () => {
       useAuthStore.setState((state) => ({
-        user: state.user
-          ? {
-              ...state.user,
-              is_verified: true,
-            }
-          : null,
+        user: state.user ? { ...state.user, is_verified: true } : null,
+        verificationRequested: false,
       }));
 
       router.push('/users');
@@ -116,6 +112,7 @@ export function useVerifyForm() {
   };
 
   const handleLater = () => {
+    useAuthStore.getState().clearVerification();
     router.push('/users');
   };
 
