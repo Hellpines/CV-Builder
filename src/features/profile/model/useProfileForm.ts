@@ -4,6 +4,7 @@ import {
   UPDATE_PROFILE_MUTATION,
   UPDATE_USER_MUTATION,
   UPLOAD_AVATAR_MUTATION,
+  DELETE_AVATAR_MUTATION,
 } from '../api/ProfileMutations';
 import { useAuthStore } from '@/features/auth/model/useAuthStore';
 import { User } from '@/shared/types/user';
@@ -43,11 +44,14 @@ export function useProfileForm(userData: User | undefined, isEditable: boolean) 
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
   const [avatarError, setAvatarError] = useState('');
+  const [avatarRemoved, setAvatarRemoved] = useState(false);
+
   const previewUrlRef = useRef<string | null>(null);
 
   const [updateProfile, { loading: updatingProfile }] = useMutation(UPDATE_PROFILE_MUTATION);
   const [updateUser, { loading: updatingUser }] = useMutation(UPDATE_USER_MUTATION);
   const [uploadAvatar, { loading: uploadingAvatar }] = useMutation(UPLOAD_AVATAR_MUTATION);
+  const [deleteAvatar, { loading: deletingAvatar }] = useMutation(DELETE_AVATAR_MUTATION);
 
   useEffect(() => {
     return () => {
@@ -60,6 +64,11 @@ export function useProfileForm(userData: User | undefined, isEditable: boolean) 
     previewUrlRef.current = null;
     setAvatarFile(null);
     setAvatarPreview(null);
+  };
+
+  const removeAvatar = () => {
+    clearAvatar();
+    if (userData?.profile?.avatar) setAvatarRemoved(true);
   };
 
   const selectAvatar = (file: File) => {
@@ -77,6 +86,7 @@ export function useProfileForm(userData: User | undefined, isEditable: boolean) 
     previewUrlRef.current = url;
 
     setAvatarError('');
+    setAvatarRemoved(false);
     setAvatarFile(file);
     setAvatarPreview(url);
   };
@@ -93,6 +103,14 @@ export function useProfileForm(userData: User | undefined, isEditable: boolean) 
               base64: await fileToBase64(avatarFile),
               size: avatarFile.size,
               type: avatarFile.type,
+            },
+          },
+        });
+      } else if (avatarRemoved) {
+        await deleteAvatar({
+          variables: {
+            avatar: {
+              userId: userData.id,
             },
           },
         });
@@ -134,6 +152,7 @@ export function useProfileForm(userData: User | undefined, isEditable: boolean) 
       }
 
       clearAvatar();
+      setAvatarRemoved(false);
       alert('Profile updated successfully!');
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
@@ -155,6 +174,8 @@ export function useProfileForm(userData: User | undefined, isEditable: boolean) 
     avatarError,
     selectAvatar,
     handleSave,
-    loading: updatingProfile || updatingUser || uploadingAvatar,
+    avatarRemoved,
+    removeAvatar,
+    loading: updatingProfile || updatingUser || uploadingAvatar || deletingAvatar,
   };
 }

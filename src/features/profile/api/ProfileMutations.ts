@@ -68,3 +68,16 @@ export const UPLOAD_AVATAR_MUTATION: TypedDocumentNode<
     uploadAvatar(avatar: $avatar)
   }
 `;
+
+export const DELETE_AVATAR_MUTATION: TypedDocumentNode<
+  { deleteAvatar: boolean },
+  {
+    avatar: {
+      userId: string;
+    };
+  }
+> = gql`
+  mutation DeleteAvatar($avatar: DeleteAvatarInput!) {
+    deleteAvatar(avatar: $avatar)
+  }
+`;

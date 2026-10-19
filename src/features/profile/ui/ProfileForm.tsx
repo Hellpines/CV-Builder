@@ -37,6 +37,8 @@ export default function ProfileForm({
     avatarPreview,
     avatarError,
     selectAvatar,
+    avatarRemoved,
+    removeAvatar,
   } = useProfileForm(userData, isEditable);
 
   const { handleVerifyEmail, sendingCode } = useVerifyEmail(userData?.email);
@@ -69,13 +71,14 @@ export default function ProfileForm({
     <div className="relative flex w-full flex-col items-start justify-center pt-6 pb-20">
       <div className="mb-15 flex w-full flex-col items-center justify-center gap-8 text-center">
         <AvatarUpload
-          src={avatar}
+          src={avatarRemoved ? null : avatar}
           preview={avatarPreview}
           initials={initials}
           alt={`${profileFirstName} ${profileLastName}`}
           editable={isEditable}
           error={avatarError}
           onSelect={selectAvatar}
+          onRemove={removeAvatar}
         />
 
         <div className="flex flex-col">
