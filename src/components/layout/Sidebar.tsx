@@ -33,9 +33,9 @@ export default function Sidebar() {
   };
 
   return (
-    <div className="relative min-h-screen">
+    <div className="sticky top-0 z-2 h-screen shrink-0 self-start">
       <aside
-        className={`relative min-h-full overflow-hidden transition-all duration-400 ${
+        className={`relative h-full overflow-hidden transition-all duration-400 ${
           isOpen ? 'w-50' : 'w-14'
         }`}
       >
@@ -68,7 +68,7 @@ export default function Sidebar() {
           </nav>
         </div>
 
-        <div className="absolute bottom-16 left-0 w-50 px-3">
+        <div className="absolute bottom-16 left-0 w-50 px-2">
           <UserMenu isOpen={isOpen} />
         </div>
       </aside>

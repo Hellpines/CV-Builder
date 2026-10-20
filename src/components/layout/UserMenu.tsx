@@ -33,40 +33,45 @@ export function UserMenu({ isOpen }: { isOpen: boolean }) {
     router.replace('/login');
   };
 
+  const itemClass = isOpen ? undefined : 'justify-center px-0';
+
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger
-        className={`flex items-center gap-2 text-left outline-none ${
-          isOpen ? 'w-full' : 'w-10 justify-center'
-        }`}
-      >
-        {avatar ? (
-          <Image
-            src={avatar}
-            alt={displayName}
-            width={40}
-            height={40}
-            className="h-10 w-10 shrink-0 rounded-full object-cover"
-          />
-        ) : (
-          <div className="bg-muted text-secondary flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-medium">
-            {initials}
-          </div>
-        )}
-        {isOpen && <p className="text-primary-bold truncate">{displayName}</p>}
+      <DropdownMenuTrigger className="block w-full text-left outline-none">
+        <span className="flex items-center gap-2 px-2">
+          {avatar ? (
+            <Image
+              src={avatar}
+              alt={displayName}
+              width={40}
+              height={40}
+              className="h-10 w-10 shrink-0 rounded-full object-cover"
+            />
+          ) : (
+            <span className="bg-muted text-secondary flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-medium">
+              {initials}
+            </span>
+          )}
+          {isOpen && <span className="text-primary-bold truncate">{displayName}</span>}
+        </span>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent side="top" align="center" sideOffset={8}>
-        <DropdownMenuItem render={<Link href={`/users/${user?.id}`} />}>
+      <DropdownMenuContent
+        side="top"
+        align="start"
+        sideOffset={8}
+        positionerClassName={isOpen ? 'w-48' : 'w-14'}
+      >
+        <DropdownMenuItem render={<Link href={`/users/${user?.id}`} />} className={itemClass}>
           <User size={20} />
           {isOpen && <span>Profile</span>}
         </DropdownMenuItem>
-        <DropdownMenuItem render={<Link href="/settings" />}>
+        <DropdownMenuItem render={<Link href="/settings" />} className={itemClass}>
           <Settings size={20} />
           {isOpen && <span>Settings</span>}
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={handleLogout}>
+        <DropdownMenuItem onClick={handleLogout} className={itemClass}>
           <LogOut size={20} />
           {isOpen && <span>Logout</span>}
         </DropdownMenuItem>
