@@ -3,13 +3,11 @@
 import { ArrowUp, ArrowDown, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useMemo, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { User } from '@/shared/types/user';
+import type { SortDirection, SortKey } from '../types/UserTypes';
 
-type SortKey = 'firstName' | 'lastName' | 'email' | 'department' | 'position';
-
-const headData = [
+const headData: { key: SortKey; label: string }[] = [
   { key: 'firstName', label: 'First Name' },
   { key: 'lastName', label: 'Last Name' },
   { key: 'email', label: 'Email' },
@@ -17,57 +15,18 @@ const headData = [
   { key: 'position', label: 'Position' },
 ];
 
-export default function UsersTable({ data }: { data: User[] }) {
+interface UsersTableProps {
+  data: User[];
+  sortKey: SortKey | null;
+  sortDirection: SortDirection;
+  onSort: (key: SortKey) => void;
+}
+
+export default function UsersTable({ data, sortKey, sortDirection, onSort }: UsersTableProps) {
   const router = useRouter();
-  const [sortKey, setSortKey] = useState<SortKey | null>(null);
-  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
-
-  const sortedData = useMemo(() => {
-    if (!sortKey) {
-      return data;
-    }
-
-    const sorted = [...data].sort((a, b) => {
-      const valueA =
-        sortKey === 'firstName'
-          ? a.profile?.first_name || ''
-          : sortKey === 'lastName'
-            ? a.profile?.last_name || ''
-            : sortKey === 'email'
-              ? a.email
-              : sortKey === 'department'
-                ? a.department?.name || ''
-                : a.position?.name || '';
-
-      const valueB =
-        sortKey === 'firstName'
-          ? b.profile?.first_name || ''
-          : sortKey === 'lastName'
-            ? b.profile?.last_name || ''
-            : sortKey === 'email'
-              ? b.email
-              : sortKey === 'department'
-                ? b.department?.name || ''
-                : b.position?.name || '';
-
-      return valueA.localeCompare(valueB) * (sortDirection === 'asc' ? 1 : -1);
-    });
-
-    return sorted;
-  }, [data, sortDirection, sortKey]);
-
-  const handleSort = (key: SortKey) => {
-    if (sortKey === key) {
-      setSortDirection((prev) => (prev === 'asc' ? 'desc' : 'asc'));
-      return;
-    }
-
-    setSortKey(key);
-    setSortDirection('asc');
-  };
 
   return (
-    <div className="w-full overflow-x-auto pl-6">
+    <div className="w-full overflow-x-auto">
       <table className="w-full border-separate border-spacing-0 text-left">
         <thead>
           <tr className="bg-transparent text-sm">
@@ -80,7 +39,7 @@ export default function UsersTable({ data }: { data: User[] }) {
                 <th key={key} className="border-muted border-b px-4 py-3 font-medium">
                   <button
                     type="button"
-                    onClick={() => handleSort(key as SortKey)}
+                    onClick={() => onSort(key)}
                     className="text-primary-bold flex cursor-pointer items-center gap-1 text-left text-sm font-medium"
                   >
                     {label}
@@ -103,8 +62,8 @@ export default function UsersTable({ data }: { data: User[] }) {
         </thead>
 
         <tbody>
-          {sortedData.length ? (
-            sortedData.map((user) => {
+          {data.length ? (
+            data.map((user) => {
               const firstName = user.profile?.first_name || '';
               const lastName = user.profile?.last_name || '';
               const avatar = user.profile?.avatar;

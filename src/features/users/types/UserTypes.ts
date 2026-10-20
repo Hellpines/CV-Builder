@@ -15,3 +15,6 @@ export interface UsersQueryParams {
   page?: number;
   limit?: number;
 }
+
+export type SortKey = 'firstName' | 'lastName' | 'email' | 'department' | 'position';
+export type SortDirection = 'asc' | 'desc';

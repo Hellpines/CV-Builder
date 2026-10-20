@@ -22,7 +22,7 @@ function Input({
   const [isFocused, setIsFocused] = useState(false);
   const hasValue = value !== undefined && value !== null && String(value).length > 0;
   const isInvalid = Boolean(invalid) || props['aria-invalid'] === true;
-  const shouldFloat = isFocused || hasValue || disabled;
+  const shouldFloat = isFocused || hasValue;
 
   return (
     <div className="relative w-full">
@@ -60,7 +60,9 @@ function Input({
               ? 'text-primary'
               : shouldFloat
                 ? 'text-primary-foreground'
-                : 'text-placeholder'
+                : disabled
+                  ? 'text-primary-disabled'
+                  : 'text-placeholder'
           )}
         >
           {placeholder}
