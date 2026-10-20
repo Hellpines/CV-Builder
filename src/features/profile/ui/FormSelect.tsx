@@ -58,7 +58,13 @@ export function FormSelect({
         >
           <SelectValue
             className={
-              selected ? 'text-primary-bold' : invalid ? 'text-primary' : 'text-placeholder'
+              disabled
+                ? 'text-primary-disabled'
+                : selected
+                  ? 'text-primary-bold'
+                  : invalid
+                    ? 'text-primary'
+                    : 'text-placeholder'
             }
           >
             {selected?.name || placeholder}

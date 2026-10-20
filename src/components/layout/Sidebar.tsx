@@ -78,7 +78,7 @@ export default function Sidebar() {
         variant="icon"
         className={[
           'absolute top-9 p-1 transition-all duration-400',
-          isOpen ? '-right-4' : '-right-9',
+          isOpen ? '-right-4' : '-right-6',
         ].join(' ')}
         aria-label={isOpen ? 'Hide sidebar' : 'Open sidebar'}
       >

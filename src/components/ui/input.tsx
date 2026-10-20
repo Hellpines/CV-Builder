@@ -45,7 +45,7 @@ function Input({
           isInvalid
             ? 'border-primary text-primary'
             : 'border-muted text-primary-bold hover:border-border',
-          disabled && 'border-muted bg-input-disabled text-primary-foreground cursor-not-allowed',
+          disabled && 'border-muted bg-input-disabled text-primary-disabled cursor-not-allowed',
           className
         )}
         {...props}
