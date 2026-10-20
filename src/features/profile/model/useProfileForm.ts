@@ -77,7 +77,7 @@ export function useProfileForm(userData: User | undefined, isEditable: boolean) 
       return;
     }
     if (file.size > MAX_AVATAR_SIZE) {
-      setAvatarError('File must be no more than 5MB');
+      setAvatarError('File must be no more than 0.5MB');
       return;
     }
 
