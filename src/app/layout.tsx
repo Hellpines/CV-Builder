@@ -3,6 +3,7 @@ import './globals.css';
 import { Roboto } from 'next/font/google';
 import { ApolloProvider } from '@/components/providers/ApolloProvider';
 import { ReactNode } from 'react';
+import { AppGuard } from '@/components/providers/AppGuard';
 
 const roboto = Roboto({
   weight: ['400', '500'],
@@ -16,9 +17,11 @@ export const metadata: Metadata = {
 };
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="ru" className={roboto.className}>
+    <html lang="en" className={roboto.className}>
       <body className="bg-background text-primary-foreground min-h-screen antialiased">
-        <ApolloProvider>{children}</ApolloProvider>
+        <ApolloProvider>
+          <AppGuard>{children}</AppGuard>
+        </ApolloProvider>
       </body>
     </html>
   );
