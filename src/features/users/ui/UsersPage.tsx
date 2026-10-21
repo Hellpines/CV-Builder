@@ -1,7 +1,8 @@
 'use client';
 
-import { Loader2, Search } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { useMemo, useState } from 'react';
+import { AppLoader } from '@/components/ui/app-loader';
 import UsersTable from './UsersTable';
 import { useQuery } from '@apollo/client/react';
 import { GET_USERS } from '../api/UserQueries';
@@ -80,13 +81,7 @@ export function UsersPage() {
         </div>
       </div>
 
-      {loading && !result && (
-        <Loader2
-          width={72}
-          height={72}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-        />
-      )}
+      {loading && !result && <AppLoader size={72} />}
       {error && (
         <div className="text-primary pl-10 text-sm">Failed to load users: {error.message}</div>
       )}

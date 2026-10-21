@@ -34,11 +34,12 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
     }
   }, [redirectTo, router]);
 
-  if (!_hasHydrated || redirectTo) {
-    return <AuthLoader />;
-  }
+  const showLoader = !_hasHydrated || Boolean(redirectTo);
 
   return (
-    <div className="bg-background flex min-h-screen items-center justify-center">{children}</div>
+    <div className="bg-background flex min-h-screen items-center justify-center">
+      {showLoader && <AuthLoader />}
+      {children}
+    </div>
   );
 }

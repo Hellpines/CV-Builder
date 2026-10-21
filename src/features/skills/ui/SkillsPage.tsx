@@ -1,6 +1,6 @@
 'use client';
 
-import { Loader2 } from 'lucide-react';
+import { AppLoader } from '@/components/ui/app-loader';
 import { LevelsPanel, type LevelsPanelLabels } from '@/components/ui/levels-panel';
 import { MASTERY_OPTIONS } from '../model/skillLevels';
 import { useSkillActions } from '../model/useSkillActions';
@@ -36,12 +36,10 @@ export function SkillsPage({ userId }: { userId?: string }) {
     return <div className="text-primary pt-6">Error loading skills: {error.message}</div>;
   }
 
-  if (loading) {
-    return <Loader2 size={48} className="text-primary-foreground mx-auto mt-20 animate-spin" />;
-  }
-
   return (
-    <div className="mx-auto w-full max-w-212.5 pt-8 pb-20">
+    <div className="mx-auto w-full max-w-213 py-8">
+      {loading && <AppLoader size={72} />}
+
       <LevelsPanel
         groups={groups}
         readOnly={readOnly}

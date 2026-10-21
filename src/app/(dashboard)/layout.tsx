@@ -19,12 +19,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     }
   }, [_hasHydrated, accessToken, router]);
 
-  if (!_hasHydrated || !accessToken) {
-    return <AuthLoader />;
-  }
+  const showLoader = !_hasHydrated || !accessToken;
 
   return (
     <div className="bg-background flex min-h-screen w-full">
+      {showLoader && <AuthLoader />}
       <Sidebar />
       <main className="flex-1 p-5 pb-1.5">
         <Breadcrumbs />
