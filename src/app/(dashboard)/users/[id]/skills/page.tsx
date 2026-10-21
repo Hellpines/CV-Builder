@@ -1,7 +1,8 @@
-import { SkillsPage } from '@/features/profile/ui/SkillsPage';
+import { SkillsPage } from '@/features/skills/ui/SkillsPage';
 
 export const instant = false;
 
-export default function UserSkills() {
-  return <SkillsPage />;
+export default async function UserSkills({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  return <SkillsPage userId={id} />;
 }

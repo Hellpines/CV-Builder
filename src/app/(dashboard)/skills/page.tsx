@@ -1,9 +1,7 @@
+import { SkillsPage } from '@/features/skills/ui/SkillsPage';
+
 export const instant = false;
 
 export default function Skills() {
-  return (
-    <div>
-      <p>Welcome to the Skills Page</p>
-    </div>
-  );
+  return <SkillsPage />;
 }
