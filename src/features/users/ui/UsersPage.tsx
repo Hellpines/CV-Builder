@@ -1,6 +1,5 @@
 'use client';
 
-import { Search } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { AppLoader } from '@/components/ui/app-loader';
 import UsersTable from './UsersTable';
@@ -8,6 +7,7 @@ import { useQuery } from '@apollo/client/react';
 import { GET_USERS } from '../api/UserQueries';
 import { PaginatedUsers, SortDirection, SortKey } from '../types/UserTypes';
 import { Pagination } from './Pagination';
+import { SearchInput } from '@/components/ui/search-input';
 
 const SORT_FIELDS: Record<SortKey, string> = {
   firstName: 'first_name',
@@ -65,21 +65,7 @@ export function UsersPage() {
 
   return (
     <div className="flex min-h-full flex-col gap-2.5">
-      <div className="flex flex-col gap-5 pl-11">
-        <div className="relative">
-          <Search
-            className="text-primary-foreground absolute top-1/2 left-4 -translate-y-1/2"
-            size={18}
-          />
-          <input
-            type="text"
-            placeholder="Search"
-            value={searchQuery}
-            onChange={(e) => handleSearch(e.target.value)}
-            className="border-muted text-primary-foreground placeholder:text-placeholder focus:border-border h-12 w-80 rounded-full border bg-transparent pr-4 pl-11 text-sm transition-colors outline-none"
-          />
-        </div>
-      </div>
+      <SearchInput value={searchQuery} onChange={handleSearch} className="pl-5" />
 
       {loading && !result && <AppLoader size={72} />}
       {error && (
