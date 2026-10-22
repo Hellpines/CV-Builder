@@ -2,6 +2,7 @@
 
 import { AppLoader } from '@/components/ui/app-loader';
 import { LevelsPanel, type LevelsPanelLabels } from '@/components/ui/levels-panel';
+import { useAuthStore } from '@/features/auth/model/useAuthStore';
 import { MASTERY_OPTIONS } from '../model/skillLevels';
 import { useSkillActions } from '../model/useSkillActions';
 import { useSkills } from '../model/useSkills';
@@ -23,7 +24,8 @@ const labels: LevelsPanelLabels = {
 };
 
 export function SkillsPage({ userId }: { userId?: string }) {
-  const readOnly = Boolean(userId);
+  const currentUserId = useAuthStore((state) => state.user?.id);
+  const readOnly = userId !== undefined && userId !== 'me' && userId !== currentUserId;
 
   const { targetId, skills, groups, loading, error } = useSkills(userId);
   const { options, add, update, remove } = useSkillActions({

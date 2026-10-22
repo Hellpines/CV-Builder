@@ -2,6 +2,7 @@
 
 import { Loader2 } from 'lucide-react';
 import { LevelsPanel, type LevelsPanelLabels } from '@/components/ui/levels-panel';
+import { useAuthStore } from '@/features/auth/model/useAuthStore';
 import { useLanguages } from '../models/useLanguages';
 import { useLanguageActions } from '../models/useLanguagesActions';
 import { PROFICIENCY_OPTIONS } from '../models/languagesLevels';
@@ -23,7 +24,8 @@ const labels: LevelsPanelLabels = {
 };
 
 export function LanguagesPage({ userId }: { userId?: string }) {
-  const readOnly = Boolean(userId);
+  const currentUserId = useAuthStore((state) => state.user?.id);
+  const readOnly = userId !== undefined && userId !== 'me' && userId !== currentUserId;
 
   const { targetId, languages, groups, loading, error } = useLanguages(userId);
   const { options, add, update, remove } = useLanguageActions({
