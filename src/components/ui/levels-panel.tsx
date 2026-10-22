@@ -170,7 +170,7 @@ export function LevelsPanel({
                 </Button>
                 <Button
                   variant={selected.length ? 'primary' : 'primaryV2'}
-                  className="flex w-54 items-center justify-center gap-4"
+                  className="flex w-60 items-center justify-center gap-2"
                   disabled={!selected.length}
                   onClick={() => setModal({ type: 'confirm' })}
                 >
@@ -199,7 +199,7 @@ export function LevelsPanel({
                 </Button>
                 <Button
                   variant="primaryV2"
-                  className="flex w-54 items-center justify-center gap-2"
+                  className="flex w-60 items-center justify-center gap-2"
                   disabled={!hasItems}
                   onClick={() => setSelectionMode(true)}
                 >

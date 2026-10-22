@@ -1,9 +1,7 @@
+import { LanguagesPage } from '@/features/languages/ui/LanguagesPage';
+
 export const instant = false;
 
 export default function Languages() {
-  return (
-    <div>
-      <p>Welcome to the Languages Page</p>
-    </div>
-  );
+  return <LanguagesPage />;
 }
