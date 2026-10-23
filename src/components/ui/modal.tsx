@@ -20,7 +20,7 @@ export function Modal({ open, onOpenChange, title, children, className }: ModalP
         <Dialog.Backdrop className="fixed inset-0 z-3 bg-black/60 transition-opacity duration-150 data-ending-style:opacity-0 data-starting-style:opacity-0" />
         <Dialog.Popup
           className={cn(
-            'bg-background fixed top-1/2 left-1/2 z-3 w-150 -translate-x-1/2 -translate-y-1/2 px-6 py-4 shadow-md transition-opacity duration-150 outline-none',
+            'bg-background fixed top-1/2 left-1/2 z-3 w-154 -translate-x-1/2 -translate-y-1/2 px-6 py-4 shadow-md transition-opacity duration-150 outline-none',
             'data-ending-style:opacity-0 data-starting-style:opacity-0',
             className
           )}

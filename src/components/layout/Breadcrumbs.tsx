@@ -83,7 +83,7 @@ export function Breadcrumbs() {
   return (
     <nav
       aria-label="Breadcrumb"
-      className="text-primary-foreground flex items-center gap-2 text-sm"
+      className="text-primary-foreground flex items-center gap-2 px-2 py-4 text-sm"
     >
       {isUserPage || isCvPage ? (
         <Link

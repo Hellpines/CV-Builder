@@ -3,7 +3,6 @@ import { useAuthStore } from '@/features/auth/model/useAuthStore';
 import { CREATE_CV_MUTATION, DELETE_CV_MUTATION, UPDATE_CV_MUTATION } from '../api/CvMutations';
 import type { CvFormValues } from '../types/CvTypes';
 
-/** onChanged: перезапрос текущей страницы списка после успешной операции */
 export function useCvActions(onChanged: () => Promise<unknown>) {
   const userId = useAuthStore((state) => state.user?.id);
 

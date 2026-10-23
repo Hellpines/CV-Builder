@@ -21,6 +21,7 @@ interface MultiSelectProps {
   helperText?: string;
   disabled?: boolean;
   className?: string;
+  display?: 'chips' | 'text';
 }
 
 export function MultiSelect({
@@ -33,6 +34,7 @@ export function MultiSelect({
   helperText,
   disabled,
   className,
+  display = 'chips',
 }: MultiSelectProps) {
   const [open, setOpen] = React.useState(false);
 
@@ -90,38 +92,49 @@ export function MultiSelect({
               className
             )}
           >
-            <div className="flex flex-1 flex-wrap items-center gap-2">
+            <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
               {hasValue ? (
-                selected.map((opt) => (
+                display === 'text' ? (
                   <span
-                    key={opt.value}
                     className={cn(
-                      'inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-sm',
-                      disabled
-                        ? 'border-muted text-primary-foreground'
-                        : 'border-border text-primary-bold'
+                      'truncate',
+                      disabled ? 'text-primary-foreground' : 'text-primary-bold'
                     )}
                   >
-                    {opt.label}
-                    <span
-                      role="button"
-                      aria-label={`Remove ${opt.label}`}
-                      tabIndex={-1}
-                      className={cn(
-                        'inline-flex',
-                        disabled ? 'pointer-events-none' : 'hover:text-primary cursor-pointer'
-                      )}
-                      onPointerDown={(e) => e.stopPropagation()}
-                      onMouseDown={(e) => e.stopPropagation()}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        remove(opt.value);
-                      }}
-                    >
-                      <XIcon className="size-3.5" />
-                    </span>
+                    {selected.map((opt) => opt.label).join(', ')}
                   </span>
-                ))
+                ) : (
+                  selected.map((opt) => (
+                    <span
+                      key={opt.value}
+                      className={cn(
+                        'inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-sm',
+                        disabled
+                          ? 'border-muted text-primary-foreground'
+                          : 'border-border text-primary-bold'
+                      )}
+                    >
+                      {opt.label}
+                      <span
+                        role="button"
+                        aria-label={`Remove ${opt.label}`}
+                        tabIndex={-1}
+                        className={cn(
+                          'inline-flex',
+                          disabled ? 'pointer-events-none' : 'hover:text-primary cursor-pointer'
+                        )}
+                        onPointerDown={(e) => e.stopPropagation()}
+                        onMouseDown={(e) => e.stopPropagation()}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          remove(opt.value);
+                        }}
+                      >
+                        <XIcon className="size-3.5" />
+                      </span>
+                    </span>
+                  ))
+                )
               ) : (
                 <span
                   className={cn(

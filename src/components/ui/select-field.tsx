@@ -1,0 +1,100 @@
+'use client';
+
+import { cn } from 'cn';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+
+export interface SelectFieldOption {
+  value: string;
+  label: string;
+}
+
+interface SelectFieldProps {
+  label: string;
+  placeholder: string;
+  value: string;
+  options: SelectFieldOption[];
+  onChange: (value: string) => void;
+  onTouched?: () => void;
+  disabled?: boolean;
+  invalid?: boolean;
+  errorText?: string;
+}
+
+export function SelectField({
+  label,
+  placeholder,
+  value,
+  options,
+  onChange,
+  onTouched,
+  disabled,
+  invalid,
+  errorText,
+}: SelectFieldProps) {
+  const selected = options.find((option) => option.value === value);
+
+  return (
+    <div className="relative w-full">
+      <span
+        className={cn(
+          'text-primary-foreground pointer-events-none absolute -top-4 left-3 text-[12px] leading-none transition-opacity duration-200',
+          selected ? 'opacity-100' : 'opacity-0'
+        )}
+      >
+        {label}
+      </span>
+      <Select
+        disabled={disabled}
+        value={value || null}
+        onValueChange={(next) => {
+          if (next) onChange(String(next));
+        }}
+        onOpenChange={(open) => {
+          if (!open) onTouched?.();
+        }}
+      >
+        <SelectTrigger
+          className="h-12 w-full"
+          aria-label={label}
+          invalid={invalid}
+          helperText={invalid ? errorText : undefined}
+        >
+          <SelectValue
+            className={
+              disabled
+                ? 'text-primary-foreground'
+                : selected
+                  ? 'text-primary-bold'
+                  : invalid
+                    ? 'text-primary'
+                    : 'text-placeholder'
+            }
+          >
+            {selected?.label ?? placeholder}
+          </SelectValue>
+        </SelectTrigger>
+        <SelectContent>
+          {options.map((option) => (
+            <SelectItem
+              key={option.value}
+              value={option.value}
+              className={
+                option.value === value
+                  ? 'bg-primary-foreground text-secondary data-highlighted:bg-primary-foreground data-highlighted:text-secondary'
+                  : undefined
+              }
+            >
+              {option.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
+  );
+}
