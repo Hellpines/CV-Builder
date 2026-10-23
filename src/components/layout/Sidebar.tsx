@@ -3,15 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import {
-  ChevronLeft,
-  ChevronRight,
-  FileUser,
-  Languages,
-  Settings,
-  TrendingUp,
-  Users,
-} from 'lucide-react';
+import { ChevronLeft, ChevronRight, FileUser, Languages, TrendingUp, Users } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '../ui/button';
 import { UserMenu } from './UserMenu';
@@ -21,7 +13,6 @@ const navItems = [
   { href: '/skills', label: 'Skills', Icon: TrendingUp },
   { href: '/languages', label: 'Languages', Icon: Languages },
   { href: '/cvs', label: 'CVs', Icon: FileUser },
-  { href: '/settings', label: 'Settings', Icon: Settings },
 ];
 
 export default function Sidebar() {

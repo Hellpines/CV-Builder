@@ -49,11 +49,7 @@ export function RegisterForm() {
       }
       footer={
         <Link href="/login">
-          <Button
-            type="button"
-            variant="ghost"
-            className="px-12 text-xs font-semibold tracking-wider"
-          >
+          <Button variant="ghost" className="px-12 text-xs font-semibold tracking-wider">
             I HAVE AN ACCOUNT
           </Button>
         </Link>
