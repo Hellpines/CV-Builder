@@ -38,3 +38,17 @@ export function formatDate(date: Date | null): string {
   if (!date) return '';
   return `${pad(date.getMonth() + 1)}/${pad(date.getDate())}/${date.getFullYear()}`;
 }
+
+export function formatMonthYear(date: Date | null): string {
+  if (!date) return '';
+  return `${pad(date.getMonth() + 1)}.${date.getFullYear()}`;
+}
+
+export function fullYearsBetween(start: Date, end: Date): number {
+  let years = end.getFullYear() - start.getFullYear();
+  const beforeAnniversary =
+    end.getMonth() < start.getMonth() ||
+    (end.getMonth() === start.getMonth() && end.getDate() < start.getDate());
+  if (beforeAnniversary) years -= 1;
+  return Math.max(0, years);
+}
