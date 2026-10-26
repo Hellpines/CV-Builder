@@ -1,9 +1,7 @@
+import SettingsPage from '@/features/settings/ui/SettingsPage';
+
 export const instant = false;
 
 export default function Settings() {
-  return (
-    <div>
-      <p>Welcome to the Settings Page</p>
-    </div>
-  );
+  return <SettingsPage />;
 }
