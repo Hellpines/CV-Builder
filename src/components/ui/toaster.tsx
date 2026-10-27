@@ -20,10 +20,14 @@ interface ToastItemProps {
 
 function ToastItem({ toast, onClose }: ToastItemProps) {
   const [paused, setPaused] = useState(false);
+  const [isLeaving, setIsLeaving] = useState(false);
 
   useEffect(() => {
     if (paused || toast.duration <= 0) return;
-    const timer = setTimeout(() => onClose(toast.id), toast.duration);
+    const timer = setTimeout(() => {
+      setIsLeaving(true);
+      window.setTimeout(() => onClose(toast.id), 200);
+    }, toast.duration);
     return () => clearTimeout(timer);
   }, [paused, toast.id, toast.duration, onClose]);
 
@@ -35,8 +39,10 @@ function ToastItem({ toast, onClose }: ToastItemProps) {
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
       className={cn(
-        'animate-in fade-in-0 slide-in-from-right-8 pointer-events-auto rounded-2xl border px-5 py-4 shadow-md duration-200',
-        toneClass[toast.type]
+        'pointer-events-auto rounded-2xl border px-5 py-4 shadow-md transition-all duration-200 ease-out',
+        toneClass[toast.type],
+        isLeaving ? 'translate-x-2 scale-[0.98] opacity-0' : 'translate-x-0 scale-100 opacity-100',
+        !isLeaving && 'animate-in fade-in-0 slide-in-from-right-8'
       )}
     >
       <div className="flex items-start justify-between gap-4">
@@ -44,7 +50,10 @@ function ToastItem({ toast, onClose }: ToastItemProps) {
         <button
           type="button"
           aria-label="Close notification"
-          onClick={() => onClose(toast.id)}
+          onClick={() => {
+            setIsLeaving(true);
+            window.setTimeout(() => onClose(toast.id), 200);
+          }}
           className="-mt-1 -mr-1 shrink-0 cursor-pointer rounded-full p-1 transition-opacity outline-none hover:opacity-70 focus-visible:ring-2 focus-visible:ring-current"
         >
           <X size={24} />

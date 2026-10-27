@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { skipToken, useMutation, useQuery } from '@apollo/client/react';
 import type { PickerOption } from '@/components/ui/level-modal';
+import { toast } from '@/shared/lib/toast';
 import type { LanguageProficiency, Proficiency } from '@/shared/types/user';
 import { GET_LANGUAGES_CATALOG } from '../api/LanguageQueries';
 import {
@@ -45,21 +46,39 @@ export function useLanguageActions({ userId, languages, enabled }: UseLanguageAc
 
   const add = async (name: string, proficiency: string) => {
     if (!userId) throw new Error('User not found');
-    await addLanguage({
-      variables: { language: { userId, name, proficiency: proficiency as Proficiency } },
-    });
+    try {
+      await addLanguage({
+        variables: { language: { userId, name, proficiency: proficiency as Proficiency } },
+      });
+      toast.success(`${name} added successfully`);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : `Failed to add ${name}`);
+      throw err;
+    }
   };
 
   const update = async (name: string, proficiency: string) => {
     if (!userId) throw new Error('User not found');
-    await updateLanguage({
-      variables: { language: { userId, name, proficiency: proficiency as Proficiency } },
-    });
+    try {
+      await updateLanguage({
+        variables: { language: { userId, name, proficiency: proficiency as Proficiency } },
+      });
+      toast.success(`${name} updated successfully`);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : `Failed to update ${name}`);
+      throw err;
+    }
   };
 
   const remove = async (names: string[]) => {
     if (!userId) throw new Error('User not found');
-    await deleteLanguage({ variables: { language: { userId, name: names } } });
+    try {
+      await deleteLanguage({ variables: { language: { userId, name: names } } });
+      toast.success(`${names.join(', ')} removed successfully`);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Failed to remove language');
+      throw err;
+    }
   };
 
   return { options, add, update, remove };

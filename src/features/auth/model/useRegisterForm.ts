@@ -3,6 +3,7 @@ import { useMutation } from '@apollo/client/react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from './useAuthStore';
 import { SIGNUP_MUTATION } from '../api/AuthMutations';
+import { toast } from '@/shared/lib/toast';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -27,6 +28,7 @@ export function useRegisterForm() {
       const { access_token, refresh_token, user } = data.signup;
       startVerification();
       setAuth(access_token, refresh_token, user);
+      toast.success('Account created. Please verify your email.');
       router.push('/verify-email');
     },
     onError: (err) => {
@@ -34,9 +36,11 @@ export function useRegisterForm() {
       if (msg.includes('exist') || msg.includes('already') || msg.includes('duplicate')) {
         setServerError('An account with this email already exists');
         setGeneralError(null);
+        toast.error('An account with this email already exists');
       } else {
         setGeneralError('Something went wrong. Please try again later');
         setServerError(null);
+        toast.error('Something went wrong. Please try again later');
       }
     },
   });

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useMutation } from '@apollo/client/react';
 import { downloadPdf } from '@/shared/lib/download';
+import { toast } from '@/shared/lib/toast';
 import { EXPORT_PDF_MUTATION } from '../api/CvPreviewQueries';
 import { buildPdfHtml, slugify } from '../helpers/pdf';
 
@@ -21,8 +22,11 @@ export function useCvPdfExport(cvName?: string) {
       if (!data?.exportPdf) throw new Error('Server returned an empty file');
 
       await downloadPdf(data.exportPdf, `${slugify(cvName)}.pdf`);
+      toast.success('PDF exported successfully');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to export PDF');
+      const message = err instanceof Error ? err.message : 'Failed to export PDF';
+      setError(message);
+      toast.error(message);
     }
   };
 

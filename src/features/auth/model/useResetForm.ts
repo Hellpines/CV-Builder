@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { RESET_PASSWORD_MUTATION, LOGIN_MUTATION } from '../api/AuthMutations';
 import { useAuthStore } from './useAuthStore';
 import { parseJwt } from '../helpers/parseJwt';
+import { toast } from '@/shared/lib/toast';
 
 export function useResetForm() {
   const router = useRouter();
@@ -28,12 +29,17 @@ export function useResetForm() {
   }, [token, router]);
 
   const [resetPassword, { loading: resetLoading }] = useMutation(RESET_PASSWORD_MUTATION, {
+    onCompleted: () => {
+      toast.success('Password reset successfully');
+    },
     onError: (err) => {
       const msg = err.message.toLowerCase();
       if (msg.includes('expired') || msg.includes('invalid') || msg.includes('token')) {
         setLinkError('This password reset link has expired');
+        toast.error('This password reset link has expired');
       } else {
         setGeneralError('Something went wrong. Please try again later');
+        toast.error('Something went wrong. Please try again later');
       }
     },
   });
@@ -42,10 +48,12 @@ export function useResetForm() {
     onCompleted: (data) => {
       const { access_token, refresh_token, user } = data.login;
       setAuth(access_token, refresh_token, user);
+      toast.success('Password updated. You are signed in.');
       router.push('/users');
     },
     onError: (err) => {
       console.error('Auto-login after reset error:', err.message);
+      toast.error('Password reset completed, but login failed. Please sign in manually.');
       router.push('/login');
     },
   });

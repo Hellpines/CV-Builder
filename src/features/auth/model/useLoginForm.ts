@@ -3,6 +3,7 @@ import { useMutation } from '@apollo/client/react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from './useAuthStore';
 import { LOGIN_MUTATION } from '../api/AuthMutations';
+import { toast } from '@/shared/lib/toast';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -23,6 +24,7 @@ export function useLoginForm() {
     onCompleted: (data) => {
       const { access_token, refresh_token, user } = data.login;
       setAuth(access_token, refresh_token, user);
+      toast.success('Logged in successfully');
       router.push('/users');
     },
     onError: (err) => {
@@ -35,8 +37,10 @@ export function useLoginForm() {
         msg.includes('found')
       ) {
         setAuthError('Invalid email or password');
+        toast.error('Invalid email or password');
       } else {
         setGeneralError('Something went wrong. Please try again later');
+        toast.error('Something went wrong. Please try again later');
       }
     },
   });

@@ -3,6 +3,7 @@ import { useMutation } from '@apollo/client/react';
 import { useRouter } from 'next/navigation';
 import { VERIFY_MAIL_MUTATION } from '../api/AuthMutations';
 import { useAuthStore } from './useAuthStore';
+import { toast } from '@/shared/lib/toast';
 
 export function useVerifyForm() {
   const router = useRouter();
@@ -31,16 +32,20 @@ export function useVerifyForm() {
         verificationRequested: false,
       }));
 
+      toast.success('Email verified successfully');
       router.push('/users');
     },
     onError: (err) => {
       const msg = err.message.toLowerCase();
       if (msg.includes('expired')) {
         setServerError('Verification code has expired');
+        toast.error('Verification code has expired');
       } else if (msg.includes('invalid') || msg.includes('wrong') || msg.includes('code')) {
         setServerError('Invalid verification code');
+        toast.error('Invalid verification code');
       } else {
         setServerError('Something went wrong. Please try again later');
+        toast.error('Something went wrong. Please try again later');
       }
     },
   });

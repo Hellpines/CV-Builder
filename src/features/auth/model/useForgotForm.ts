@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useMutation } from '@apollo/client/react';
 import { FORGOT_PASSWORD_MUTATION } from '../api/AuthMutations';
+import { toast } from '@/shared/lib/toast';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -16,6 +17,7 @@ export function useForgotForm() {
       setIsSuccess(true);
       setServerError(null);
       setFormError(null);
+      toast.success('Password reset link sent successfully');
     },
     onError: (err) => {
       const msg = err.message.toLowerCase();
@@ -23,9 +25,11 @@ export function useForgotForm() {
       if (msg.includes('not found') || msg.includes('user') || msg.includes('email')) {
         setServerError('No account found with this email address');
         setFormError(null);
+        toast.error('No account found with this email address');
       } else {
         setFormError('Something went wrong. Please try again later');
         setServerError(null);
+        toast.error('Something went wrong. Please try again later');
       }
     },
   });
