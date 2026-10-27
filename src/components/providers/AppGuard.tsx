@@ -47,7 +47,7 @@ export function AppGuard({ children }: { children: ReactNode }) {
     <>
       {children}
       {screen ? (
-        <div className="bg-background fixed inset-0 z-100 overflow-auto">{screen}</div>
+        <div className="bg-background fixed inset-0 z-7 overflow-auto">{screen}</div>
       ) : null}
     </>
   );
