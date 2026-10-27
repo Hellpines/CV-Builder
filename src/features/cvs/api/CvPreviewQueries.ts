@@ -49,16 +49,6 @@ export const GET_PREVIEW_CATEGORIES: TypedDocumentNode<
       id
       name
       order
-      parent {
-        id
-        name
-        order
-        parent {
-          id
-          name
-          order
-        }
-      }
       children {
         id
         name

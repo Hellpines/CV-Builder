@@ -4,23 +4,25 @@ import { GET_CV_PREVIEW, GET_PREVIEW_CATEGORIES } from '../api/CvPreviewQueries'
 import { buildCvPreview } from '../helpers/buildCvPreview';
 
 export function useCvPreview(cvId?: string) {
-  const { data, loading, error, refetch } = useQuery(
+  const cvQuery = useQuery(
     GET_CV_PREVIEW,
     cvId ? { variables: { cvId }, fetchPolicy: 'cache-and-network' } : skipToken
   );
-  const { data: categoryData, loading: categoriesLoading } = useQuery(GET_PREVIEW_CATEGORIES);
+  const categoriesQuery = useQuery(GET_PREVIEW_CATEGORIES);
 
-  const cv = data?.cv;
+  const cv = cvQuery.data?.cv;
+  const categories = categoriesQuery.data?.skillCategories;
 
   const model = useMemo(
-    () => (cv && cv.user ? buildCvPreview(cv, categoryData?.skillCategories ?? []) : null),
-    [cv, categoryData]
+    () => (cv && cv.user && categories ? buildCvPreview(cv, categories) : null),
+    [cv, categories]
   );
 
   return {
     model,
-    initialLoading: (loading && !data) || (categoriesLoading && !categoryData),
-    error,
-    refetch: () => refetch().catch(() => undefined),
+    initialLoading: (cvQuery.loading && !cvQuery.data) || (categoriesQuery.loading && !categories),
+    error: cvQuery.error ?? categoriesQuery.error,
+    refetch: () =>
+      Promise.all([cvQuery.refetch(), categoriesQuery.refetch()]).catch(() => undefined),
   };
 }
