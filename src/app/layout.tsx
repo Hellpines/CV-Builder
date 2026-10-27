@@ -4,6 +4,7 @@ import { Roboto } from 'next/font/google';
 import { ApolloProvider } from '@/components/providers/ApolloProvider';
 import { ReactNode } from 'react';
 import { AppGuard } from '@/components/providers/AppGuard';
+import { Toaster } from '@/components/ui/toaster';
 
 const roboto = Roboto({
   weight: ['400', '500'],
@@ -21,6 +22,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className="bg-background text-primary-foreground min-h-screen antialiased">
         <ApolloProvider>
           <AppGuard>{children}</AppGuard>
+          <Toaster />
         </ApolloProvider>
       </body>
     </html>

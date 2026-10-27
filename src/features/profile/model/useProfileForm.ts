@@ -8,6 +8,7 @@ import {
 } from '../api/ProfileMutations';
 import { useAuthStore } from '@/features/auth/model/useAuthStore';
 import { User } from '@/shared/types/user';
+import { toast } from '@/shared/lib/toast';
 
 const ALLOWED_AVATAR_TYPES = ['image/png', 'image/jpeg', 'image/gif'];
 const MAX_AVATAR_SIZE = 5 * 1024 * 1024;
@@ -153,11 +154,11 @@ export function useProfileForm(userData: User | undefined, isEditable: boolean) 
 
       clearAvatar();
       setAvatarRemoved(false);
-      alert('Profile updated successfully!');
+      toast.success('Profile updated successfully!');
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
       console.error('Error updating profile:', err);
-      alert(`Failed to update profile: ${errorMessage}`);
+      toast.error(errorMessage);
     }
   };
 
