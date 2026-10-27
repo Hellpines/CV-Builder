@@ -8,6 +8,7 @@ import { AppGuard } from '@/components/providers/AppGuard';
 import { ThemeSync } from '@/components/providers/ThemeSync';
 import { Toaster } from '@/components/ui/toaster';
 import { THEME_INIT_SCRIPT } from '@/shared/lib/theme';
+import { I18nProvider } from '@/shared/i18n/I18nProvider';
 
 const roboto = Roboto({
   weight: ['400', '500'],
@@ -28,11 +29,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         </Script>
       </head>
       <body className="bg-background text-primary-foreground min-h-screen antialiased">
-        <ApolloProvider>
+        <I18nProvider>
+          <ApolloProvider>
+            <AppGuard>{children}</AppGuard>
+            <Toaster />
+          </ApolloProvider>
           <ThemeSync />
-          <AppGuard>{children}</AppGuard>
-          <Toaster />
-        </ApolloProvider>
+        </I18nProvider>
       </body>
     </html>
   );
