@@ -52,8 +52,8 @@ function SelectTrigger({
           'group flex w-full items-center justify-between gap-1.5 border bg-transparent p-3 text-sm transition-colors outline-none select-none',
           isInvalid
             ? 'border-primary text-primary'
-            : 'border-muted text-primary-bold hover:border-border focus-visible:border-border data-popup-open:border-border',
-          'data-disabled:border-muted data-disabled:bg-input-disabled data-disabled:text-primary-foreground data-disabled:hover:border-muted data-disabled:cursor-not-allowed',
+            : 'border-muted text-select-text hover:border-border focus-visible:border-border data-popup-open:border-border',
+          'data-disabled:border-muted data-disabled:bg-input-disabled-background data-disabled:text-select-disabled-text data-disabled:hover:border-muted data-disabled:cursor-not-allowed',
           'data-[size=sm]:px-2.5 data-[size=sm]:py-2',
           className
         )}
@@ -66,7 +66,7 @@ function SelectTrigger({
             <ChevronDownIcon
               className={cn(
                 'pointer-events-none transition-transform duration-200 group-data-popup-open:rotate-180',
-                isInvalid ? 'text-primary' : 'text-primary-foreground'
+                isInvalid ? 'text-primary' : 'text-select-text'
               )}
             />
           }
@@ -74,7 +74,7 @@ function SelectTrigger({
       </SelectPrimitive.Trigger>
 
       {helperText ? (
-        <p className="text-primary absolute -bottom-5 left-3 text-[12px]">{helperText}</p>
+        <p className="text-primary text-s absolute -bottom-5 left-3">{helperText}</p>
       ) : null}
     </div>
   );
@@ -128,7 +128,7 @@ function SelectLabel({ className, ...props }: SelectPrimitive.GroupLabel.Props) 
   return (
     <SelectPrimitive.GroupLabel
       data-slot="select-label"
-      className={cn('text-muted-foreground text-xs font-medium', className)}
+      className={cn('text-select-label text-xs font-medium', className)}
       {...props}
     />
   );
@@ -140,10 +140,10 @@ function SelectItem({ className, children, value, ...props }: SelectPrimitive.It
       value={value}
       data-slot="select-item"
       className={cn(
-        'text-primary-bold relative flex w-full cursor-default items-center gap-2 p-3 text-sm transition-colors outline-none select-none',
-        'data-highlighted:bg-muted data-highlighted:text-primary-bold',
-        'data-selected:bg-primary-foreground data-selected:text-secondary',
-        'data-selected:data-highlighted:bg-primary-foreground data-selected:data-highlighted:text-secondary',
+        'text-foregroundelative flex w-full cursor-default items-center gap-2 p-3 text-sm transition-colors outline-none select-none',
+        'data-highlighted:bg-muted data-highlighted:text-foreground',
+        'data-selected:bg-select-selected data-selected:text-select-selected-text',
+        'data-selected:data-highlighted:bg-select-selected data-selected:data-highlighted:text-select-selected-text',
         'data-disabled:pointer-events-none data-disabled:opacity-50',
         "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className

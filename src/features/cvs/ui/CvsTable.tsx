@@ -70,7 +70,7 @@ export function CvsTable({
     <div className={cn('w-full overflow-x-auto transition-opacity', busy && 'opacity-60')}>
       <table className="w-full border-collapse text-left">
         <thead className="border-muted border-b">
-          <tr className="text-primary-bold text-sm">
+          <tr className="text-foreground text-sm">
             <th
               scope="col"
               aria-sort={sortDirection === 'asc' ? 'ascending' : 'descending'}
@@ -106,7 +106,7 @@ export function CvsTable({
         ) : items.length ? (
           items.map((cv) => (
             <tbody key={cv.id} className="border-muted border-b">
-              <tr className="text-primary-bold text-sm">
+              <tr className="text-foreground text-sm">
                 <td className="px-4 py-7">{cv.name}</td>
                 <td className="px-4 py-7">{cv.education ?? ''}</td>
                 <td className="px-4 py-7">{cv.user?.email ?? fallbackEmail ?? ''}</td>
@@ -117,7 +117,7 @@ export function CvsTable({
                   >
                     <DropdownMenuTrigger
                       aria-label={`Actions for ${cv.name}`}
-                      className="text-primary-foreground hover:border-border focus-visible:outline-primary inline-flex h-10 w-10 items-center justify-center rounded-full border-0 transition-colors hover:border"
+                      className="text-primary-foreground hover:border-icon-button-hover-border hover:text-icon-button-hover-text active:bg-icon-button-active active:text-icon-button-active-text focus-visible:outline-primary inline-flex h-10 w-10 items-center justify-center rounded-full border-0 transition-colors hover:border"
                     >
                       <EllipsisVertical size={20} />
                     </DropdownMenuTrigger>
@@ -135,7 +135,7 @@ export function CvsTable({
                 </td>
               </tr>
               <tr>
-                <td colSpan={4} className="text-primary-bold/50 px-4 pb-5 text-sm leading-relaxed">
+                <td colSpan={4} className="text-foreground/50 px-4 pb-5 text-sm leading-relaxed">
                   {cv.description}
                 </td>
               </tr>

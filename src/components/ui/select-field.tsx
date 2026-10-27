@@ -39,16 +39,27 @@ export function SelectField({
 }: SelectFieldProps) {
   const selected = options.find((option) => option.value === value);
 
+  const labelClasses = cn(
+    'text-select-label pointer-events-none absolute -top-4 left-3 text-[12px] leading-none transition-opacity duration-200',
+    selected ? 'opacity-100' : 'opacity-0'
+  );
+
+  const valueClasses = cn(
+    disabled
+      ? 'text-primary-foreground'
+      : selected
+        ? 'text-foreground'
+        : invalid
+          ? 'text-primary'
+          : 'text-placeholder'
+  );
+
+  const selectedItemClasses =
+    'bg-select-selected text-select-selected-text data-highlighted:bg-select-selected data-highlighted:text-select-selected-text';
+
   return (
     <div className="relative w-full">
-      <span
-        className={cn(
-          'text-primary-foreground pointer-events-none absolute -top-4 left-3 text-[12px] leading-none transition-opacity duration-200',
-          selected ? 'opacity-100' : 'opacity-0'
-        )}
-      >
-        {label}
-      </span>
+      <span className={labelClasses}>{label}</span>
       <Select
         disabled={disabled}
         value={value || null}
@@ -65,30 +76,14 @@ export function SelectField({
           invalid={invalid}
           helperText={invalid ? errorText : undefined}
         >
-          <SelectValue
-            className={
-              disabled
-                ? 'text-primary-foreground'
-                : selected
-                  ? 'text-primary-bold'
-                  : invalid
-                    ? 'text-primary'
-                    : 'text-placeholder'
-            }
-          >
-            {selected?.label ?? placeholder}
-          </SelectValue>
+          <SelectValue className={valueClasses}>{selected?.label ?? placeholder}</SelectValue>
         </SelectTrigger>
         <SelectContent>
           {options.map((option) => (
             <SelectItem
               key={option.value}
               value={option.value}
-              className={
-                option.value === value
-                  ? 'bg-primary-foreground text-secondary data-highlighted:bg-primary-foreground data-highlighted:text-secondary'
-                  : undefined
-              }
+              className={option.value === value ? selectedItemClasses : undefined}
             >
               {option.label}
             </SelectItem>

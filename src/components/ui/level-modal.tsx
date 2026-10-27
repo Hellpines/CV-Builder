@@ -62,7 +62,7 @@ function PickerField({
   return (
     <div className="flex flex-col">
       <label
-        className={`text-primary-foreground ml-3 text-xs transition-opacity duration-200 ${
+        className={`text-select-label ml-3 text-xs transition-opacity duration-200 ${
           selected ? 'opacity-100' : 'opacity-0'
         }`}
       >
@@ -90,7 +90,7 @@ function PickerField({
               disabled
                 ? 'text-primary-foreground'
                 : selected
-                  ? 'text-primary-bold'
+                  ? 'text-foreground'
                   : message
                     ? 'text-primary'
                     : 'text-placeholder'
@@ -106,7 +106,7 @@ function PickerField({
               value={option.value}
               className={
                 option.value === value
-                  ? 'bg-primary-foreground text-secondary data-highlighted:bg-primary-foreground data-highlighted:text-secondary'
+                  ? 'bg-select-selected text-select-selected-text data-highlighted:bg-select-selected data-highlighted:text-select-selected-text'
                   : undefined
               }
             >

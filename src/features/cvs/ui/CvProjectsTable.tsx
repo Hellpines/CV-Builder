@@ -111,7 +111,7 @@ export function CvProjectsTable({
     <div className="w-full overflow-x-auto">
       <table className="w-full min-w-180 border-collapse text-left">
         <thead className="border-muted border-b">
-          <tr className="text-primary-bold text-sm">
+          <tr className="text-foreground text-sm">
             <SortableHead label="Name" sortKey="name" className="w-[30%]" {...sortProps} />
             <th scope="col" className="w-[24%] px-4 py-3 font-medium">
               Domain
@@ -134,7 +134,7 @@ export function CvProjectsTable({
         ) : items.length ? (
           items.map((item) => (
             <tbody key={item.id} className="border-muted border-b">
-              <tr className="text-primary-bold text-sm">
+              <tr className="text-foreground text-sm">
                 <td className="px-4 py-5">{item.name}</td>
                 <td className="px-4 py-5">{item.domain}</td>
                 <td className="px-4 py-5">{formatDate(parseDate(item.start_date))}</td>
@@ -179,7 +179,7 @@ export function CvProjectsTable({
                       {item.responsibilities.map((responsibility, index) => (
                         <li
                           key={`${responsibility}-${index}`}
-                          className="bg-primary-hover text-primary-bold rounded-full px-3 py-1 text-xs"
+                          className="bg-primary-hover text-foreground rounded-full px-3 py-1 text-xs"
                         >
                           {responsibility}
                         </li>

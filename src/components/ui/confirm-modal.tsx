@@ -24,7 +24,7 @@ export function ConfirmModal({
 }: ConfirmModalProps) {
   return (
     <Modal open={open} onOpenChange={onOpenChange} title={title}>
-      <p className="text-primary-bold mb-6 text-sm">{message}</p>
+      <p className="text-foreground mb-6 text-sm">{message}</p>
 
       {error ? <p className="text-primary mb-6 text-sm">{error}</p> : null}
 

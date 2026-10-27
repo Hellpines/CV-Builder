@@ -4,9 +4,31 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ChevronLeft, ChevronRight, FileUser, Languages, TrendingUp, Users } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useSyncExternalStore } from 'react';
 import { Button } from '../ui/button';
 import { UserMenu } from './UserMenu';
+
+function subscribeToDarkMode(callback: () => void) {
+  if (typeof window === 'undefined') return () => {};
+
+  const root = document.documentElement;
+  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+  const onMediaChange = () => callback();
+  const observer = new MutationObserver(() => callback());
+
+  mediaQuery.addEventListener('change', onMediaChange);
+  observer.observe(root, { attributes: true, attributeFilter: ['class'] });
+
+  return () => {
+    mediaQuery.removeEventListener('change', onMediaChange);
+    observer.disconnect();
+  };
+}
+
+function getDarkModeSnapshot() {
+  if (typeof document === 'undefined') return false;
+  return document.documentElement.classList.contains('dark');
+}
 
 const navItems = [
   { href: '/users', label: 'Employees', Icon: Users },
@@ -18,6 +40,9 @@ const navItems = [
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(true);
   const pathname = usePathname();
+  const isDarkMode = useSyncExternalStore(subscribeToDarkMode, getDarkModeSnapshot, () => false);
+
+  const logoSrc = isDarkMode ? '/logo-light.svg' : '/logo-dark.svg';
 
   const handleSidebar = () => {
     setIsOpen((prevState) => !prevState);
@@ -32,8 +57,8 @@ export default function Sidebar() {
       >
         <div className="flex h-full flex-col">
           <div className="flex items-center gap-4 p-4">
-            <Image src="/icon.svg" alt="CV Builder Logo" width={24} height={24} />
-            {isOpen && <h2 className="text-primary-bold text-lg whitespace-nowrap">CV Builder</h2>}
+            <Image src={logoSrc} alt="CV Builder Logo" width={24} height={24} />
+            {isOpen && <h2 className="text-foreground text-lg whitespace-nowrap">CV Builder</h2>}
           </div>
 
           <nav className="space-y-2">
@@ -47,11 +72,11 @@ export default function Sidebar() {
                   className={[
                     'flex cursor-pointer items-center gap-4 rounded-r-[200px] p-4 whitespace-nowrap transition-colors',
                     isActive
-                      ? 'bg-primary-hover text-primary-bold'
-                      : 'hover:bg-primary-hover hover:text-primary-bold',
+                      ? 'bg-primary-hover text-foreground'
+                      : 'hover:bg-primary-hover hover:text-foreground',
                   ].join(' ')}
                 >
-                  <Icon className={isActive ? 'text-primary-bold' : ''} />
+                  <Icon className={isActive ? 'text-foreground' : ''} />
                   {isOpen ? <span>{label}</span> : null}
                 </Link>
               );

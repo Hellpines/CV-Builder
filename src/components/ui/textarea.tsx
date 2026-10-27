@@ -24,6 +24,28 @@ function Textarea({
   const isInvalid = Boolean(invalid) || props['aria-invalid'] === true;
   const shouldFloat = isFocused || hasValue;
 
+  const textareaClasses = cn(
+    'block min-h-32 w-full resize-none border bg-transparent p-3 text-sm transition-colors outline-none placeholder:text-transparent',
+    isInvalid
+      ? 'border-primary'
+      : 'border-muted text-input-text hover:border-border focus:border-border',
+    disabled &&
+      'border-muted bg-input-disabled-background text-input-disabled-text cursor-not-allowed',
+    className
+  );
+
+  const labelClasses = cn(
+    'pointer-events-none absolute left-3 leading-none transition-all duration-200',
+    shouldFloat ? '-top-4 text-[12px]' : 'top-5 -translate-y-1/2 text-[14px]',
+    isInvalid
+      ? 'text-primary'
+      : shouldFloat
+        ? 'text-floating-label'
+        : disabled
+          ? 'text-input-disabled-text'
+          : 'text-placeholder'
+  );
+
   return (
     <div className="relative w-full">
       <textarea
@@ -39,34 +61,11 @@ function Textarea({
           setIsFocused(false);
           onBlur?.(event);
         }}
-        className={cn(
-          'block min-h-32 w-full resize-none border bg-transparent p-3 text-sm transition-colors outline-none placeholder:text-transparent',
-          isInvalid
-            ? 'border-primary text-primary'
-            : 'border-muted text-primary-bold hover:border-border focus:border-border',
-          disabled && 'border-muted bg-input-disabled text-primary-disabled cursor-not-allowed',
-          className
-        )}
+        className={textareaClasses}
         {...props}
       />
 
-      {placeholder ? (
-        <label
-          className={cn(
-            'pointer-events-none absolute left-3 leading-none transition-all duration-200',
-            shouldFloat ? '-top-4 text-[12px]' : 'top-3.5 text-[14px]',
-            isInvalid
-              ? 'text-primary'
-              : shouldFloat
-                ? 'text-primary-foreground'
-                : disabled
-                  ? 'text-primary-foreground'
-                  : 'text-placeholder'
-          )}
-        >
-          {placeholder}
-        </label>
-      ) : null}
+      {placeholder ? <label className={labelClasses}>{placeholder}</label> : null}
 
       {helperText ? (
         <p className="text-primary absolute -bottom-5 left-3 text-[12px]">{helperText}</p>

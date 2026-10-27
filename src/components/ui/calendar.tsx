@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from 'cn';
 import { isSameDay, startOfDay } from '@/shared/lib/date';
+import { Button } from './button';
 
 const WEEKDAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 const MONTHS = [
@@ -75,28 +76,25 @@ export function Calendar({ value, onSelect, minDate, maxDate, defaultMonth }: Ca
 
   const cellClass = (selected: boolean, disabled: boolean) =>
     cn(
-      'flex h-9 items-center justify-center rounded-sm text-sm transition-colors outline-none',
+      'flex h-10 items-center justify-center rounded-full text-sm transition-colors outline-none',
       'focus-visible:ring-primary focus-visible:ring-2',
       selected
         ? 'bg-primary text-secondary'
         : disabled
           ? 'text-muted cursor-not-allowed'
-          : 'text-primary-bold hover:bg-primary-hover cursor-pointer'
+          : 'text-foreground hover:bg-primary-hover cursor-pointer'
     );
 
-  const arrowClass =
-    'border-border text-primary-bold hover:bg-primary-hover focus-visible:ring-primary flex h-7 w-7 cursor-pointer items-center justify-center rounded-full border outline-none focus-visible:ring-2';
-
   return (
-    <div className="w-68">
-      <div className="mb-4 flex items-center justify-between">
+    <div className="align-center flex h-85 w-110 flex-col">
+      <div className="mb-4 ml-10 flex items-center justify-between">
         <div className="flex items-center gap-4 text-sm">
           <button
             type="button"
             onClick={() => toggleView('months')}
             className={cn(
               'cursor-pointer outline-none focus-visible:underline',
-              view === 'months' ? 'text-primary' : 'text-primary-bold'
+              view === 'months' ? 'text-primary' : 'text-foreground'
             )}
           >
             {MONTHS[cursor.getMonth()]}
@@ -106,7 +104,7 @@ export function Calendar({ value, onSelect, minDate, maxDate, defaultMonth }: Ca
             onClick={() => toggleView('years')}
             className={cn(
               'cursor-pointer outline-none focus-visible:underline',
-              view === 'years' ? 'text-primary' : 'text-primary-bold'
+              view === 'years' ? 'text-primary' : 'text-foreground'
             )}
           >
             {cursor.getFullYear()}
@@ -114,17 +112,12 @@ export function Calendar({ value, onSelect, minDate, maxDate, defaultMonth }: Ca
         </div>
 
         <div className="flex items-center gap-2">
-          <button
-            type="button"
-            className={arrowClass}
-            onClick={() => shift(-1)}
-            aria-label="Previous"
-          >
+          <Button variant="icon" onClick={() => shift(-1)} aria-label="Previous">
             <ChevronLeft size={16} />
-          </button>
-          <button type="button" className={arrowClass} onClick={() => shift(1)} aria-label="Next">
+          </Button>
+          <Button variant="icon" onClick={() => shift(1)} aria-label="Next">
             <ChevronRight size={16} />
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -134,7 +127,7 @@ export function Calendar({ value, onSelect, minDate, maxDate, defaultMonth }: Ca
             {WEEKDAYS.map((weekday, index) => (
               <span
                 key={index}
-                className="text-primary-bold flex h-8 items-center justify-center text-xs font-medium"
+                className="text-foreground flex h-8 items-center justify-center text-xs font-medium"
               >
                 {weekday}
               </span>
@@ -160,7 +153,7 @@ export function Calendar({ value, onSelect, minDate, maxDate, defaultMonth }: Ca
                   }}
                   className={cn(
                     cellClass(selected, disabled),
-                    'mx-auto w-9',
+                    'mx-auto w-10',
                     outside && !selected && 'text-muted',
                     disabled && 'line-through'
                   )}

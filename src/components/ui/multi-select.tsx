@@ -60,7 +60,7 @@ export function MultiSelect({
         <label
           className={cn(
             'ml-3 text-xs transition-opacity duration-200',
-            invalid ? 'text-primary' : 'text-primary-foreground',
+            invalid ? 'text-primary' : 'text-select-label',
             hasValue ? 'opacity-100' : 'opacity-0'
           )}
         >
@@ -86,9 +86,9 @@ export function MultiSelect({
               'flex min-h-12 w-full items-center justify-between gap-1.5 border bg-transparent px-3 py-2 text-left text-sm transition-colors outline-none select-none',
               invalid
                 ? 'border-primary text-primary'
-                : 'border-muted text-primary-bold hover:border-border focus-visible:border-border',
+                : 'border-muted text-foreground hover:border-border focus-visible:border-border',
               open && !invalid && 'border-border',
-              'data-disabled:border-muted data-disabled:bg-input-disabled data-disabled:text-primary-foreground data-disabled:hover:border-muted data-disabled:cursor-not-allowed',
+              'data-disabled:border-muted data-disabled:bg-input-disabled-background data-disabled:text-primary-foreground data-disabled:hover:border-muted data-disabled:cursor-not-allowed',
               className
             )}
           >
@@ -98,7 +98,7 @@ export function MultiSelect({
                   <span
                     className={cn(
                       'truncate',
-                      disabled ? 'text-primary-foreground' : 'text-primary-bold'
+                      disabled ? 'text-primary-foreground' : 'text-foreground'
                     )}
                   >
                     {selected.map((opt) => opt.label).join(', ')}
@@ -110,8 +110,8 @@ export function MultiSelect({
                       className={cn(
                         'inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-sm',
                         disabled
-                          ? 'border-muted text-primary-foreground'
-                          : 'border-border text-primary-bold'
+                          ? 'border-muted text-input-disabled-text'
+                          : 'border-border text-foreground'
                       )}
                     >
                       {opt.label}
@@ -140,7 +140,7 @@ export function MultiSelect({
                   className={cn(
                     'truncate',
                     disabled
-                      ? 'text-primary-foreground'
+                      ? 'text-input-disabled-text'
                       : invalid
                         ? 'text-primary'
                         : 'text-placeholder'
@@ -183,16 +183,16 @@ function MultiSelectItem({ className, children, value, ...props }: SelectPrimiti
       value={value}
       data-slot="multi-select-item"
       className={cn(
-        'text-primary-bold relative flex w-full cursor-default items-center gap-3 p-3 text-sm transition-colors outline-none select-none',
-        'data-highlighted:bg-muted data-highlighted:text-primary-bold',
-        'data-selected:bg-primary-foreground data-selected:text-secondary',
-        'data-selected:data-highlighted:bg-primary-foreground data-selected:data-highlighted:text-secondary',
+        'text-foreground relative flex w-full cursor-default items-center gap-3 p-3 text-sm transition-colors outline-none select-none',
+        'data-highlighted:bg-muted data-highlighted:text-foreground',
+        'data-selected:bg-select-selected data-selected:text-select-selected-text',
+        'data-selected:data-highlighted:bg-select-selected data-selected:data-highlighted:text-select-selected-text',
         'data-disabled:pointer-events-none data-disabled:opacity-50',
         className
       )}
       {...props}
     >
-      <span className="border-border bg-background text-primary-bold flex size-5 shrink-0 items-center justify-center border">
+      <span className="border-border bg-background text-foreground flex size-5 shrink-0 items-center justify-center border">
         <SelectPrimitive.ItemIndicator>
           <CheckIcon className="size-4" />
         </SelectPrimitive.ItemIndicator>

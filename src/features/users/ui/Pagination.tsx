@@ -32,7 +32,7 @@ export function Pagination({
   const total = Math.max(1, totalPages);
 
   const arrowClass =
-    'text-primary-foreground flex p-1 cursor-pointer items-center justify-center transition-colors hover:text-primary-bold disabled:cursor-not-allowed disabled:opacity-40';
+    'text-primary-foreground flex p-1 cursor-pointer items-center justify-center transition-colors hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40';
 
   return (
     <div className="flex items-center justify-center gap-6">
@@ -58,7 +58,7 @@ export function Pagination({
                 'flex h-8 min-w-8 cursor-pointer items-center justify-center rounded-full border px-2 text-sm transition-colors',
                 item === page
                   ? 'border-primary text-primary'
-                  : 'border-muted text-primary-bold hover:border-border'
+                  : 'border-muted text-foreground hover:border-border'
               )}
             >
               {item}
@@ -101,7 +101,7 @@ export function Pagination({
                   value={String(size)}
                   className={
                     isSelected
-                      ? 'bg-primary-foreground text-secondary data-highlighted:bg-primary-foreground data-highlighted:text-secondary'
+                      ? 'bg-select-selected text-select-selected-text data-highlighted:bg-primary-foreground'
                       : undefined
                   }
                 >

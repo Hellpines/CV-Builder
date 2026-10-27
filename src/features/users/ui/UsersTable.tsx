@@ -40,7 +40,7 @@ export default function UsersTable({ data, sortKey, sortDirection, onSort }: Use
                   <button
                     type="button"
                     onClick={() => onSort(key)}
-                    className="text-primary-bold flex cursor-pointer items-center gap-1 text-left text-sm font-medium"
+                    className="text-foreground flex cursor-pointer items-center gap-1 text-left text-sm font-medium"
                   >
                     {label}
                     {isActive ? (
@@ -73,7 +73,7 @@ export default function UsersTable({ data, sortKey, sortDirection, onSort }: Use
                 <tr
                   key={user.id}
                   onClick={() => router.push(`/users/${user.id}`)}
-                  className="text-primary-bold hover:bg-primary-hover cursor-pointer border border-b-2 transition-colors"
+                  className="text-foreground hover:bg-primary-hover cursor-pointer border border-b-2 transition-colors"
                 >
                   <td className="border-muted border-b py-4 align-middle text-sm">
                     <div className="flex items-center justify-center">

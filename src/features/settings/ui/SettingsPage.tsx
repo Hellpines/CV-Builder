@@ -3,21 +3,22 @@
 import { Button } from '@/components/ui/button';
 import { SelectField } from '@/components/ui/select-field';
 import { PasswordInput } from '@/features/auth/ui/PasswordInput';
+import { useTheme } from '@/shared/hooks/useTheme';
+import type { Theme } from '@/shared/lib/theme';
+import { THEME_OPTIONS } from '../model/themeOptions';
 
 export default function SettingsPage() {
+  const { theme, setTheme } = useTheme();
+
   return (
     <div className="mx-auto flex max-w-4xl flex-col gap-9">
       <div className="flex flex-col gap-9">
         <SelectField
           label="Theme"
           placeholder="Select theme"
-          value="Device settings"
-          options={[
-            { value: 'Device settings', label: 'Device settings' },
-            { value: 'Dark', label: 'Dark' },
-            { value: 'Light', label: 'Light' },
-          ]}
-          onChange={(value) => console.log('Selected theme:', value)}
+          value={theme}
+          options={THEME_OPTIONS}
+          onChange={(value) => setTheme(value as Theme)}
         />
 
         <SelectField

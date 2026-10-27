@@ -59,7 +59,7 @@ export function AvatarUpload({
 
       {editable && (
         <div className="flex flex-col items-center">
-          <label className="text-primary-bold focus-within:text-primary flex cursor-pointer items-center gap-4 transition-colors hover:underline">
+          <label className="text-foregroundus-within:text-primary flex cursor-pointer items-center gap-4 transition-colors hover:underline">
             <div className="flex gap-2">
               <Upload size={24} />
               <span className="text-lg font-medium">Upload avatar image</span>
@@ -75,7 +75,7 @@ export function AvatarUpload({
               }}
             />
           </label>
-          <p className="text-primary-bold/60 text-s">png, jpg or gif no more than 5MB</p>
+          <p className="text-foreground/60 text-s">png, jpg or gif no more than 5MB</p>
           {error ? <p className="text-primary text-s">{error}</p> : null}
         </div>
       )}

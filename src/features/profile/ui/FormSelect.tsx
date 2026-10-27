@@ -44,7 +44,7 @@ export function FormSelect({
   return (
     <div className="flex flex-col">
       <label
-        className={`text-primary-foreground ml-3 text-xs transition-opacity duration-200 ${
+        className={`text-select-label ml-3 text-xs transition-opacity duration-200 ${
           selected ? 'opacity-100' : 'opacity-0'
         }`}
       >
@@ -59,9 +59,9 @@ export function FormSelect({
           <SelectValue
             className={
               disabled
-                ? 'text-primary-disabled'
+                ? 'text-select-disabled-text'
                 : selected
-                  ? 'text-primary-bold'
+                  ? 'text-foreground'
                   : invalid
                     ? 'text-primary'
                     : 'text-placeholder'
@@ -79,7 +79,7 @@ export function FormSelect({
                 value={String(opt.id)}
                 className={
                   isSelected
-                    ? 'bg-primary-foreground text-secondary data-highlighted:bg-primary-foreground data-highlighted:text-secondary'
+                    ? 'bg-select-selected text-select-selected-text data-highlighted:bg-select-selected data-highlighted:text-select-selected-text'
                     : undefined
                 }
               >

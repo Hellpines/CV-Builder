@@ -33,8 +33,8 @@ export function AuthPage({
       <div className="flex flex-1 items-center justify-center px-4 pb-8">
         <div className="w-full max-w-140">
           <div className="mb-10.5 text-center">
-            <h1 className="text-primary-bold mb-6 text-4xl font-normal">{title}</h1>
-            <p className="text-md text-primary-bold">{subtitle}</p>
+            <h1 className="text-foreground mb-6 text-4xl font-normal">{title}</h1>
+            <p className="text-md text-foreground">{subtitle}</p>
           </div>
 
           <form onSubmit={onSubmit} className="space-y-9">

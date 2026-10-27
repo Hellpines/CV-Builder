@@ -34,9 +34,9 @@ interface ErrorScreenProps {
 export function ErrorScreen({ title, description, actionLabel, onAction }: ErrorScreenProps) {
   return (
     <div className="flex min-h-screen w-full flex-col items-center justify-center gap-6 px-4 text-center">
-      <SadMonitor className="text-primary-bold" />
-      <h1 className="text-primary-bold text-3xl font-normal">{title}</h1>
-      <p className="text-primary-bold text-sm leading-relaxed">{description}</p>
+      <SadMonitor className="text-foreground" />
+      <h1 className="text-foreground text-3xl font-normal">{title}</h1>
+      <p className="text-foreground text-sm leading-relaxed">{description}</p>
       {actionLabel ? (
         <Button onClick={onAction} className="w-55 py-4">
           {actionLabel}

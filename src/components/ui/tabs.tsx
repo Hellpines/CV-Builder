@@ -25,7 +25,7 @@ export function Tabs({
   onChange,
   className,
   tabClassName,
-  inactiveClassName = 'text-primary-bold',
+  inactiveClassName = 'text-foreground',
 }: TabsProps) {
   const pathname = usePathname();
 

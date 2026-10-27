@@ -52,7 +52,7 @@ export function UserMenu({ isOpen }: { isOpen: boolean }) {
               {initials}
             </span>
           )}
-          {isOpen && <span className="text-primary-bold truncate">{displayName}</span>}
+          {isOpen && <span className="text-foreground truncate">{displayName}</span>}
         </span>
       </DropdownMenuTrigger>
 

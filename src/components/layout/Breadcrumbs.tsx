@@ -88,7 +88,7 @@ export function Breadcrumbs() {
       {isUserPage || isCvPage ? (
         <Link
           href={isUserPage ? '/users' : '/cvs'}
-          className="hover:text-primary-bold transition-colors"
+          className="hover:text-foreground transition-colors"
         >
           {sectionLabel}
         </Link>

@@ -9,6 +9,23 @@
   --font-sans: var(--font-sans);
   --color-border: var(--border);
   --color-border-error: var(--border-error);
+  --color-input-text: var(--input-text);
+  --color-secondary-button-hover: var(--secondary-button-hover);
+  --color-secondary-button-hover-border: var(--secondary-button-hover-border);
+  --color-secondary-button-hover-text: var(--secondary-button-hover-text);
+  --color-secondary-button-active: var(--secondary-button-active);
+  --color-secondary-button-active-border: var(--secondary-button-active-border);
+  --color-secondary-button-active-text: var(--secondary-button-active-text);
+  --color-ghost-button-hover-border: var(--ghost-button-hover-border);
+  --color-ghost-button-hover-text: var(--ghost-button-hover-text);
+  --color-ghost-button-active: var(--ghost-button-active);
+  --color-ghost-button-active-border: var(--ghost-button-active-border);
+  --color-ghost-button-active-text: var(--ghost-button-active-text);
+  --color-icon-button-hover-border: var(--icon-button-hover-border);
+  --color-icon-button-hover-text: var(--icon-button-hover-text);
+  --color-icon-button-active: var(--icon-button-active);
+  --color-icon-button-active-border: var(--icon-button-active-border);
+  --color-icon-button-active-text: var(--icon-button-active-text);
   --color-muted-foreground: var(--muted-foreground);
   --color-muted: var(--muted);
   --color-secondary: var(--secondary);
@@ -17,9 +34,17 @@
   --color-primary-hover: var(--primary-hover);
   --color-primary-active: var(--primary-active);
   --color-primary-disabled: var(--primary-disabled);
-  --color-primary-bold: var(--primary-bold);
-  --color-input-disabled: var(--input-disabled);
+  --color-input-disabled-background: var(--input-disabled-background);
+  --color-input-disabled-text: var(--input-disabled-text);
+  --color-floating-label: var(--floating-label);
   --color-placeholder: var(--placeholder);
+  --color-select-text: var(--select-text);
+  --color-select-label: var(--select-label);
+  --color-select-hover: var(--select-hover);
+  --color-select-selected: var(--select-selected);
+  --color-select-selected-text: var(--select-selected-text);
+  --color-select-disabled-background: var(--select-disabled-background);
+  --color-select-disabled-text: var(--select-disabled-text);
   --color-foreground: var(--foreground);
   --color-background: var(--background);
 
@@ -47,20 +72,55 @@
 
 :root {
   --background: #f5f5f7;
-  --foreground: #0a0a0a;
+  --foreground: #2e2e2e;
+  --secondary: #f5f5f7;
+
   --primary: #c63031;
   --primary-foreground: #626262;
   --primary-hover: #e2e2e4;
   --primary-active: #e9b0b0;
   --primary-disabled: #aeaeae;
-  --primary-bold: #2e2e2e;
-  --input-disabled: #c4c4c6;
-  --placeholder: #c4c4c6;
-  --secondary: #f5f5f7;
-  --muted: #aeaeae;
-  --muted-foreground: #e2e2e4;
+
   --border: #626262;
   --border-error: #fb2c36;
+  --muted: #aeaeae;
+  --muted-foreground: #e2e2e4;
+
+  --secondary-button-hover: #aeaeae;
+  --secondary-button-hover-border: #626262;
+  --secondary-button-hover-text: #f5f5f7;
+
+  --secondary-button-active: #626262;
+  --secondary-button-active-border: #626262;
+  --secondary-button-active-text: #f5f5f7;
+
+  --ghost-button-hover-border: #e2e2e4;
+  --ghost-button-hover-text: #626262;
+
+  --ghost-button-active: #aeaeae;
+  --ghost-button-active-border: #626262;
+  --ghost-button-active-text: #626262;
+
+  --icon-button-hover-border: #626262;
+  --icon-button-hover-text: #626262;
+
+  --icon-button-active: #aeaeae;
+  --icon-button-active-border: #626262;
+  --icon-button-active-text: #f5f5f7;
+
+  --input-text: #2e2e2e;
+  --input-disabled-background: #c4c4c6;
+  --input-disabled-text: #aeaeae;
+  --floating-label: #626262;
+  --placeholder: #c4c4c6;
+
+  --select-text: #2e2e2e;
+  --select-label: #626262;
+  --select-hover: #aeaeae;
+  --select-selected: #626262;
+  --select-selected-text: #f5f5f7;
+  --select-disabled-background: #626262;
+  --select-disabled-text: #aeaeae;
 
   --success: #66bb6a;
   --success-text: #335d35;
@@ -79,22 +139,56 @@
 }
 
 .dark {
-  /* will be overridden */
-  --background: #f5f5f7;
-  --foreground: #0a0a0a;
+  --background: #2e2e2e;
+  --foreground: #f5f5f7;
+  --secondary: #f5f5f7;
+
   --primary: #c63031;
   --primary-foreground: #ffffff;
-  --primary-hover: #e2e2e4;
-  --primary-active: #e9b0b0;
-  --primary-disabled: #aeaeae;
-  --primary-bold: #2e2e2e;
-  --input-disabled: #c4c4c6;
-  --placeholder: #c4c4c6;
-  --secondary: #f5f5f7;
+  --primary-hover: #454545;
+  --primary-active: #454545;
+  --primary-disabled: #626262;
+
+  --border: #aeaeae;
+  --border-error: #fb2c36;
   --muted: #aeaeae;
   --muted-foreground: #e2e2e4;
-  --border: #626262;
-  --border-error: #fb2c36;
+
+  --secondary-button-hover: #e2e2e4;
+  --secondary-button-hover-border: #626262;
+  --secondary-button-hover-text: #626262;
+
+  --secondary-button-active: transparent;
+  --secondary-button-active-border: #e2e2e4;
+  --secondary-button-active-text: #f5f5f7;
+
+  --ghost-button-hover-border: #e2e2e4;
+  --ghost-button-hover-text: #f5f5f7;
+
+  --ghost-button-active: #e2e2e4;
+  --ghost-button-active-border: #454545;
+  --ghost-button-active-text: #454545;
+
+  --icon-button-hover-border: #e2e2e4;
+  --icon-button-hover-text: #f5f5f7;
+
+  --icon-button-active: #f5f5f7;
+  --icon-button-active-border: #e2e2e4;
+  --icon-button-active-text: #656565;
+
+  --input-text: #f5f5f7;
+  --input-disabled-background: #626262;
+  --input-disabled-text: #aeaeae;
+  --floating-label: #aeaeae;
+  --placeholder: #c4c4c6;
+
+  --select-text: #f5f5f7;
+  --select-hover: #626262;
+  --select-label: #aeaeae;
+  --select-selected: #f5f5f7;
+  --select-selected-text: #2e2e2e;
+  --select-disabled-background: #626262;
+  --select-disabled-text: #aeaeae;
 
   --success: #66bb6a;
   --success-text: #335d35;

@@ -29,7 +29,7 @@ export function CvPreviewDocument({ model, ref }: CvPreviewDocumentProps) {
     <div
       ref={ref}
       data-pdf-root
-      className="text-m text-primary-bold mx-auto w-full max-w-225 sm:p-10"
+      className="text-m text-foreground mx-auto w-full max-w-225 sm:p-10"
     >
       <header className="mb-8">
         <h1 className="text-4xl">{model.fullName}</h1>
@@ -98,7 +98,7 @@ export function CvPreviewDocument({ model, ref }: CvPreviewDocumentProps) {
                   <Field label="Period">{project.period}</Field>
                   {project.responsibilities.length > 0 && (
                     <Field label="Responsibilities">
-                      <ul className="marker:text-primary-bold list-disc pl-4">
+                      <ul className="marker:text-foreground list-disc pl-4">
                         {project.responsibilities.map((item, index) => (
                           <li key={`${item}-${index}`}>{item}</li>
                         ))}
@@ -117,7 +117,7 @@ export function CvPreviewDocument({ model, ref }: CvPreviewDocumentProps) {
 
       {model.skillTables.length > 0 && (
         <section className="mt-14">
-          <h2 className="text-primary-bold mb-8 text-4xl">Professional skills</h2>
+          <h2 className="text-foreground mb-8 text-4xl">Professional skills</h2>
 
           <table className="w-full border-collapse">
             <thead>

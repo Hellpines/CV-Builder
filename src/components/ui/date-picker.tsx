@@ -56,20 +56,20 @@ export function DatePicker({
             'flex h-12 w-full cursor-pointer items-center justify-between border bg-transparent px-3 text-left text-sm transition-colors outline-none',
             invalid
               ? 'border-primary text-primary'
-              : 'border-muted text-primary-bold hover:border-border focus-visible:border-border data-popup-open:border-border',
-            'data-disabled:border-muted data-disabled:bg-input-disabled data-disabled:text-primary-foreground data-disabled:hover:border-muted data-disabled:cursor-not-allowed'
+              : 'border-muted text-foreground hover:border-border focus-visible:border-border data-popup-open:border-border',
+            'data-disabled:border-muted data-disabled:bg-input-disabled-background data-disabled:text-input-disabled-text data-disabled:hover:border-muted data-disabled:cursor-not-allowed'
           )}
         >
           <span>{formatDate(selected)}</span>
           <CalendarDays
             size={20}
-            className={cn('shrink-0', invalid ? 'text-primary' : 'text-primary-foreground')}
+            className={cn('shrink-0', invalid ? 'text-primary' : 'text-input-disabled-text')}
           />
         </Popover.Trigger>
 
         <Popover.Portal>
-          <Popover.Positioner side="bottom" align="start" sideOffset={4} className="isolate z-60">
-            <Popover.Popup className="bg-background border-muted rounded-lg border p-4 shadow-md outline-none">
+          <Popover.Positioner side="bottom" align="start" sideOffset={4} className="isolate z-3">
+            <Popover.Popup className="bg-background border-muted border px-8 py-6 shadow-md outline-none">
               <Calendar
                 value={selected}
                 minDate={min}
@@ -91,7 +91,7 @@ export function DatePicker({
           type="button"
           aria-label={`Clear ${label}`}
           onClick={() => onChange('')}
-          className="text-primary-foreground hover:text-primary-bold absolute top-1/2 right-11 -translate-y-1/2 cursor-pointer transition-colors"
+          className="text-input-disabled-text hover:text-foreground absolute top-1/2 right-11 -translate-y-1/2 cursor-pointer transition-colors"
         >
           <X size={16} />
         </button>
@@ -104,7 +104,7 @@ export function DatePicker({
           invalid
             ? 'text-primary'
             : floated || disabled
-              ? 'text-primary-foreground'
+              ? 'text-input-disabled-text'
               : 'text-placeholder'
         )}
       >

@@ -34,7 +34,7 @@ export function PasswordInput({
           'absolute top-1/2 right-3 transition-colors',
           invalid
             ? 'text-primary hover:text-primary'
-            : 'text-primary-foreground hover:text-primary-bold'
+            : 'text-primary-foreground hover:text-foreground'
         )}
         style={{ transform: 'translateY(-50%)' }}
       >

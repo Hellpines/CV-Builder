@@ -64,6 +64,16 @@ export default function ProfileForm({
   const initials = `${profileFirstName[0] || ''}${profileLastName[0] || ''}`.toUpperCase() || 'U';
   const avatar = profile?.avatar;
 
+  const createdAtValue = Number(userData.created_at);
+  const formattedCreatedAt = Number.isFinite(createdAtValue)
+    ? new Intl.DateTimeFormat('en-US', {
+        timeZone: 'UTC',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      }).format(new Date(createdAtValue))
+    : null;
+
   const isVerified = isEditable ? authIsVerified : userData.is_verified;
   const showVerifyButton = isEditable && isVerified === false;
 
@@ -82,15 +92,12 @@ export default function ProfileForm({
         />
 
         <div className="flex flex-col">
-          <h1 className="text-primary-bold mb-2 text-xl">
+          <h1 className="text-foregroundb-2 text-xl">
             {profileFirstName} {profileLastName}
           </h1>
           <p className="text-primary-foreground mb-0.5 text-sm">{userData?.email}</p>
-          {userData?.created_at && (
-            <p className="text-m text-primary-bold">
-              A member since{' '}
-              {new Date(Number(userData.created_at) || userData.created_at).toDateString()}
-            </p>
+          {formattedCreatedAt && (
+            <p className="text-m text-foreground">A member since {formattedCreatedAt}</p>
           )}
         </div>
       </div>

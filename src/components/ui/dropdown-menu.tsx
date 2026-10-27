@@ -56,7 +56,7 @@ function DropdownMenuItem({ className, ...props }: MenuPrimitive.Item.Props) {
     <MenuPrimitive.Item
       data-slot="dropdown-menu-item"
       className={cn(
-        'text-primary-bold flex w-full cursor-pointer items-center gap-4 px-4 py-2 text-sm transition-colors outline-none select-none',
+        'text-foreground flex w-full cursor-pointer items-center gap-4 px-4 py-2 text-sm transition-colors outline-none select-none',
         'data-highlighted:bg-muted',
         'data-disabled:pointer-events-none data-disabled:opacity-50',
         className

@@ -25,13 +25,11 @@ export function Modal({ open, onOpenChange, title, children, className }: ModalP
             className
           )}
         >
-          <Dialog.Title className="text-primary-bold mb-6 text-xl font-medium">
-            {title}
-          </Dialog.Title>
+          <Dialog.Title className="text-foreground mb-6 text-xl font-medium">{title}</Dialog.Title>
           {children}
           <Dialog.Close
             aria-label="Close"
-            className="text-primary-bold hover:text-primary-bold absolute top-4 right-4 cursor-pointer transition-colors"
+            className="text-foreground hover:text-foreground absolute top-4 right-4 cursor-pointer transition-colors"
           >
             <X size={20} />
           </Dialog.Close>

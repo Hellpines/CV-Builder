@@ -112,7 +112,7 @@ export function LevelsPanel({
             .map((group) => (
               <section key={group.id}>
                 {group.title ? (
-                  <h2 className="text-primary-bold mb-4 text-sm">{group.title}</h2>
+                  <h2 className="text-foreground mb-4 text-sm">{group.title}</h2>
                 ) : null}
                 <ul className="grid grid-cols-1 gap-x-10 gap-y-2 sm:grid-cols-2 lg:grid-cols-3">
                   {group.items.map((item) => {

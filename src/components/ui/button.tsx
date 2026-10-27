@@ -12,10 +12,10 @@ const buttonVariants = cva(
         primaryV2:
           'bg-transparent text-primary hover:border-primary active:bg-primary-active disabled:bg-muted disabled:text-muted-foreground',
         secondary:
-          'bg-transparent border-border text-primary-foreground hover:bg-primary-disabled hover:text-muted-foreground active:bg-primary-foreground active:text-muted-foreground active:shadow-md disabled:bg-primary-disabled disabled:text-primary-hover disabled:border-0',
+          'bg-transparent border-border text-primary-foreground hover:bg-secondary-button-hover hover:border-secondary-button-hover-border hover:text-secondary-button-hover-text active:bg-secondary-button-active active:text-secondary-button-active-text active:shadow-md disabled:bg-primary-disabled disabled:text-primary-hover disabled:border-0',
         ghost:
-          'hover:border-border active:bg-muted disabled:bg-muted disabled:text-muted-foreground',
-        icon: 'text-primary-foreground p-3 hover:border-border active:bg-muted active:text-secondary disabled:bg-transparent disabled:text-muted',
+          'hover:border-ghost-button-hover-border hover:text-ghost-button-hover-text active:bg-ghost-button-active active:text-ghost-button-active-text disabled:bg-muted disabled:text-muted-foreground',
+        icon: 'text-primary-foreground p-3 hover:border-icon-button-hover-border hover:text-icon-button-hover-text active:bg-icon-button-active active:text-icon-button-active-text disabled:bg-transparent disabled:text-muted',
       },
     },
     defaultVariants: {
