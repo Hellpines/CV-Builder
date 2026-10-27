@@ -75,7 +75,7 @@ export function AvatarUpload({
               }}
             />
           </label>
-          <p className="text-primary-bold/60 text-s">png, jpg or gif no more than 0.5MB</p>
+          <p className="text-primary-bold/60 text-s">png, jpg or gif no more than 5MB</p>
           {error ? <p className="text-primary text-s">{error}</p> : null}
         </div>
       )}
