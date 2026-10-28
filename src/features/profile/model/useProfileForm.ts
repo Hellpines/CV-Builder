@@ -76,11 +76,11 @@ export function useProfileForm(userData: User | undefined, isEditable: boolean) 
 
   const selectAvatar = (file: File) => {
     if (!ALLOWED_AVATAR_TYPES.includes(file.type)) {
-      setAvatarError('Only png, jpg or gif files are allowed');
+      setAvatarError(t('common.invalidAvatarType'));
       return;
     }
     if (file.size > MAX_AVATAR_SIZE) {
-      setAvatarError('File must be no more than 0.5MB');
+      setAvatarError(t('common.invalidAvatarSize'));
       return;
     }
 

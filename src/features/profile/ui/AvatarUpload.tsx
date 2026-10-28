@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { Upload, X } from 'lucide-react';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 
 interface AvatarUploadProps {
   src?: string | null;
@@ -24,6 +25,7 @@ export function AvatarUpload({
   onSelect,
   onRemove,
 }: AvatarUploadProps) {
+  const { t } = useTranslation();
   const imageSrc = preview || src;
 
   return (
@@ -49,7 +51,8 @@ export function AvatarUpload({
           <button
             type="button"
             onClick={onRemove}
-            aria-label="Remove avatar"
+            aria-label={t('common.removeAvatar')}
+            suppressHydrationWarning
             className="bg-primary text-secondary absolute top-0 right-0 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100"
           >
             <X size={24} />
@@ -62,7 +65,7 @@ export function AvatarUpload({
           <label className="text-foregroundus-within:text-primary flex cursor-pointer items-center gap-4 transition-colors hover:underline">
             <div className="flex gap-2">
               <Upload size={24} />
-              <span className="text-lg font-medium">Upload avatar image</span>
+              <span className="text-lg font-medium">{t('common.uploadAvatar')}</span>
             </div>
             <input
               type="file"
@@ -75,7 +78,7 @@ export function AvatarUpload({
               }}
             />
           </label>
-          <p className="text-foreground/60 text-s">png, jpg or gif no more than 5MB</p>
+          <p className="text-foreground/60 text-s">{t('common.uploadAvatarHint')}</p>
           {error ? <p className="text-primary text-s">{error}</p> : null}
         </div>
       )}

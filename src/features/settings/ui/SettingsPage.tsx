@@ -1,13 +1,12 @@
 'use client';
 
 import { useTranslation } from '@/shared/i18n/useTranslation';
-import { Button } from '@/components/ui/button';
 import { SelectField } from '@/components/ui/select-field';
-import { PasswordInput } from '@/features/auth/ui/PasswordInput';
 import { useTheme } from '@/shared/hooks/useTheme';
 import type { Theme } from '@/shared/lib/theme';
 import { useLanguage } from '@/shared/i18n/useLanguage';
 import { THEME_OPTIONS } from '../model/themeOptions';
+import { PasswordSection } from './PasswordSection';
 
 export default function SettingsPage() {
   const { t } = useTranslation();
@@ -46,21 +45,7 @@ export default function SettingsPage() {
         />
       </div>
 
-      <div className="flex flex-col gap-6">
-        <p className="text-m">{t('settings.changePassword')}</p>
-        <div className="flex flex-col gap-9">
-          <PasswordInput placeholder={t('common.password')} value="" onChange={() => {}} />
-          <PasswordInput placeholder={t('common.newPassword')} value="" onChange={() => {}} />
-          <PasswordInput placeholder={t('common.confirmPassword')} value="" onChange={() => {}} />
-          <Button
-            variant="primary"
-            className="ml-auto w-40"
-            onClick={() => console.log('Change password clicked')}
-          >
-            {t('settings.change')}
-          </Button>
-        </div>
-      </div>
+      <PasswordSection />
     </div>
   );
 }

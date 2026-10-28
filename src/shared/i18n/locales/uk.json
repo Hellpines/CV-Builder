@@ -55,7 +55,13 @@
     "noLanguagesYet": "Поки немає мов",
     "search": "Пошук",
     "readOnly": "Тільки читання",
-    "other": "Інше"
+    "other": "Інше",
+    "verifyEmail": "Підтвердити електронну пошту",
+    "uploadAvatar": "Завантажити фото аватара",
+    "uploadAvatarHint": "png, jpg або gif не більше 5 МБ",
+    "removeAvatar": "Видалити аватар",
+    "invalidAvatarType": "Дозволені лише файли PNG, JPG або GIF",
+    "invalidAvatarSize": "Файл має бути не більше 5 МБ"
   },
   "toast": {
     "success": "Успішно",
@@ -145,7 +151,26 @@
     "changePassword": "Змінити пароль",
     "change": "Змінити",
     "theme": "Тема",
-    "language": "Мова"
+    "language": "Мова",
+    "password": {
+      "title": "Змінити пароль",
+      "current": "Поточний пароль",
+      "new": "Новий пароль",
+      "confirm": "Підтвердити новий пароль",
+      "submit": "Оновити пароль",
+      "validation": {
+        "required": "Введіть пароль",
+        "newRequired": "Введіть новий пароль",
+        "confirmRequired": "Підтвердьте пароль",
+        "mismatch": "Паролі не збігаються",
+        "tooShort": "Пароль має містити щонайменше {{min}} символів",
+        "incorrect": "Поточний пароль указано невірно"
+      },
+      "messages": {
+        "success": "Пароль успішно змінено",
+        "failed": "Не вдалося змінити пароль. Спробуйте пізніше"
+      }
+    }
   },
   "languages": {
     "current": "Поточні мови",
@@ -204,6 +229,7 @@
     "invalidEmail": "Невірний email"
   },
   "errors": {
+    "loadUsers": "Не вдалося завантажити користувачів",
     "loadCvDetails": "Не вдалося завантажити деталі CV",
     "loadCvs": "Не вдалося завантажити CV",
     "loadProjects": "Не вдалося завантажити проєкти",
@@ -219,7 +245,19 @@
     "noUsersFound": "Користувачів не знайдено ...",
     "noCvsFound": "CV не знайдено",
     "noCVsYet": "У вас поки немає CV",
-    "invalidUser": "Невірний користувач"
+    "invalidUser": "Невірний користувач",
+    "notFoundTitle": "Хм...",
+    "notFoundDescription": "Схоже, це не та сторінка, яку ви шукали.",
+    "notFoundHint": "Повернемо вас на правильний шлях.",
+    "genericTitle": "Щось пішло не так",
+    "genericDescription": "Сталася непередбачена помилка.",
+    "genericHint": "Будь ласка, спробуйте ще трохи пізніше.",
+    "mobileTitle": "Упс",
+    "mobileDescription": "Ця програма не підтримується на мобільних пристроях.",
+    "mobileHint": "Будь ласка, відкрийте її на комп'ютері або планшеті, щоб продовжити.",
+    "networkTitle": "Упс",
+    "networkDescription": "Щось пішло не так. Ми вже працюємо над виправленням.",
+    "networkHint": "Будь ласка, спробуйте ще раз або поверніться назад."
   },
   "cv": {
     "create": "Створити CV",

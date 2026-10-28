@@ -74,7 +74,7 @@ function SelectTrigger({
       </SelectPrimitive.Trigger>
 
       {helperText ? (
-        <p className="text-primary text-s absolute -bottom-5 left-3">{helperText}</p>
+        <p className="text-primary absolute -bottom-5 left-3 text-[12px]">{helperText}</p>
       ) : null}
     </div>
   );

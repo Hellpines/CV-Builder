@@ -55,7 +55,13 @@
     "noLanguagesYet": "Brak języków",
     "search": "Szukaj",
     "readOnly": "Tylko do odczytu",
-    "other": "Inne"
+    "other": "Inne",
+    "verifyEmail": "Zweryfikuj e-mail",
+    "uploadAvatar": "Prześlij zdjęcie profilowe",
+    "uploadAvatarHint": "png, jpg lub gif o maksymalnym rozmiarze 5 MB",
+    "removeAvatar": "Usuń avatar",
+    "invalidAvatarType": "Dozwolone są tylko pliki PNG, JPG lub GIF",
+    "invalidAvatarSize": "Plik może mieć maksymalnie 5 MB"
   },
   "toast": {
     "success": "Sukces",
@@ -145,7 +151,26 @@
     "changePassword": "Zmień hasło",
     "change": "Zmień",
     "theme": "Motyw",
-    "language": "Język"
+    "language": "Język",
+    "password": {
+      "title": "Zmień hasło",
+      "current": "Obecne hasło",
+      "new": "Nowe hasło",
+      "confirm": "Potwierdź nowe hasło",
+      "submit": "Zaktualizuj hasło",
+      "validation": {
+        "required": "Hasło jest wymagane",
+        "newRequired": "Nowe hasło jest wymagane",
+        "confirmRequired": "Potwierdzenie hasła jest wymagane",
+        "mismatch": "Hasła nie są takie same",
+        "tooShort": "Hasło musi mieć co najmniej {{min}} znaków",
+        "incorrect": "Obecne hasło jest nieprawidłowe"
+      },
+      "messages": {
+        "success": "Hasło zostało zmienione",
+        "failed": "Nie udało się zmienić hasła. Spróbuj ponownie później"
+      }
+    }
   },
   "languages": {
     "current": "Aktualne języki",
@@ -204,13 +229,14 @@
     "invalidEmail": "Nieprawidłowy adres e-mail"
   },
   "errors": {
+    "loadUsers": "Nie udało się załadować użytkowników",
     "loadCvDetails": "Nie udało się załadować szczegółów CV",
     "loadCvs": "Nie udało się załadować CV",
     "loadProjects": "Nie udało się załadować projektów",
     "loadCvPreview": "Nie udało się załadować podglądu CV",
     "cvPreviewUnavailable": "Podgląd CV jest niedostępny",
     "loadProfile": "Nie udało się załadować profilu",
-    "somethingWentWrong": "Coś poszło nie tak. Spróbuj jeszcze raz",
+    "somethingWentWrong": "Coś poszło nie tak. Spróbuj ponownie",
     "deleteCvTitle": "Usuń CV",
     "deleteCvMessage": "Czy na pewno chcesz usunąć CV {{name}}?",
     "deleteProjectTitle": "Usuń projekt",
@@ -219,7 +245,19 @@
     "noUsersFound": "Nie znaleziono użytkowników ...",
     "noCvsFound": "Nie znaleziono CV",
     "noCVsYet": "Nie masz jeszcze żadnych CV",
-    "invalidUser": "Nieprawidłowy użytkownik"
+    "invalidUser": "Nieprawidłowy użytkownik",
+    "notFoundTitle": "Hmm...",
+    "notFoundDescription": "To nie wygląda na stronę, której szukałeś.",
+    "notFoundHint": "Wrócimy cię na właściwy tor.",
+    "genericTitle": "Coś poszło nie tak",
+    "genericDescription": "Wystąpił nieoczekiwany błąd.",
+    "genericHint": "Spróbuj ponownie za chwilę.",
+    "mobileTitle": "Ups",
+    "mobileDescription": "Ta aplikacja nie jest obsługiwana na urządzeniach mobilnych.",
+    "mobileHint": "Otwórz ją na komputerze lub tablecie, aby kontynuować.",
+    "networkTitle": "Ups",
+    "networkDescription": "Coś poszło nie tak. Już pracujemy nad poprawką.",
+    "networkHint": "Spróbuj ponownie lub wróć."
   },
   "cv": {
     "create": "Utwórz CV",

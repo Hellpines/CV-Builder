@@ -12,6 +12,7 @@ export function useTranslation() {
     getLanguageSnapshot,
     getServerLanguageSnapshot
   );
+
   const t = useMemo(() => i18n.getFixedT(language), [language]);
 
   return { t, i18n, language };

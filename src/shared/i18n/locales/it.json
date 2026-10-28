@@ -55,7 +55,13 @@
     "noLanguagesYet": "Nessuna lingua ancora",
     "search": "Cerca",
     "readOnly": "Sola lettura",
-    "other": "Altro"
+    "other": "Altro",
+    "verifyEmail": "Verifica email",
+    "uploadAvatar": "Carica immagine avatar",
+    "uploadAvatarHint": "png, jpg o gif massimo 5 MB",
+    "removeAvatar": "Rimuovi avatar",
+    "invalidAvatarType": "Sono consentiti solo file PNG, JPG o GIF",
+    "invalidAvatarSize": "Il file deve avere dimensione massima di 5 MB"
   },
   "toast": {
     "success": "Successo",
@@ -145,7 +151,26 @@
     "changePassword": "Cambia password",
     "change": "Cambia",
     "theme": "Tema",
-    "language": "Lingua"
+    "language": "Lingua",
+    "password": {
+      "title": "Cambia password",
+      "current": "Password attuale",
+      "new": "Nuova password",
+      "confirm": "Conferma nuova password",
+      "submit": "Aggiorna password",
+      "validation": {
+        "required": "La password è obbligatoria",
+        "newRequired": "La nuova password è obbligatoria",
+        "confirmRequired": "La conferma della password è obbligatoria",
+        "mismatch": "Le password non coincidono",
+        "tooShort": "La password deve contenere almeno {{min}} caratteri",
+        "incorrect": "La password attuale non è corretta"
+      },
+      "messages": {
+        "success": "Password modificata con successo",
+        "failed": "Impossibile modificare la password. Riprova più tardi"
+      }
+    }
   },
   "languages": {
     "current": "Lingue correnti",
@@ -204,22 +229,35 @@
     "invalidEmail": "Email non valida"
   },
   "errors": {
+    "loadUsers": "Impossibile caricare gli utenti",
     "loadCvDetails": "Impossibile caricare i dettagli del CV",
     "loadCvs": "Impossibile caricare i CV",
     "loadProjects": "Impossibile caricare i progetti",
     "loadCvPreview": "Impossibile caricare l'anteprima del CV",
     "cvPreviewUnavailable": "L'anteprima del CV non è disponibile",
     "loadProfile": "Impossibile caricare il profilo",
-    "somethingWentWrong": "Si è verificato un problema. Riprova",
+    "somethingWentWrong": "Qualcosa è andato storto. Riprova",
     "deleteCvTitle": "Elimina CV",
     "deleteCvMessage": "Sei sicuro di voler eliminare il CV {{name}}?",
     "deleteProjectTitle": "Rimuovi progetto",
     "deleteProjectMessage": "Sei sicuro di voler rimuovere questo progetto?",
-    "loadLanguages": "Errore durante il caricamento delle lingue: {{message}}",
+    "loadLanguages": "Errore nel caricamento delle lingue: {{message}}",
     "noUsersFound": "Nessun utente trovato ...",
     "noCvsFound": "Nessun CV trovato",
-    "noCVsYet": "Non hai ancora nessun CV",
-    "invalidUser": "Utente non valido"
+    "noCVsYet": "Non hai ancora CV",
+    "invalidUser": "Utente non valido",
+    "notFoundTitle": "Hmm...",
+    "notFoundDescription": "Non sembra essere la pagina che stavi cercando.",
+    "notFoundHint": "Ti riportiamo sulla giusta strada.",
+    "genericTitle": "Qualcosa è andato storto",
+    "genericDescription": "Si è verificato un errore imprevisto.",
+    "genericHint": "Riprova tra un momento.",
+    "mobileTitle": "Ops",
+    "mobileDescription": "Questa app non è supportata sui dispositivi mobili.",
+    "mobileHint": "Aprila su un computer o un tablet per continuare.",
+    "networkTitle": "Ops",
+    "networkDescription": "Qualcosa è andato storto. Stiamo già lavorando per risolverlo.",
+    "networkHint": "Riprova o torna indietro."
   },
   "cv": {
     "create": "Crea CV",

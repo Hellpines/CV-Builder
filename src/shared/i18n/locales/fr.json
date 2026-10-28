@@ -55,7 +55,13 @@
     "noLanguagesYet": "Aucune langue pour le moment",
     "search": "Rechercher",
     "readOnly": "Lecture seule",
-    "other": "Autre"
+    "other": "Autre",
+    "verifyEmail": "Vérifier l'e-mail",
+    "uploadAvatar": "Télécharger une image de profil",
+    "uploadAvatarHint": "png, jpg ou gif, maximum 5 Mo",
+    "removeAvatar": "Supprimer l'avatar",
+    "invalidAvatarType": "Seuls les fichiers PNG, JPG ou GIF sont autorisés",
+    "invalidAvatarSize": "Le fichier doit faire au maximum 5 Mo"
   },
   "toast": {
     "success": "Succès",
@@ -145,7 +151,26 @@
     "changePassword": "Changer le mot de passe",
     "change": "Modifier",
     "theme": "Thème",
-    "language": "Langue"
+    "language": "Langue",
+    "password": {
+      "title": "Changer le mot de passe",
+      "current": "Mot de passe actuel",
+      "new": "Nouveau mot de passe",
+      "confirm": "Confirmer le nouveau mot de passe",
+      "submit": "Mettre à jour le mot de passe",
+      "validation": {
+        "required": "Le mot de passe est requis",
+        "newRequired": "Le nouveau mot de passe est requis",
+        "confirmRequired": "La confirmation du mot de passe est requise",
+        "mismatch": "Les mots de passe ne correspondent pas",
+        "tooShort": "Le mot de passe doit contenir au moins {{min}} caractères",
+        "incorrect": "Le mot de passe actuel est incorrect"
+      },
+      "messages": {
+        "success": "Mot de passe modifié avec succès",
+        "failed": "Échec de la modification du mot de passe. Veuillez réessayer plus tard"
+      }
+    }
   },
   "languages": {
     "current": "Langues actuelles",
@@ -204,22 +229,35 @@
     "invalidEmail": "Adresse e-mail invalide"
   },
   "errors": {
+    "loadUsers": "Échec du chargement des utilisateurs",
     "loadCvDetails": "Échec du chargement des détails du CV",
     "loadCvs": "Échec du chargement des CV",
     "loadProjects": "Échec du chargement des projets",
-    "loadCvPreview": "Échec du chargement de l’aperçu du CV",
-    "cvPreviewUnavailable": "L’aperçu du CV n’est pas disponible",
+    "loadCvPreview": "Échec du chargement de l'aperçu du CV",
+    "cvPreviewUnavailable": "L'aperçu du CV n'est pas disponible",
     "loadProfile": "Échec du chargement du profil",
-    "somethingWentWrong": "Une erreur s’est produite. Veuillez réessayer",
+    "somethingWentWrong": "Une erreur s'est produite. Veuillez réessayer",
     "deleteCvTitle": "Supprimer le CV",
-    "deleteCvMessage": "Voulez-vous vraiment supprimer le CV {{name}} ?",
+    "deleteCvMessage": "Êtes-vous sûr de vouloir supprimer le CV {{name}} ?",
     "deleteProjectTitle": "Supprimer le projet",
-    "deleteProjectMessage": "Voulez-vous vraiment supprimer ce projet ?",
+    "deleteProjectMessage": "Êtes-vous sûr de vouloir supprimer ce projet ?",
     "loadLanguages": "Erreur de chargement des langues : {{message}}",
     "noUsersFound": "Aucun utilisateur trouvé ...",
     "noCvsFound": "Aucun CV trouvé",
-    "noCVsYet": "Vous n’avez pas encore de CV",
-    "invalidUser": "Utilisateur invalide"
+    "noCVsYet": "Vous n'avez pas encore de CV",
+    "invalidUser": "Utilisateur invalide",
+    "notFoundTitle": "Hmm...",
+    "notFoundDescription": "Cela ne ressemble pas à la page que vous recherchiez.",
+    "notFoundHint": "Retournons sur la bonne voie.",
+    "genericTitle": "Une erreur s'est produite",
+    "genericDescription": "Une erreur inattendue est survenue.",
+    "genericHint": "Veuillez réessayer dans un instant.",
+    "mobileTitle": "Oups",
+    "mobileDescription": "Cette application n'est pas prise en charge sur les appareils mobiles.",
+    "mobileHint": "Veuillez l'ouvrir sur un ordinateur ou une tablette pour continuer.",
+    "networkTitle": "Oups",
+    "networkDescription": "Quelque chose s'est mal passé. Nous travaillons déjà à la correction.",
+    "networkHint": "Veuillez réessayer ou revenir en arrière."
   },
   "cv": {
     "create": "Créer un CV",

@@ -55,7 +55,13 @@
     "noLanguagesYet": "Ainda não há idiomas",
     "search": "Buscar",
     "readOnly": "Somente leitura",
-    "other": "Outro"
+    "other": "Outro",
+    "verifyEmail": "Verificar e-mail",
+    "uploadAvatar": "Carregar imagem do avatar",
+    "uploadAvatarHint": "png, jpg ou gif com no máximo 5 MB",
+    "removeAvatar": "Remover avatar",
+    "invalidAvatarType": "Só são permitidos arquivos PNG, JPG ou GIF",
+    "invalidAvatarSize": "O arquivo deve ter no máximo 5 MB"
   },
   "toast": {
     "success": "Sucesso",
@@ -145,7 +151,26 @@
     "changePassword": "Alterar senha",
     "change": "Alterar",
     "theme": "Tema",
-    "language": "Idioma"
+    "language": "Idioma",
+    "password": {
+      "title": "Alterar senha",
+      "current": "Senha atual",
+      "new": "Nova senha",
+      "confirm": "Confirmar nova senha",
+      "submit": "Atualizar senha",
+      "validation": {
+        "required": "A senha é obrigatória",
+        "newRequired": "A nova senha é obrigatória",
+        "confirmRequired": "A confirmação da senha é obrigatória",
+        "mismatch": "As senhas não coincidem",
+        "tooShort": "A senha deve ter pelo menos {{min}} caracteres",
+        "incorrect": "A senha atual está incorreta"
+      },
+      "messages": {
+        "success": "Senha alterada com sucesso",
+        "failed": "Não foi possível alterar a senha. Tente novamente mais tarde"
+      }
+    }
   },
   "languages": {
     "current": "Idiomas atuais",
@@ -204,6 +229,7 @@
     "invalidEmail": "E-mail inválido"
   },
   "errors": {
+    "loadUsers": "Falha ao carregar usuários",
     "loadCvDetails": "Falha ao carregar detalhes do CV",
     "loadCvs": "Falha ao carregar CVs",
     "loadProjects": "Falha ao carregar projetos",
@@ -219,7 +245,19 @@
     "noUsersFound": "Nenhum usuário encontrado ...",
     "noCvsFound": "Nenhum CV encontrado",
     "noCVsYet": "Você ainda não tem CVs",
-    "invalidUser": "Usuário inválido"
+    "invalidUser": "Usuário inválido",
+    "notFoundTitle": "Hmm...",
+    "notFoundDescription": "Isso não parece ser a página que você estava procurando.",
+    "notFoundHint": "Vamos te levar de volta ao caminho certo.",
+    "genericTitle": "Algo deu errado",
+    "genericDescription": "Ocorreu um erro inesperado.",
+    "genericHint": "Tente novamente em alguns instantes.",
+    "mobileTitle": "Ops",
+    "mobileDescription": "Este aplicativo não é compatível com dispositivos móveis.",
+    "mobileHint": "Abra-o em um desktop ou tablet para continuar.",
+    "networkTitle": "Ops",
+    "networkDescription": "Algo deu errado. Já estamos trabalhando na correção.",
+    "networkHint": "Tente novamente ou volte."
   },
   "cv": {
     "create": "Criar CV",

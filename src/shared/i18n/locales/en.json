@@ -55,7 +55,13 @@
     "noLanguagesYet": "No languages yet",
     "search": "Search",
     "readOnly": "Read only",
-    "other": "Other"
+    "other": "Other",
+    "verifyEmail": "Verify email",
+    "uploadAvatar": "Upload avatar image",
+    "uploadAvatarHint": "png, jpg or gif no more than 5MB",
+    "removeAvatar": "Remove avatar",
+    "invalidAvatarType": "Only png, jpg or gif files are allowed",
+    "invalidAvatarSize": "File must be no more than 5MB"
   },
   "toast": {
     "success": "Success",
@@ -145,7 +151,26 @@
     "changePassword": "Change password",
     "change": "Change",
     "theme": "Theme",
-    "language": "Language"
+    "language": "Language",
+    "password": {
+      "title": "Change password",
+      "current": "Current password",
+      "new": "New password",
+      "confirm": "Confirm new password",
+      "submit": "Update password",
+      "validation": {
+        "required": "Password is required",
+        "newRequired": "New password is required",
+        "confirmRequired": "Confirm password is required",
+        "mismatch": "Passwords do not match",
+        "tooShort": "Password must be at least {{min}} characters long",
+        "incorrect": "Current password is incorrect"
+      },
+      "messages": {
+        "success": "Password changed successfully",
+        "failed": "Failed to change password. Please try again later"
+      }
+    }
   },
   "languages": {
     "current": "Current languages",
@@ -204,6 +229,7 @@
     "invalidEmail": "Invalid email address"
   },
   "errors": {
+    "loadUsers": "Failed to load users",
     "loadCvDetails": "Failed to load CV details",
     "loadCvs": "Failed to load CVs",
     "loadProjects": "Failed to load projects",
@@ -219,7 +245,19 @@
     "noUsersFound": "No users found ...",
     "noCvsFound": "No CVs found",
     "noCVsYet": "You have no CVs yet",
-    "invalidUser": "Invalid user"
+    "invalidUser": "Invalid user",
+    "notFoundTitle": "Hmm...",
+    "notFoundDescription": "This doesn’t seem to be the page you were looking for.",
+    "notFoundHint": "Let’s get you back on track.",
+    "genericTitle": "Something went wrong",
+    "genericDescription": "An unexpected error has occurred.",
+    "genericHint": "Please try again in a moment.",
+    "mobileTitle": "Oops",
+    "mobileDescription": "This app isn’t supported on mobile devices.",
+    "mobileHint": "Please open it on a desktop or tablet to continue.",
+    "networkTitle": "Oops",
+    "networkDescription": "Something went wrong. We’re already working on fixing it.",
+    "networkHint": "Please try again or go back."
   },
   "cv": {
     "create": "Create CV",

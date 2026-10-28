@@ -55,7 +55,13 @@
     "noLanguagesYet": "Noch keine Sprachen",
     "search": "Suchen",
     "readOnly": "Nur Lesen",
-    "other": "Andere"
+    "other": "Andere",
+    "verifyEmail": "E-Mail bestätigen",
+    "uploadAvatar": "Avatarbild hochladen",
+    "uploadAvatarHint": "PNG, JPG oder GIF, maximal 5 MB",
+    "removeAvatar": "Avatar entfernen",
+    "invalidAvatarType": "Es sind nur PNG-, JPG- oder GIF-Dateien erlaubt",
+    "invalidAvatarSize": "Die Datei darf maximal 5 MB groß sein"
   },
   "toast": {
     "success": "Erfolgreich",
@@ -145,7 +151,26 @@
     "changePassword": "Passwort ändern",
     "change": "Ändern",
     "theme": "Thema",
-    "language": "Sprache"
+    "language": "Sprache",
+    "password": {
+      "title": "Passwort ändern",
+      "current": "Aktuelles Passwort",
+      "new": "Neues Passwort",
+      "confirm": "Neues Passwort bestätigen",
+      "submit": "Passwort aktualisieren",
+      "validation": {
+        "required": "Passwort ist erforderlich",
+        "newRequired": "Neues Passwort ist erforderlich",
+        "confirmRequired": "Passwortbestätigung ist erforderlich",
+        "mismatch": "Passwörter stimmen nicht überein",
+        "tooShort": "Das Passwort muss mindestens {{min}} Zeichen lang sein",
+        "incorrect": "Aktuelles Passwort ist falsch"
+      },
+      "messages": {
+        "success": "Passwort erfolgreich geändert",
+        "failed": "Passwort konnte nicht geändert werden. Bitte versuche es später erneut"
+      }
+    }
   },
   "languages": {
     "current": "Aktuelle Sprachen",
@@ -204,6 +229,7 @@
     "invalidEmail": "Ungültige E-Mail-Adresse"
   },
   "errors": {
+    "loadUsers": "Benutzer konnten nicht geladen werden",
     "loadCvDetails": "Laden der CV-Details fehlgeschlagen",
     "loadCvs": "Laden der Lebensläufe fehlgeschlagen",
     "loadProjects": "Laden der Projekte fehlgeschlagen",
@@ -219,7 +245,19 @@
     "noUsersFound": "Keine Benutzer gefunden ...",
     "noCvsFound": "Keine Lebensläufe gefunden",
     "noCVsYet": "Sie haben noch keine Lebensläufe",
-    "invalidUser": "Ungültiger Benutzer"
+    "invalidUser": "Ungültiger Benutzer",
+    "notFoundTitle": "Hmm...",
+    "notFoundDescription": "Das scheint nicht die Seite zu sein, die Sie gesucht haben.",
+    "notFoundHint": "Wir bringen Sie wieder auf den richtigen Weg.",
+    "genericTitle": "Etwas ist schiefgelaufen",
+    "genericDescription": "Ein unerwarteter Fehler ist aufgetreten.",
+    "genericHint": "Bitte versuchen Sie es in einem Moment erneut.",
+    "mobileTitle": "Ups",
+    "mobileDescription": "Diese App wird auf Mobilgeräten nicht unterstützt.",
+    "mobileHint": "Bitte öffnen Sie sie auf einem Desktop- oder Tablet-Gerät, um fortzufahren.",
+    "networkTitle": "Ups",
+    "networkDescription": "Etwas ist schiefgelaufen. Wir arbeiten bereits daran, es zu beheben.",
+    "networkHint": "Bitte versuchen Sie es erneut oder gehen Sie zurück."
   },
   "cv": {
     "create": "CV erstellen",
