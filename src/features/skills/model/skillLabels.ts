@@ -1,17 +1,16 @@
 import type { LevelsPanelLabels } from '@/components/ui/levels-panel';
 
 export const SKILL_LABELS: LevelsPanelLabels = {
-  add: 'Add skill',
-  remove: 'Remove skills',
-  addTitle: 'Add skill',
-  editTitle: 'Update skill',
-  removeTitle: 'Remove skill',
-  removeMessage: (count) =>
-    `Are you sure you want to remove ${count} ${count === 1 ? 'skill' : 'skills'}?`,
-  optionLabel: 'Skill',
-  levelLabel: 'Skill mastery',
-  optionRequired: 'Skill is required',
-  levelRequired: 'Skill mastery is required',
-  duplicate: 'Skill already exists',
-  empty: 'No skills yet',
+  add: 'skills.add',
+  remove: 'skills.remove',
+  addTitle: 'skills.addTitle',
+  editTitle: 'skills.editTitle',
+  removeTitle: 'skills.removeTitle',
+  removeMessage: (count) => `skills.removeMessage_${count === 1 ? 'one' : 'other'}`,
+  optionLabel: 'skills.optionLabel',
+  levelLabel: 'skills.levelLabel',
+  optionRequired: 'skills.optionRequired',
+  levelRequired: 'skills.levelRequired',
+  duplicate: 'skills.duplicate',
+  empty: 'skills.empty',
 };

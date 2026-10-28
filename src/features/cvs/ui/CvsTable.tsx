@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { ArrowDown, ArrowUp, EllipsisVertical } from 'lucide-react';
 import { cn } from 'cn';
 import {
@@ -64,6 +65,7 @@ export function CvsTable({
   onEdit,
   onDelete,
 }: CvsTableProps) {
+  const { t } = useTranslation();
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
 
   return (
@@ -81,7 +83,7 @@ export function CvsTable({
                 onClick={onSort}
                 className="focus-visible:outline-primary flex cursor-pointer items-center gap-1 text-left font-medium outline-offset-4"
               >
-                Name
+                {t('common.name')}
                 {sortDirection === 'asc' ? (
                   <ArrowUp size={16} className="text-primary-foreground" />
                 ) : (
@@ -90,13 +92,13 @@ export function CvsTable({
               </button>
             </th>
             <th scope="col" className="w-[25%] px-4 py-5 font-medium">
-              Education
+              {t('common.education')}
             </th>
             <th scope="col" className="px-4 py-5 font-medium">
-              Employee
+              {t('user.employee')}
             </th>
             <th scope="col" className="w-14 px-4 py-5">
-              <span className="sr-only">Actions</span>
+              <span className="sr-only">{t('common.actions')}</span>
             </th>
           </tr>
         </thead>
@@ -116,7 +118,7 @@ export function CvsTable({
                     onOpenChange={(open) => setOpenMenuId(open ? cv.id : null)}
                   >
                     <DropdownMenuTrigger
-                      aria-label={`Actions for ${cv.name}`}
+                      aria-label={`${t('common.actions')} for ${cv.name}`}
                       className="text-primary-foreground hover:border-icon-button-hover-border hover:text-icon-button-hover-text active:bg-icon-button-active active:text-icon-button-active-text focus-visible:outline-primary inline-flex h-10 w-10 items-center justify-center rounded-full border-0 transition-colors hover:border"
                     >
                       <EllipsisVertical size={20} />
@@ -127,9 +129,15 @@ export function CvsTable({
                       sideOffset={4}
                       className="min-w-36"
                     >
-                      <DropdownMenuItem onClick={() => onView(cv)}>View</DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => onEdit(cv)}>Edit</DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => onDelete(cv)}>Delete</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => onView(cv)}>
+                        {t('common.view')}
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => onEdit(cv)}>
+                        {t('common.edit')}
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => onDelete(cv)}>
+                        {t('common.delete')}
+                      </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </td>

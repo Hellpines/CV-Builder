@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import type { SkillMastery } from '@/shared/types/user';
 import type { SkillCategory } from '../types/SkillTypes';
 
@@ -8,7 +9,11 @@ export interface SkillGroup {
   skills: SkillMastery[];
 }
 
-const OTHER = { id: 'other', title: 'Other', order: Number.MAX_SAFE_INTEGER };
+const OTHER = {
+  id: 'other',
+  title: i18next.t('common.other') || 'Other',
+  order: Number.MAX_SAFE_INTEGER,
+};
 
 function indexCategories(
   categories: SkillCategory[],

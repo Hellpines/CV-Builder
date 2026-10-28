@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client/react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { RESET_PASSWORD_MUTATION, LOGIN_MUTATION } from '../api/AuthMutations';
 import { useAuthStore } from './useAuthStore';
 import { parseJwt } from '../helpers/parseJwt';
 import { toast } from '@/shared/lib/toast';
 
 export function useResetForm() {
+  const { t } = useTranslation();
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
@@ -30,16 +32,16 @@ export function useResetForm() {
 
   const [resetPassword, { loading: resetLoading }] = useMutation(RESET_PASSWORD_MUTATION, {
     onCompleted: () => {
-      toast.success('Password reset successfully');
+      toast.success(t('notifications.passwordResetSuccess'));
     },
     onError: (err) => {
       const msg = err.message.toLowerCase();
       if (msg.includes('expired') || msg.includes('invalid') || msg.includes('token')) {
-        setLinkError('This password reset link has expired');
-        toast.error('This password reset link has expired');
+        setLinkError(t('notifications.expiredResetLink'));
+        toast.error(t('notifications.expiredResetLink'));
       } else {
-        setGeneralError('Something went wrong. Please try again later');
-        toast.error('Something went wrong. Please try again later');
+        setGeneralError(t('notifications.generalError'));
+        toast.error(t('notifications.generalError'));
       }
     },
   });
@@ -48,12 +50,12 @@ export function useResetForm() {
     onCompleted: (data) => {
       const { access_token, refresh_token, user } = data.login;
       setAuth(access_token, refresh_token, user);
-      toast.success('Password updated. You are signed in.');
+      toast.success(t('notifications.passwordUpdatedSignedIn'));
       router.push('/users');
     },
     onError: (err) => {
       console.error('Auto-login after reset error:', err.message);
-      toast.error('Password reset completed, but login failed. Please sign in manually.');
+      toast.error(t('notifications.passwordResetLoginFailed'));
       router.push('/login');
     },
   });

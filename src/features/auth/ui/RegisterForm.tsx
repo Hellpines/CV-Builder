@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { AuthPage } from './AuthPage';
@@ -8,6 +9,7 @@ import { PasswordInput } from './PasswordInput';
 import { useRegisterForm } from '../model/useRegisterForm';
 
 export function RegisterForm() {
+  const { t } = useTranslation();
   const {
     email,
     setEmail,
@@ -29,8 +31,8 @@ export function RegisterForm() {
 
   return (
     <AuthPage
-      title="Sign up now"
-      subtitle="Welcome! Sign up to continue"
+      title={t('auth.signUp')}
+      subtitle={t('auth.welcomeSubtitle')}
       onSubmit={handleSubmit}
       submitButton={
         <div className="flex w-full flex-col items-center space-y-3">
@@ -43,21 +45,21 @@ export function RegisterForm() {
             className="w-55 py-4"
             disabled={loading || !isFormValid}
           >
-            {loading ? 'LOADING...' : 'CREATE ACCOUNT'}
+            {loading ? t('auth.loading') : t('auth.createAccount').toUpperCase()}
           </Button>
         </div>
       }
       footer={
         <Link href="/login">
           <Button variant="ghost" className="px-12 text-xs font-semibold tracking-wider">
-            I HAVE AN ACCOUNT
+            {t('auth.haveAccount').toUpperCase()}
           </Button>
         </Link>
       }
     >
       <Input
         type="email"
-        placeholder="Email"
+        placeholder={t('common.email')}
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         invalid={emailInvalid}
@@ -68,7 +70,7 @@ export function RegisterForm() {
       <PasswordInput
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
+        placeholder={t('common.password')}
         invalid={passwordInvalid}
         helperText={passwordHelperText}
       />
@@ -76,7 +78,7 @@ export function RegisterForm() {
       <PasswordInput
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
-        placeholder="Confirm password"
+        placeholder={t('common.confirmPassword')}
         invalid={confirmPasswordInvalid}
         helperText={confirmPasswordHelperText}
       />

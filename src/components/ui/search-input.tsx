@@ -1,6 +1,7 @@
 'use client';
 
 import { Search } from 'lucide-react';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { cn } from 'cn';
 
 interface SearchInputProps {
@@ -10,12 +11,10 @@ interface SearchInputProps {
   className?: string;
 }
 
-export function SearchInput({
-  value,
-  onChange,
-  placeholder = 'Search',
-  className,
-}: SearchInputProps) {
+export function SearchInput({ value, onChange, placeholder, className }: SearchInputProps) {
+  const { t } = useTranslation();
+  const resolvedPlaceholder = placeholder ?? t('common.search');
+
   return (
     <div className={cn('relative', className)}>
       <Search
@@ -24,8 +23,8 @@ export function SearchInput({
       />
       <input
         type="text"
-        aria-label={placeholder}
-        placeholder={placeholder}
+        aria-label={resolvedPlaceholder}
+        placeholder={resolvedPlaceholder}
         value={value}
         onChange={(event) => onChange(event.target.value)}
         className="border-muted text-primary-foreground placeholder:text-placeholder focus:border-border h-12 w-80 max-w-full rounded-full border bg-transparent pr-4 pl-11 text-sm transition-colors outline-none"

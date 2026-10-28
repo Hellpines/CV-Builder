@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { ArrowDown, ArrowUp, EllipsisVertical } from 'lucide-react';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { cn } from 'cn';
 import {
   DropdownMenu,
@@ -103,6 +104,7 @@ export function CvProjectsTable({
   onEdit,
   onDelete,
 }: CvProjectsTableProps) {
+  const { t } = useTranslation();
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
 
   const sortProps = { activeKey: sortKey, direction: sortDirection, onSort };
@@ -112,19 +114,29 @@ export function CvProjectsTable({
       <table className="w-full min-w-180 border-collapse text-left">
         <thead className="border-muted border-b">
           <tr className="text-foreground text-sm">
-            <SortableHead label="Name" sortKey="name" className="w-[30%]" {...sortProps} />
+            <SortableHead
+              label={t('common.name')}
+              sortKey="name"
+              className="w-[30%]"
+              {...sortProps}
+            />
             <th scope="col" className="w-[24%] px-4 py-3 font-medium">
-              Domain
+              {t('cv.projectDomain')}
             </th>
             <SortableHead
-              label="Start Date"
+              label={t('common.startDate')}
               sortKey="startDate"
               className="w-[18%]"
               {...sortProps}
             />
-            <SortableHead label="End Date" sortKey="endDate" className="w-[18%]" {...sortProps} />
+            <SortableHead
+              label={t('common.endDate')}
+              sortKey="endDate"
+              className="w-[18%]"
+              {...sortProps}
+            />
             <th scope="col" className="w-14 px-4 py-3">
-              <span className="sr-only">Actions</span>
+              <span className="sr-only">{t('common.actions')}</span>
             </th>
           </tr>
         </thead>
@@ -139,7 +151,7 @@ export function CvProjectsTable({
                 <td className="px-4 py-5">{item.domain}</td>
                 <td className="px-4 py-5">{formatDate(parseDate(item.start_date))}</td>
                 <td className="px-4 py-5">
-                  {item.end_date ? formatDate(parseDate(item.end_date)) : 'Till now'}
+                  {item.end_date ? formatDate(parseDate(item.end_date)) : t('cv.tillNow')}
                 </td>
                 <td className="px-4 py-2 text-right">
                   <DropdownMenu
@@ -147,7 +159,7 @@ export function CvProjectsTable({
                     onOpenChange={(open) => setOpenMenuId(open ? item.id : null)}
                   >
                     <DropdownMenuTrigger
-                      aria-label={`Actions for ${item.name}`}
+                      aria-label={`${t('common.actions')} ${item.name}`}
                       className="text-primary-foreground hover:bg-primary-hover focus-visible:outline-primary inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors"
                     >
                       <EllipsisVertical size={20} />
@@ -158,8 +170,12 @@ export function CvProjectsTable({
                       sideOffset={4}
                       className="min-w-36"
                     >
-                      <DropdownMenuItem onClick={() => onEdit(item)}>Update</DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => onDelete(item)}>Delete</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => onEdit(item)}>
+                        {t('common.update')}
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => onDelete(item)}>
+                        {t('common.delete')}
+                      </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </td>

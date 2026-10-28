@@ -1,12 +1,14 @@
 'use client';
 
 import Link from 'next/link';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { Button } from '@/components/ui/button';
 import { AuthPage } from './AuthPage';
 import { PasswordInput } from './PasswordInput';
 import { useResetForm } from '../model/useResetForm';
 
 export function ResetForm() {
+  const { t } = useTranslation();
   const {
     password,
     handlePasswordChange,
@@ -24,8 +26,8 @@ export function ResetForm() {
 
   return (
     <AuthPage
-      title="Reset password"
-      subtitle="Here you should write a new password and confirm it"
+      title={t('auth.resetPassword')}
+      subtitle={t('auth.resetPasswordSubtitle')}
       onSubmit={handleSubmit}
       type="forgot"
       submitButton={
@@ -35,14 +37,14 @@ export function ResetForm() {
             <p className="text-primary text-center text-sm font-medium">{generalError}</p>
           )}
           <Button type="submit" variant="primary" className="w-30 py-4" disabled={loading}>
-            {loading ? 'SAVING...' : 'SUBMIT'}
+            {loading ? t('auth.saving') : t('auth.confirm').toUpperCase()}
           </Button>
         </div>
       }
       footer={
         <Link href="/login">
           <Button variant="ghost" className="px-3">
-            GO TO SIGN IN
+            {t('auth.signIn').toUpperCase()}
           </Button>
         </Link>
       }
@@ -50,7 +52,7 @@ export function ResetForm() {
       <PasswordInput
         value={password}
         onChange={handlePasswordChange}
-        placeholder="Password"
+        placeholder={t('common.password')}
         invalid={passwordInvalid}
         helperText={passwordHelperText}
       />
@@ -58,7 +60,7 @@ export function ResetForm() {
       <PasswordInput
         value={confirmPassword}
         onChange={handleConfirmPasswordChange}
-        placeholder="Confirm password"
+        placeholder={t('common.confirmPassword')}
         invalid={confirmPasswordInvalid}
         helperText={confirmPasswordHelperText}
       />

@@ -3,26 +3,27 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ChevronRight, User as UserIcon } from 'lucide-react';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { useProfileUser } from '@/features/profile/model/useProfileUser';
 import { useCv } from '@/features/cvs/model/useCv';
 
 const sections: Record<string, string> = {
-  users: 'Employees',
-  skills: 'Skills',
-  languages: 'Languages',
-  cvs: 'CVs',
-  settings: 'Settings',
+  users: 'nav.employees',
+  skills: 'nav.skills',
+  languages: 'nav.languages',
+  cvs: 'nav.cvs',
+  settings: 'nav.settings',
 };
 
 const userTabs: Record<string, string> = {
-  skills: 'Skills',
-  languages: 'Languages',
+  skills: 'nav.skills',
+  languages: 'nav.languages',
 };
 
 const cvTabs: Record<string, string> = {
-  skills: 'Skills',
-  projects: 'Projects',
-  preview: 'Preview',
+  skills: 'nav.skills',
+  projects: 'nav.projects',
+  preview: 'nav.preview',
 };
 
 function Separator() {
@@ -30,6 +31,7 @@ function Separator() {
 }
 
 function UserCrumbs({ tab }: { tab?: string }) {
+  const { t } = useTranslation();
   const { userData } = useProfileUser();
 
   const profile = userData?.profile;
@@ -46,12 +48,13 @@ function UserCrumbs({ tab }: { tab?: string }) {
         {userName}
       </Link>
       <Separator />
-      <span>{(tab && userTabs[tab]) ?? 'Profile'}</span>
+      <span>{(tab && t(userTabs[tab])) ?? t('nav.profile')}</span>
     </>
   );
 }
 
 function CvCrumbs({ id, tab }: { id: string; tab?: string }) {
+  const { t } = useTranslation();
   const { cv } = useCv();
 
   return (
@@ -64,16 +67,17 @@ function CvCrumbs({ id, tab }: { id: string; tab?: string }) {
         {cv?.name ?? '…'}
       </Link>
       <Separator />
-      <span>{(tab && cvTabs[tab]) ?? 'Details'}</span>
+      <span>{(tab && t(cvTabs[tab])) ?? t('nav.details')}</span>
     </>
   );
 }
 
 export function Breadcrumbs() {
+  const { t } = useTranslation();
   const pathname = usePathname();
 
   const [section, id, tab] = pathname.split('/').filter(Boolean);
-  const sectionLabel = sections[section];
+  const sectionLabel = sections[section] ? t(sections[section]) : undefined;
 
   if (!sectionLabel) return null;
 
@@ -82,7 +86,7 @@ export function Breadcrumbs() {
 
   return (
     <nav
-      aria-label="Breadcrumb"
+      aria-label={t('nav.dashboard')}
       className="text-primary-foreground flex items-center gap-2 px-2 py-4 text-sm"
     >
       {isUserPage || isCvPage ? (

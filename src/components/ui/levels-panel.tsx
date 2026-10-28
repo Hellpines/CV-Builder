@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Check, Plus, Trash2 } from 'lucide-react';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { cn } from 'cn';
 import { Button } from '@/components/ui/button';
 import { ConfirmModal } from '@/components/ui/confirm-modal';
@@ -60,6 +61,7 @@ export function LevelsPanel({
   onUpdate,
   onRemove,
 }: LevelsPanelProps) {
+  const { t } = useTranslation();
   const [modal, setModal] = useState<ModalState>(null);
   const [error, setError] = useState('');
   const [pending, setPending] = useState(false);
@@ -84,7 +86,7 @@ export function LevelsPanel({
       onSuccess?.();
       closeModal();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Something went wrong. Please try again');
+      setError(err instanceof Error ? err.message : t('errors.somethingWentWrong'));
     } finally {
       setPending(false);
     }
@@ -128,7 +130,9 @@ export function LevelsPanel({
                             onClick={() => handleItemClick(item)}
                             aria-pressed={selectionMode ? isSelected : undefined}
                             aria-label={
-                              selectionMode ? `Select ${item.label}` : `Update ${item.label}`
+                              selectionMode
+                                ? `${t('common.select')} ${item.label}`
+                                : `${t('common.update')} ${item.label}`
                             }
                             className={cn(
                               '-mx-3 flex w-70 cursor-pointer items-center gap-3 rounded-md px-4 py-3 text-left transition-colors outline-none',
@@ -153,7 +157,7 @@ export function LevelsPanel({
             ))}
         </div>
       ) : (
-        <p className="text-primary-foreground text-sm">{labels.empty}</p>
+        <p className="text-primary-foreground text-sm">{t(labels.empty)}</p>
       )}
 
       {!readOnly && (
@@ -166,7 +170,7 @@ export function LevelsPanel({
                   className="text-primary-foreground w-54 justify-center"
                   onClick={exitSelection}
                 >
-                  Cancel
+                  {t('common.cancel')}
                 </Button>
                 <Button
                   variant={selected.length ? 'primary' : 'primaryV2'}
@@ -177,13 +181,13 @@ export function LevelsPanel({
                   {!selected.length && <Trash2 size={20} />}
                   {selected.length ? (
                     <div className="flex gap-3">
-                      <p>Delete</p>{' '}
+                      <p>{t('common.delete')}</p>{' '}
                       <p className="bg-background text-primary rounded-full px-1.5">
                         {selected.length}
                       </p>
                     </div>
                   ) : (
-                    labels.remove
+                    t(labels.remove)
                   )}
                 </Button>
               </>
@@ -195,7 +199,7 @@ export function LevelsPanel({
                   onClick={() => setModal({ type: 'add' })}
                 >
                   <Plus size={20} />
-                  {labels.add}
+                  {t(labels.add)}
                 </Button>
                 <Button
                   variant="primaryV2"
@@ -204,7 +208,7 @@ export function LevelsPanel({
                   onClick={() => setSelectionMode(true)}
                 >
                   <Trash2 size={20} />
-                  {labels.remove}
+                  {t(labels.remove)}
                 </Button>
               </>
             )}
@@ -215,12 +219,12 @@ export function LevelsPanel({
             onOpenChange={(open) => {
               if (!open) closeModal();
             }}
-            title={editItem ? labels.editTitle : labels.addTitle}
-            optionLabel={labels.optionLabel}
-            levelLabel={labels.levelLabel}
-            optionRequired={labels.optionRequired}
-            levelRequired={labels.levelRequired}
-            duplicateMessage={labels.duplicate}
+            title={t(editItem ? labels.editTitle : labels.addTitle)}
+            optionLabel={t(labels.optionLabel)}
+            levelLabel={t(labels.levelLabel)}
+            optionRequired={t(labels.optionRequired)}
+            levelRequired={t(labels.levelRequired)}
+            duplicateMessage={t(labels.duplicate)}
             options={editItem ? [{ value: editItem.key, label: editItem.label }] : options}
             levels={levels}
             initial={editItem ? { option: editItem.key, level: editItem.level } : undefined}
@@ -236,8 +240,8 @@ export function LevelsPanel({
             onOpenChange={(open) => {
               if (!open) closeModal();
             }}
-            title={labels.removeTitle}
-            message={labels.removeMessage(selected.length)}
+            title={t(labels.removeTitle)}
+            message={t(labels.removeMessage(selected.length))}
             loading={pending}
             error={error}
             onConfirm={() => run(() => onRemove(selected), exitSelection)}

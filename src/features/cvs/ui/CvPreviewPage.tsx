@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { Button } from '@/components/ui/button';
 import { useCvPdfExport } from '../model/useCvPdfExport';
 import { useCvPreview } from '../model/useCvPreview';
@@ -19,6 +20,7 @@ function PreviewSkeleton() {
 }
 
 export function CvPreviewPage({ cvId }: { cvId: string }) {
+  const { t } = useTranslation();
   const preview = useCvPreview(cvId);
   const exporter = useCvPdfExport(preview.model?.name);
   const documentRef = useRef<HTMLDivElement>(null);
@@ -27,9 +29,9 @@ export function CvPreviewPage({ cvId }: { cvId: string }) {
     if (preview.error && !preview.model) {
       return (
         <div className="flex flex-col items-center gap-4 pt-16 text-center">
-          <p className="text-primary text-sm">Failed to load CV preview</p>
+          <p className="text-primary text-sm">{t('errors.loadCvPreview')}</p>
           <Button variant="secondary" onClick={() => void preview.refetch()}>
-            Retry
+            {t('common.retry')}
           </Button>
         </div>
       );
@@ -40,7 +42,7 @@ export function CvPreviewPage({ cvId }: { cvId: string }) {
     if (!preview.model) {
       return (
         <p className="text-primary-foreground pt-16 text-center text-sm">
-          CV preview is not available
+          {t('errors.cvPreviewUnavailable')}
         </p>
       );
     }
@@ -57,7 +59,7 @@ export function CvPreviewPage({ cvId }: { cvId: string }) {
           disabled={!preview.model || exporter.exporting}
           onClick={() => void exporter.exportPdf(documentRef.current)}
         >
-          {exporter.exporting ? 'Exporting...' : 'Export PDF'}
+          {exporter.exporting ? t('cv.exporting') : t('cv.exportPdf')}
         </Button>
         {exporter.error ? (
           <p className="text-primary max-w-56 text-right text-xs">{exporter.error}</p>

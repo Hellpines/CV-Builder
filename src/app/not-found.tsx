@@ -1,9 +1,11 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { ErrorScreen } from '@/components/ui/error-screen';
 
 export default function NotFound() {
+  const { t } = useTranslation();
   const router = useRouter();
 
   const handleBack = () => {
@@ -13,15 +15,15 @@ export default function NotFound() {
 
   return (
     <ErrorScreen
-      title="Hmm..."
+      title={t('errors.notFoundTitle')}
       description={
         <>
-          This doesn’t seem to be the page you were looking for.
+          {t('errors.notFoundDescription')}
           <br />
-          Let’s get you back on track.
+          {t('errors.notFoundHint')}
         </>
       }
-      actionLabel="Go back"
+      actionLabel={t('common.goBack')}
       onAction={handleBack}
     />
   );

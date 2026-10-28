@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useProfileForm } from '../model/useProfileForm';
@@ -23,6 +24,7 @@ export default function ProfileForm({
   positions,
   isEditable,
 }: ProfileFormProps) {
+  const { t } = useTranslation();
   const {
     firstName,
     setFirstName,
@@ -97,7 +99,9 @@ export default function ProfileForm({
           </h1>
           <p className="text-primary-foreground mb-0.5 text-sm">{userData?.email}</p>
           {formattedCreatedAt && (
-            <p className="text-m text-foreground">A member since {formattedCreatedAt}</p>
+            <p className="text-m text-foreground">
+              {t('common.memberSince', { date: formattedCreatedAt })}
+            </p>
           )}
         </div>
       </div>
@@ -105,7 +109,7 @@ export default function ProfileForm({
       <div className="relative mx-auto grid w-full max-w-212.5 grid-cols-2 gap-6">
         <Input
           type="text"
-          placeholder="First Name"
+          placeholder={t('common.firstName')}
           value={firstName}
           disabled={!isEditable}
           onChange={(e) => setFirstName(e.target.value)}
@@ -113,32 +117,32 @@ export default function ProfileForm({
 
         <Input
           type="text"
-          placeholder="Last Name"
+          placeholder={t('common.lastName')}
           value={lastName}
           disabled={!isEditable}
           onChange={(e) => setLastName(e.target.value)}
         />
 
         <FormSelect
-          label="Department"
-          placeholder="Select department"
+          label={t('common.department')}
+          placeholder={t('common.selectDepartment')}
           options={departments}
           value={departmentId}
           onChange={setDepartmentId}
           disabled={!isEditable}
           invalid={departmentInvalid}
-          errorText="Department is required"
+          errorText={t('validation.departmentRequired')}
         />
 
         <FormSelect
-          label="Position"
-          placeholder="Select position"
+          label={t('common.position')}
+          placeholder={t('common.selectPosition')}
           options={positions}
           value={positionId}
           onChange={setPositionId}
           disabled={!isEditable}
           invalid={positionInvalid}
-          errorText="Position is required"
+          errorText={t('validation.positionRequired')}
         />
       </div>
 
@@ -150,11 +154,11 @@ export default function ProfileForm({
               onClick={handleVerifyEmail}
               disabled={sendingCode || loading}
             >
-              {sendingCode ? 'Sending...' : 'Verify email'}
+              {sendingCode ? t('common.sending') : t('common.verifyEmail')}
             </Button>
           )}
           <Button variant="primary" onClick={onUpdate} disabled={loading}>
-            {loading ? 'Saving...' : 'Update'}
+            {loading ? t('common.saving') : t('common.update')}
           </Button>
         </div>
       )}

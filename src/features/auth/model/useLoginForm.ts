@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useMutation } from '@apollo/client/react';
 import { useRouter } from 'next/navigation';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { useAuthStore } from './useAuthStore';
 import { LOGIN_MUTATION } from '../api/AuthMutations';
 import { toast } from '@/shared/lib/toast';
@@ -8,6 +9,7 @@ import { toast } from '@/shared/lib/toast';
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function useLoginForm() {
+  const { t } = useTranslation();
   const router = useRouter();
   const setAuth = useAuthStore((state) => state.setAuth);
 
@@ -24,7 +26,7 @@ export function useLoginForm() {
     onCompleted: (data) => {
       const { access_token, refresh_token, user } = data.login;
       setAuth(access_token, refresh_token, user);
-      toast.success('Logged in successfully');
+      toast.success(t('notifications.loginSuccess'));
       router.push('/users');
     },
     onError: (err) => {
@@ -36,11 +38,11 @@ export function useLoginForm() {
         msg.includes('user') ||
         msg.includes('found')
       ) {
-        setAuthError('Invalid email or password');
-        toast.error('Invalid email or password');
+        setAuthError(t('notifications.invalidCredentials'));
+        toast.error(t('notifications.invalidCredentials'));
       } else {
-        setGeneralError('Something went wrong. Please try again later');
-        toast.error('Something went wrong. Please try again later');
+        setGeneralError(t('notifications.generalError'));
+        toast.error(t('notifications.generalError'));
       }
     },
   });

@@ -1,11 +1,13 @@
 'use client';
 
 import type { ReactNode } from 'react';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { ErrorScreen } from '@/components/ui/error-screen';
 import { useIsMobile } from '@/shared/hooks/useIsMobile';
 import { useOnlineStatus } from '@/shared/hooks/useOnlineStatus';
 
 export function AppGuard({ children }: { children: ReactNode }) {
+  const { t } = useTranslation();
   const isMobile = useIsMobile();
   const isOnline = useOnlineStatus();
 
@@ -14,12 +16,12 @@ export function AppGuard({ children }: { children: ReactNode }) {
   if (isMobile) {
     screen = (
       <ErrorScreen
-        title="Oops"
+        title={t('errors.mobileTitle')}
         description={
           <>
-            This app isn’t supported on mobile devices.
+            {t('errors.mobileDescription')}
             <br />
-            Please open it on a desktop or tablet to continue.
+            {t('errors.mobileHint')}
           </>
         }
       />
@@ -27,15 +29,15 @@ export function AppGuard({ children }: { children: ReactNode }) {
   } else if (!isOnline) {
     screen = (
       <ErrorScreen
-        title="Oops"
+        title={t('errors.networkTitle')}
         description={
           <>
-            No internet connection.
+            {t('errors.networkDescription')}
             <br />
-            Please check your network and try again.
+            {t('errors.networkHint')}
           </>
         }
-        actionLabel="Retry"
+        actionLabel={t('common.retry')}
         onAction={() => {
           if (navigator.onLine) window.location.reload();
         }}

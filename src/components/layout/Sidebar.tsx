@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ChevronLeft, ChevronRight, FileUser, Languages, TrendingUp, Users } from 'lucide-react';
 import { useState, useSyncExternalStore } from 'react';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { Button } from '../ui/button';
 import { UserMenu } from './UserMenu';
 
@@ -30,19 +31,19 @@ function getDarkModeSnapshot() {
   return document.documentElement.classList.contains('dark');
 }
 
-const navItems = [
-  { href: '/users', label: 'Employees', Icon: Users },
-  { href: '/skills', label: 'Skills', Icon: TrendingUp },
-  { href: '/languages', label: 'Languages', Icon: Languages },
-  { href: '/cvs', label: 'CVs', Icon: FileUser },
-];
-
 export default function Sidebar() {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(true);
   const pathname = usePathname();
   const isDarkMode = useSyncExternalStore(subscribeToDarkMode, getDarkModeSnapshot, () => false);
 
   const logoSrc = isDarkMode ? '/logo-light.svg' : '/logo-dark.svg';
+  const navItems = [
+    { href: '/users', labelKey: 'nav.employees', Icon: Users },
+    { href: '/skills', labelKey: 'nav.skills', Icon: TrendingUp },
+    { href: '/languages', labelKey: 'nav.languages', Icon: Languages },
+    { href: '/cvs', labelKey: 'nav.cvs', Icon: FileUser },
+  ] as const;
 
   const handleSidebar = () => {
     setIsOpen((prevState) => !prevState);
@@ -57,13 +58,14 @@ export default function Sidebar() {
       >
         <div className="flex h-full flex-col">
           <div className="flex items-center gap-4 p-4">
-            <Image src={logoSrc} alt="CV Builder Logo" width={24} height={24} />
+            <Image src={logoSrc} alt={t('sidebar.cvBuilderLogo')} width={24} height={24} />
             {isOpen && <h2 className="text-foreground text-lg whitespace-nowrap">CV Builder</h2>}
           </div>
 
           <nav className="space-y-2">
-            {navItems.map(({ href, label, Icon }) => {
+            {navItems.map(({ href, labelKey, Icon }) => {
               const isActive = pathname === href || pathname.startsWith(href);
+              const label = t(labelKey);
 
               return (
                 <Link
@@ -96,7 +98,7 @@ export default function Sidebar() {
           'absolute top-9 p-1 transition-all duration-400',
           isOpen ? '-right-4' : '-right-6',
         ].join(' ')}
-        aria-label={isOpen ? 'Hide sidebar' : 'Open sidebar'}
+        aria-label={isOpen ? t('sidebar.toggleClose') : t('sidebar.toggleOpen')}
       >
         {isOpen ? <ChevronLeft size={24} /> : <ChevronRight size={24} />}
       </Button>

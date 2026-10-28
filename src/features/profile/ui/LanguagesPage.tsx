@@ -1,5 +1,8 @@
 'use client';
 
+import { useTranslation } from '@/shared/i18n/useTranslation';
+
 export function LanguagesPage() {
-  return <div className="text-foregroundt-6">Languages</div>;
+  const { t } = useTranslation();
+  return <div className="text-foregroundt-6">{t('nav.languages')}</div>;
 }

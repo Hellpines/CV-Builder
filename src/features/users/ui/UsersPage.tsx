@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { AppLoader } from '@/components/ui/app-loader';
 import UsersTable from './UsersTable';
 import { useQuery } from '@apollo/client/react';
@@ -22,6 +23,7 @@ interface GetUsersQueryResponse {
 }
 
 export function UsersPage() {
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
@@ -69,7 +71,9 @@ export function UsersPage() {
 
       {loading && !result && <AppLoader size={72} />}
       {error && (
-        <div className="text-primary pl-10 text-sm">Failed to load users: {error.message}</div>
+        <div className="text-primary pl-10 text-sm">
+          {t('errors.loadUsers')}: {error.message}
+        </div>
       )}
 
       {!error && result && (

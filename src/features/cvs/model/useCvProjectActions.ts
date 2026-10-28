@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { useMutation, useQuery } from '@apollo/client/react';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { toast } from '@/shared/lib/toast';
 import {
   ADD_CV_PROJECT_MUTATION,
@@ -12,6 +13,7 @@ import type { CvProjectPayload } from '../types/CvProjectTypes';
 const OPTIONS_LIMIT = 100;
 
 export function useCvProjectActions(cvId?: string) {
+  const { t } = useTranslation();
   const { data: catalogData } = useQuery(GET_PROJECTS_CATALOG, {
     variables: { params: { limit: OPTIONS_LIMIT } },
   });
@@ -33,9 +35,9 @@ export function useCvProjectActions(cvId?: string) {
     if (!cvId) throw new Error('CV not found');
     try {
       await addProject({ variables: { project: { cvId, ...payload } } });
-      toast.success('Project added successfully');
+      toast.success(t('notifications.projectAdded'));
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : 'Failed to add project');
+      toast.error(err instanceof Error ? err.message : t('notifications.projectAddFailed'));
       throw err;
     }
   };
@@ -44,9 +46,9 @@ export function useCvProjectActions(cvId?: string) {
     if (!cvId) throw new Error('CV not found');
     try {
       await updateProject({ variables: { project: { cvId, ...payload } } });
-      toast.success('Project updated successfully');
+      toast.success(t('notifications.projectUpdated'));
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : 'Failed to update project');
+      toast.error(err instanceof Error ? err.message : t('notifications.projectUpdateFailed'));
       throw err;
     }
   };
@@ -55,9 +57,9 @@ export function useCvProjectActions(cvId?: string) {
     if (!cvId) throw new Error('CV not found');
     try {
       await removeProject({ variables: { project: { cvId, projectId } } });
-      toast.success('Project removed successfully');
+      toast.success(t('notifications.projectRemoved'));
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : 'Failed to remove project');
+      toast.error(err instanceof Error ? err.message : t('notifications.projectRemoveFailed'));
       throw err;
     }
   };

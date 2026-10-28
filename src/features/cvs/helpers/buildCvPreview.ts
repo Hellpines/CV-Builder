@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import { formatMonthYear, parseDate } from '@/shared/lib/date';
 import type {
   CvPreviewData,
@@ -11,7 +12,9 @@ import { groupPreviewSkills } from './groupPreviewSkills';
 
 function formatPeriod(project: CvProjectItem): string {
   const start = formatMonthYear(parseDate(project.start_date));
-  const end = project.end_date ? formatMonthYear(parseDate(project.end_date)) : 'Till now';
+  const end = project.end_date
+    ? formatMonthYear(parseDate(project.end_date))
+    : i18next.t('cv.tillNow');
   return `${start} – ${end}`;
 }
 

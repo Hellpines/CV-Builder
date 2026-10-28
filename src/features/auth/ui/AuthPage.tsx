@@ -1,12 +1,8 @@
 'use client';
 
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { AuthPageProps } from '../types/AuthTypes';
 import { Tabs } from '@/components/ui/tabs';
-
-const tabs = [
-  { href: '/login', label: 'SIGN IN' },
-  { href: '/register', label: 'SIGN UP' },
-];
 
 export function AuthPage({
   title,
@@ -17,6 +13,13 @@ export function AuthPage({
   submitButton,
   footer,
 }: AuthPageProps) {
+  const { t } = useTranslation();
+
+  const tabs = [
+    { href: '/login', label: t('auth.signIn').toUpperCase() },
+    { href: '/register', label: t('auth.signUp').toUpperCase() },
+  ];
+
   return (
     <div className="flex min-h-screen w-full flex-col">
       {type === 'sign' ? (

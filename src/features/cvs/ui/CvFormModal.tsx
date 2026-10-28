@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Modal } from '@/components/ui/modal';
@@ -22,6 +23,7 @@ interface CvFormProps {
 }
 
 function CvForm({ mode, initial, loading, error, onSubmit, onCancel }: CvFormProps) {
+  const { t } = useTranslation();
   const [values, setValues] = useState<CvFormValues>(initial);
   const [touched, setTouched] = useState<Record<Field, boolean>>({
     name: false,
@@ -30,9 +32,9 @@ function CvForm({ mode, initial, loading, error, onSubmit, onCancel }: CvFormPro
   });
 
   const errors: Record<Field, string | undefined> = {
-    name: values.name.trim() ? undefined : 'Name is required',
-    education: values.education.trim() ? undefined : 'Education is required',
-    description: values.description.trim() ? undefined : 'Description is required',
+    name: values.name.trim() ? undefined : t('validation.nameRequired'),
+    education: values.education.trim() ? undefined : t('validation.educationRequired'),
+    description: values.description.trim() ? undefined : t('validation.descriptionRequired'),
   };
 
   const visibleError = (field: Field) => (touched[field] ? errors[field] : undefined);
@@ -60,7 +62,7 @@ function CvForm({ mode, initial, loading, error, onSubmit, onCancel }: CvFormPro
     >
       <Input
         type="text"
-        placeholder="Name"
+        placeholder={t('common.name')}
         value={values.name}
         maxLength={MAX_LENGTH}
         invalid={Boolean(visibleError('name'))}
@@ -70,7 +72,7 @@ function CvForm({ mode, initial, loading, error, onSubmit, onCancel }: CvFormPro
       />
       <Input
         type="text"
-        placeholder="Education"
+        placeholder={t('common.education')}
         value={values.education}
         maxLength={MAX_LENGTH}
         invalid={Boolean(visibleError('education'))}
@@ -79,7 +81,7 @@ function CvForm({ mode, initial, loading, error, onSubmit, onCancel }: CvFormPro
         onBlur={touch('education')}
       />
       <Textarea
-        placeholder="Description"
+        placeholder={t('common.description')}
         value={values.description}
         invalid={Boolean(visibleError('description'))}
         helperText={visibleError('description')}
@@ -91,10 +93,10 @@ function CvForm({ mode, initial, loading, error, onSubmit, onCancel }: CvFormPro
 
       <div className="flex justify-end gap-4">
         <Button type="button" variant="ghost" onClick={onCancel}>
-          Cancel
+          {t('common.cancel')}
         </Button>
         <Button type="submit" variant="primary" disabled={!canSubmit}>
-          {loading ? 'Saving...' : mode === 'create' ? 'Create' : 'Save'}
+          {loading ? t('common.saving') : mode === 'create' ? t('cv.create') : t('common.save')}
         </Button>
       </div>
     </form>
@@ -120,11 +122,13 @@ export function CvFormModal({
   error,
   onSubmit,
 }: CvFormModalProps) {
+  const { t } = useTranslation();
+
   return (
     <Modal
       open={open}
       onOpenChange={onOpenChange}
-      title={mode === 'create' ? 'Create CV' : 'Update CV'}
+      title={mode === 'create' ? t('cv.create') : t('cv.update')}
       className="max-w-lg"
     >
       <CvForm

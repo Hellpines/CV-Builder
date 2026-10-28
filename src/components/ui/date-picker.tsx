@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { Popover } from '@base-ui/react/popover';
 import { CalendarDays, X } from 'lucide-react';
 import { cn } from 'cn';
@@ -32,6 +33,7 @@ export function DatePicker({
   clearable,
   onTouched,
 }: DatePickerProps) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
 
   const selected = parseDate(value);
@@ -89,7 +91,7 @@ export function DatePicker({
       {clearable && selected && !disabled ? (
         <button
           type="button"
-          aria-label={`Clear ${label}`}
+          aria-label={`${t('common.clear')} ${label}`}
           onClick={() => onChange('')}
           className="text-input-disabled-text hover:text-foreground absolute top-1/2 right-11 -translate-y-1/2 cursor-pointer transition-colors"
         >

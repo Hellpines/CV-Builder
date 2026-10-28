@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { Button } from '@/components/ui/button';
 import { DatePicker } from '@/components/ui/date-picker';
 import { Input } from '@/components/ui/input';
@@ -56,6 +57,7 @@ function CvProjectForm({
   onSubmit,
   onCancel,
 }: CvProjectFormProps) {
+  const { t } = useTranslation();
   const [values, setValues] = useState<CvProjectFormValues>(initial);
   const [touched, setTouched] = useState<Record<Field, boolean>>({
     project: false,
@@ -78,20 +80,20 @@ function CvProjectForm({
     );
 
   const errors: Record<Field, string | undefined> = {
-    project: values.projectId ? undefined : 'Project is required',
+    project: values.projectId ? undefined : t('validation.projectRequired'),
     startDate: !values.startDate
-      ? 'Start date is required'
+      ? t('validation.startDateRequired')
       : isOutsideProject(start)
-        ? 'Start date must be within project duration'
+        ? t('validation.startDateOutOfRange')
         : undefined,
     endDate: !values.endDate
       ? undefined
       : isOutsideProject(end)
-        ? 'End date must be within project duration'
+        ? t('validation.endDateOutOfRange')
         : start && end && end.getTime() < start.getTime()
-          ? 'End date cannot be earlier than start date'
+          ? t('validation.endDateBeforeStart')
           : undefined,
-    roles: values.roles.length ? undefined : 'At least one role must be selected',
+    roles: values.roles.length ? undefined : t('validation.roleRequired'),
   };
 
   const hasValue: Record<Field, boolean> = {
@@ -141,8 +143,8 @@ function CvProjectForm({
       className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2"
     >
       <SelectField
-        label="Name"
-        placeholder="Select project"
+        label={t('common.name')}
+        placeholder={t('common.selectProject')}
         value={values.projectId}
         options={projects.map((item) => ({ value: item.id, label: item.name }))}
         disabled={mode === 'edit'}
@@ -153,14 +155,14 @@ function CvProjectForm({
       />
       <Input
         className="h-12 text-sm"
-        placeholder="Responsibilities"
+        placeholder={t('common.responsibilities')}
         disabled
         value={project?.domain ?? ''}
         readOnly
       />
 
       <DatePicker
-        label="Start Date"
+        label={t('common.startDate')}
         value={values.startDate}
         minDate={project?.start_date}
         maxDate={project?.end_date}
@@ -171,7 +173,7 @@ function CvProjectForm({
         onTouched={touch('startDate')}
       />
       <DatePicker
-        label="End Date"
+        label={t('common.endDate')}
         value={values.endDate}
         minDate={values.startDate || project?.start_date}
         maxDate={project?.end_date}
@@ -186,7 +188,7 @@ function CvProjectForm({
       <div className="sm:col-span-2">
         <Textarea
           className="min-h-28"
-          placeholder="Description"
+          placeholder={t('common.description')}
           value={project?.description ?? ''}
           disabled
           readOnly
@@ -195,8 +197,8 @@ function CvProjectForm({
 
       <div className="sm:col-span-2">
         <MultiSelect
-          label="Environment"
-          placeholder="Environment"
+          label={t('common.environment')}
+          placeholder={t('common.environment')}
           options={(project?.environment ?? []).map((item) => ({ value: item, label: item }))}
           value={project?.environment ?? []}
           onValueChange={() => undefined}
@@ -206,8 +208,8 @@ function CvProjectForm({
 
       <div className="sm:col-span-2">
         <MultiSelect
-          label="Roles"
-          placeholder="Roles"
+          label={t('common.roles')}
+          placeholder={t('common.roles')}
           display="text"
           options={roleOptions}
           value={values.roles}
@@ -222,23 +224,29 @@ function CvProjectForm({
 
       <div className="sm:col-span-2">
         <Input
-          placeholder="Responsibilities"
+          placeholder={t('common.responsibilities')}
           value={values.responsibilities}
           onChange={(event) =>
             setValues((prev) => ({ ...prev, responsibilities: event.target.value }))
           }
         />
-        <p className="text-primary-foreground ml-2 text-sm">One responsibility per space</p>
+        <p className="text-primary-foreground ml-2 text-sm">
+          {t('common.oneResponsibilityPerSpace')}
+        </p>
       </div>
 
       {error ? <p className="text-primary text-sm sm:col-span-2">{error}</p> : null}
 
       <div className="flex justify-end gap-4 sm:col-span-2">
         <Button type="button" variant="secondary" onClick={onCancel}>
-          Cancel
+          {t('common.cancel')}
         </Button>
         <Button type="submit" variant="primary" disabled={!canSubmit}>
-          {loading ? 'Saving...' : mode === 'add' ? 'Add' : 'Update'}
+          {loading
+            ? t('common.saving')
+            : mode === 'add'
+              ? t('cv.projectCreate')
+              : t('common.update')}
         </Button>
       </div>
     </form>
@@ -268,11 +276,13 @@ export function CvProjectModal({
   error,
   onSubmit,
 }: CvProjectModalProps) {
+  const { t } = useTranslation();
+
   return (
     <Modal
       open={open}
       onOpenChange={onOpenChange}
-      title={mode === 'add' ? 'Add project' : 'Update project'}
+      title={mode === 'add' ? t('cv.projectCreate') : t('cv.projectUpdate')}
       className="w-215 overflow-y-auto"
     >
       <CvProjectForm

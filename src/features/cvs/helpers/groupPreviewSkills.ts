@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import type { SkillMastery } from '@/shared/types/user';
 import type { PreviewCategory } from '../types/CvPreviewTypes';
 
@@ -12,7 +13,11 @@ export interface PreviewSkillBucket extends CategoryInfo {
   skills: SkillMastery[];
 }
 
-const OTHER: CategoryInfo = { id: 'other', name: 'Other', order: Number.MAX_SAFE_INTEGER };
+const OTHER: CategoryInfo = {
+  id: 'other',
+  name: i18next.t('common.other') || 'Other',
+  order: Number.MAX_SAFE_INTEGER,
+};
 
 function indexCategories(categories: PreviewCategory[]) {
   const byId = new Map<string, CategoryInfo>();

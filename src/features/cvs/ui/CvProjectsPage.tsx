@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Plus } from 'lucide-react';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { Button } from '@/components/ui/button';
 import { ConfirmModal } from '@/components/ui/confirm-modal';
 import { SearchInput } from '@/components/ui/search-input';
@@ -19,6 +20,7 @@ type ModalState =
   | null;
 
 export function CvProjectsPage({ cvId }: { cvId: string }) {
+  const { t } = useTranslation();
   const list = useCvProjects(cvId);
   const actions = useCvProjectActions(cvId);
 
@@ -38,7 +40,7 @@ export function CvProjectsPage({ cvId }: { cvId: string }) {
       await action();
       closeModal();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Something went wrong. Please try again');
+      setError(err instanceof Error ? err.message : t('errors.somethingWentWrong'));
     } finally {
       setPending(false);
     }
@@ -60,22 +62,22 @@ export function CvProjectsPage({ cvId }: { cvId: string }) {
           onClick={() => setModal({ type: 'add' })}
         >
           <Plus size={20} />
-          Add project
+          {t('cv.projectCreate')}
         </Button>
       </div>
 
       {list.error ? (
         <div className="flex flex-col items-center gap-4 pt-16 text-center">
-          <p className="text-primary text-sm">Failed to load projects</p>
+          <p className="text-primary text-sm">{t('errors.loadProjects')}</p>
           <Button variant="secondary" onClick={() => void list.refetch()}>
-            Retry
+            {t('common.retry')}
           </Button>
         </div>
       ) : (
         <CvProjectsTable
           items={list.items}
           loading={list.initialLoading}
-          emptyText={list.isSearching ? 'No projects found' : 'No projects added yet'}
+          emptyText={list.isSearching ? t('cv.noProjectsFound') : t('cv.noProjectsAddedYet')}
           sortKey={list.sortKey}
           sortDirection={list.sortDirection}
           onSort={list.toggleSort}
@@ -115,8 +117,8 @@ export function CvProjectsPage({ cvId }: { cvId: string }) {
         onOpenChange={(open) => {
           if (!open) closeModal();
         }}
-        title="Remove project"
-        message={`Are you sure you want to remove project ${deleteItem?.name ?? ''}?`}
+        title={t('errors.deleteProjectTitle')}
+        message={t('cv.deleteProjectMessage', { name: deleteItem?.name ?? '' })}
         loading={pending}
         error={error}
         onConfirm={() => {

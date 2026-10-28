@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { useRouter } from 'next/navigation';
 import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -19,6 +20,7 @@ type ModalState =
 const MIN_PAGE_SIZE = 10;
 
 export function CvsPage() {
+  const { t } = useTranslation();
   const router = useRouter();
   const cvs = useCvs();
   const actions = useCvActions(cvs.refetch);
@@ -40,7 +42,7 @@ export function CvsPage() {
       onSuccess?.();
       closeModal();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Something went wrong. Please try again');
+      setError(err instanceof Error ? err.message : t('errors.somethingWentWrong'));
     } finally {
       setPending(false);
     }
@@ -59,15 +61,15 @@ export function CvsPage() {
           onClick={() => setModal({ type: 'create' })}
         >
           <Plus size={20} />
-          Create CV
+          {t('cv.create')}
         </Button>
       </div>
 
       {cvs.error ? (
         <div className="flex flex-col items-center gap-4 pt-16 text-center">
-          <p className="text-primary text-sm">Failed to load CVs</p>
+          <p className="text-primary text-sm">{t('errors.loadCvs')}</p>
           <Button variant="secondary" onClick={() => void cvs.refetch()}>
-            Retry
+            {t('common.retry')}
           </Button>
         </div>
       ) : (
@@ -77,7 +79,7 @@ export function CvsPage() {
             fallbackEmail={cvs.email}
             loading={cvs.initialLoading}
             busy={cvs.loading && !cvs.initialLoading}
-            emptyText={cvs.isSearching ? 'No CVs found' : 'You have no CVs yet'}
+            emptyText={cvs.isSearching ? t('errors.noCvsFound') : t('errors.noCVsYet')}
             sortDirection={cvs.sortDirection}
             onSort={cvs.toggleSort}
             onView={(cv) => router.push(`/cvs/${cv.id}`)}
@@ -124,8 +126,8 @@ export function CvsPage() {
         onOpenChange={(open) => {
           if (!open) closeModal();
         }}
-        title="Delete CV"
-        message={`Are you sure you want to delete CV ${deleteCv?.name ?? ''}?`}
+        title={t('errors.deleteCvTitle')}
+        message={t('errors.deleteCvMessage', { name: deleteCv?.name ?? '' })}
         loading={pending}
         error={error}
         onConfirm={() => {

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useMutation } from '@apollo/client/react';
 import { useRouter } from 'next/navigation';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { useAuthStore } from './useAuthStore';
 import { SIGNUP_MUTATION } from '../api/AuthMutations';
 import { toast } from '@/shared/lib/toast';
@@ -8,6 +9,7 @@ import { toast } from '@/shared/lib/toast';
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function useRegisterForm() {
+  const { t } = useTranslation();
   const router = useRouter();
   const setAuth = useAuthStore((state) => state.setAuth);
   const startVerification = useAuthStore((state) => state.startVerification);
@@ -28,19 +30,19 @@ export function useRegisterForm() {
       const { access_token, refresh_token, user } = data.signup;
       startVerification();
       setAuth(access_token, refresh_token, user);
-      toast.success('Account created. Please verify your email.');
+      toast.success(t('notifications.accountCreatedVerify'));
       router.push('/verify-email');
     },
     onError: (err) => {
       const msg = err.message.toLowerCase();
       if (msg.includes('exist') || msg.includes('already') || msg.includes('duplicate')) {
-        setServerError('An account with this email already exists');
+        setServerError(t('notifications.accountExists'));
         setGeneralError(null);
-        toast.error('An account with this email already exists');
+        toast.error(t('notifications.accountExists'));
       } else {
-        setGeneralError('Something went wrong. Please try again later');
+        setGeneralError(t('notifications.generalError'));
         setServerError(null);
-        toast.error('Something went wrong. Please try again later');
+        toast.error(t('notifications.generalError'));
       }
     },
   });

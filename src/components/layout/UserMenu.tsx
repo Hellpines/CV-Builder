@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useApolloClient } from '@apollo/client/react';
 import { LogOut, Settings, User } from 'lucide-react';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,6 +16,7 @@ import {
 import { useAuthStore } from '@/features/auth/model/useAuthStore';
 
 export function UserMenu({ isOpen }: { isOpen: boolean }) {
+  const { t } = useTranslation();
   const router = useRouter();
   const client = useApolloClient();
   const user = useAuthStore((state) => state.user);
@@ -25,7 +27,8 @@ export function UserMenu({ isOpen }: { isOpen: boolean }) {
   const profileFirstName = profile?.first_name || '';
   const profileLastName = profile?.last_name || '';
   const initials = `${profileFirstName[0] || ''}${profileLastName[0] || ''}`.toUpperCase() || 'U';
-  const displayName = profile?.full_name || profile?.first_name || profile?.last_name || 'No name';
+  const displayName =
+    profile?.full_name || profile?.first_name || profile?.last_name || t('user.noName');
 
   const handleLogout = async () => {
     logout();
@@ -64,16 +67,16 @@ export function UserMenu({ isOpen }: { isOpen: boolean }) {
       >
         <DropdownMenuItem render={<Link href={`/users/${user?.id}`} />} className={itemClass}>
           <User size={20} />
-          {isOpen && <span>Profile</span>}
+          {isOpen && <span>{t('common.profile')}</span>}
         </DropdownMenuItem>
         <DropdownMenuItem render={<Link href="/settings" />} className={itemClass}>
           <Settings size={20} />
-          {isOpen && <span>Settings</span>}
+          {isOpen && <span>{t('common.settings')}</span>}
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleLogout} className={itemClass}>
           <LogOut size={20} />
-          {isOpen && <span>Logout</span>}
+          {isOpen && <span>{t('common.logout')}</span>}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { Button } from '@/components/ui/button';
 import { Modal } from '@/components/ui/modal';
 
@@ -22,6 +23,8 @@ export function ConfirmModal({
   error,
   onConfirm,
 }: ConfirmModalProps) {
+  const { t } = useTranslation();
+
   return (
     <Modal open={open} onOpenChange={onOpenChange} title={title}>
       <p className="text-foreground mb-6 text-sm">{message}</p>
@@ -35,10 +38,10 @@ export function ConfirmModal({
           onClick={() => onOpenChange(false)}
           className="w-40"
         >
-          Cancel
+          {t('common.cancel')}
         </Button>
         <Button variant="primary" disabled={loading} onClick={onConfirm} className="w-40">
-          {loading ? 'Removing...' : 'Confirm'}
+          {loading ? t('common.removing') : t('common.confirm')}
         </Button>
       </div>
     </Modal>

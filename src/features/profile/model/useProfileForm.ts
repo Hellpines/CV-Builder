@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useMutation } from '@apollo/client/react';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import {
   UPDATE_PROFILE_MUTATION,
   UPDATE_USER_MUTATION,
@@ -30,6 +31,7 @@ interface FormEdits {
 }
 
 export function useProfileForm(userData: User | undefined, isEditable: boolean) {
+  const { t } = useTranslation();
   const [edits, setEdits] = useState<FormEdits>({});
 
   const firstName = edits.firstName ?? userData?.profile?.first_name ?? '';
@@ -154,9 +156,9 @@ export function useProfileForm(userData: User | undefined, isEditable: boolean) 
 
       clearAvatar();
       setAvatarRemoved(false);
-      toast.success('Profile updated successfully!');
+      toast.success(t('notifications.profileUpdated'));
     } catch (err: unknown) {
-      const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
+      const errorMessage = err instanceof Error ? err.message : t('errors.somethingWentWrong');
       console.error('Error updating profile:', err);
       toast.error(errorMessage);
     }

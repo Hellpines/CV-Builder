@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -28,6 +29,7 @@ interface CvDetailsFormProps {
 }
 
 function CvDetailsForm({ cv, onChanged }: CvDetailsFormProps) {
+  const { t } = useTranslation();
   const actions = useCvActions(onChanged);
 
   const [edits, setEdits] = useState<Partial<CvFormValues>>({});
@@ -41,9 +43,9 @@ function CvDetailsForm({ cv, onChanged }: CvDetailsFormProps) {
   };
 
   const errors: Record<Field, string | undefined> = {
-    name: values.name.trim() ? undefined : 'Name is required',
-    education: values.education.trim() ? undefined : 'Education is required',
-    description: values.description.trim() ? undefined : 'Description is required',
+    name: values.name.trim() ? undefined : t('validation.nameRequired'),
+    education: values.education.trim() ? undefined : t('validation.educationRequired'),
+    description: values.description.trim() ? undefined : t('validation.descriptionRequired'),
   };
 
   const visibleError = (field: Field) => (edits[field] !== undefined ? errors[field] : undefined);
@@ -74,7 +76,7 @@ function CvDetailsForm({ cv, onChanged }: CvDetailsFormProps) {
       });
       setEdits({});
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Something went wrong. Please try again');
+      setError(err instanceof Error ? err.message : t('errors.somethingWentWrong'));
     } finally {
       setSaving(false);
     }
@@ -88,7 +90,7 @@ function CvDetailsForm({ cv, onChanged }: CvDetailsFormProps) {
     >
       <Input
         type="text"
-        placeholder="Name"
+        placeholder={t('common.name')}
         value={values.name}
         maxLength={MAX_LENGTH}
         invalid={Boolean(visibleError('name'))}
@@ -97,7 +99,7 @@ function CvDetailsForm({ cv, onChanged }: CvDetailsFormProps) {
       />
       <Input
         type="text"
-        placeholder="Education"
+        placeholder={t('common.education')}
         value={values.education}
         maxLength={MAX_LENGTH}
         invalid={Boolean(visibleError('education'))}
@@ -106,7 +108,7 @@ function CvDetailsForm({ cv, onChanged }: CvDetailsFormProps) {
       />
       <Textarea
         className="min-h-36"
-        placeholder="Description"
+        placeholder={t('common.description')}
         value={values.description}
         invalid={Boolean(visibleError('description'))}
         helperText={visibleError('description')}
@@ -117,7 +119,7 @@ function CvDetailsForm({ cv, onChanged }: CvDetailsFormProps) {
 
       <div className="flex justify-end">
         <Button type="submit" variant="primary" disabled={!canSubmit}>
-          {saving ? 'Saving...' : 'Update'}
+          {saving ? t('common.saving') : t('common.update')}
         </Button>
       </div>
     </form>
@@ -125,14 +127,15 @@ function CvDetailsForm({ cv, onChanged }: CvDetailsFormProps) {
 }
 
 export function CvDetailsPage() {
+  const { t } = useTranslation();
   const { cv, error, refetch } = useCv();
 
   if (error && !cv) {
     return (
       <div className="flex flex-col items-center gap-4 pt-16 text-center">
-        <p className="text-primary text-sm">Failed to load CV details</p>
+        <p className="text-primary text-sm">{t('errors.loadCvDetails')}</p>
         <Button variant="secondary" onClick={() => void refetch()}>
-          Retry
+          {t('common.retry')}
         </Button>
       </div>
     );

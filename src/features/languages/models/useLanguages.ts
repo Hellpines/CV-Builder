@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { skipToken, useQuery } from '@apollo/client/react';
+import { i18n } from '@/shared/i18n/i18n';
 import type { LevelGroup } from '@/components/ui/levels-panel';
 import { useAuthStore } from '@/features/auth/model/useAuthStore';
 import { GET_PROFILE_LANGUAGES } from '../api/LanguageQueries';
@@ -22,7 +23,7 @@ export function useLanguages(userId?: string) {
     return [
       {
         id: 'current',
-        title: 'Current languages',
+        title: i18n.t('languages.current'),
         items: languages.map((language) => {
           const level = PROFICIENCY_BY_VALUE[language.proficiency] ?? PROFICIENCY_LEVELS[0];
           return {

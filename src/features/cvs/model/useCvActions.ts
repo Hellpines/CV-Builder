@@ -1,10 +1,12 @@
 import { useMutation } from '@apollo/client/react';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { useAuthStore } from '@/features/auth/model/useAuthStore';
 import { toast } from '@/shared/lib/toast';
 import { CREATE_CV_MUTATION, DELETE_CV_MUTATION, UPDATE_CV_MUTATION } from '../api/CvMutations';
 import type { CvFormValues } from '../types/CvTypes';
 
 export function useCvActions(onChanged: () => Promise<unknown>) {
+  const { t } = useTranslation();
   const userId = useAuthStore((state) => state.user?.id);
 
   const [createCv] = useMutation(CREATE_CV_MUTATION);
@@ -16,9 +18,9 @@ export function useCvActions(onChanged: () => Promise<unknown>) {
     try {
       await createCv({ variables: { cv: { ...values, userId } } });
       await onChanged();
-      toast.success('CV created successfully');
+      toast.success(t('notifications.cvCreated'));
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : 'Failed to create CV');
+      toast.error(err instanceof Error ? err.message : t('notifications.cvCreateFailed'));
       throw err;
     }
   };
@@ -27,9 +29,9 @@ export function useCvActions(onChanged: () => Promise<unknown>) {
     try {
       await updateCv({ variables: { cv: { cvId, ...values } } });
       await onChanged();
-      toast.success('CV updated successfully');
+      toast.success(t('notifications.cvUpdated'));
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : 'Failed to update CV');
+      toast.error(err instanceof Error ? err.message : t('notifications.cvUpdateFailed'));
       throw err;
     }
   };
@@ -44,9 +46,9 @@ export function useCvActions(onChanged: () => Promise<unknown>) {
         },
       });
       await onChanged();
-      toast.success('CV deleted successfully');
+      toast.success(t('notifications.cvDeleted'));
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : 'Failed to delete CV');
+      toast.error(err instanceof Error ? err.message : t('notifications.cvDeleteFailed'));
       throw err;
     }
   };

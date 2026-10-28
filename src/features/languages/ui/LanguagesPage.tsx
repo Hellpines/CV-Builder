@@ -1,29 +1,15 @@
 'use client';
 
 import { Loader2 } from 'lucide-react';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { LevelsPanel, type LevelsPanelLabels } from '@/components/ui/levels-panel';
 import { useAuthStore } from '@/features/auth/model/useAuthStore';
 import { useLanguages } from '../models/useLanguages';
 import { useLanguageActions } from '../models/useLanguagesActions';
 import { PROFICIENCY_OPTIONS } from '../models/languagesLevels';
 
-const labels: LevelsPanelLabels = {
-  add: 'Add language',
-  remove: 'Remove languages',
-  addTitle: 'Add language',
-  editTitle: 'Update language',
-  removeTitle: 'Remove language',
-  removeMessage: (count) =>
-    `Are you sure you want to remove ${count} ${count === 1 ? 'language' : 'languages'}?`,
-  optionLabel: 'Language',
-  levelLabel: 'Language proficiency',
-  optionRequired: 'Language is required',
-  levelRequired: 'Language proficiency is required',
-  duplicate: 'Language already exists',
-  empty: 'No languages yet',
-};
-
 export function LanguagesPage({ userId }: { userId?: string }) {
+  const { t } = useTranslation();
   const currentUserId = useAuthStore((state) => state.user?.id);
   const readOnly = userId !== undefined && userId !== 'me' && userId !== currentUserId;
 
@@ -34,8 +20,30 @@ export function LanguagesPage({ userId }: { userId?: string }) {
     enabled: !readOnly,
   });
 
+  const labels: LevelsPanelLabels = {
+    add: t('languages.add'),
+    remove: t('languages.remove'),
+    addTitle: t('languages.addTitle'),
+    editTitle: t('languages.editTitle'),
+    removeTitle: t('languages.removeTitle'),
+    removeMessage: (count) =>
+      t(count === 1 ? 'languages.removeMessage_one' : 'languages.removeMessage_other', {
+        count,
+      }),
+    optionLabel: t('languages.optionLabel'),
+    levelLabel: t('languages.levelLabel'),
+    optionRequired: t('languages.optionRequired'),
+    levelRequired: t('languages.levelRequired'),
+    duplicate: t('languages.duplicate'),
+    empty: t('languages.empty'),
+  };
+
   if (error) {
-    return <div className="text-primary pt-6">Error loading languages: {error.message}</div>;
+    return (
+      <div className="text-primary pt-6">
+        {t('errors.loadLanguages', { message: error.message })}
+      </div>
+    );
   }
 
   if (loading) {

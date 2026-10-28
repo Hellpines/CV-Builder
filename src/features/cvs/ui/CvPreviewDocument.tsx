@@ -1,4 +1,7 @@
+'use client';
+
 import type { ReactNode, Ref } from 'react';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import type { CvPreviewModel } from '../types/CvPreviewTypes';
 
 function Split({ left, children }: { left: ReactNode; children: ReactNode }) {
@@ -25,6 +28,8 @@ interface CvPreviewDocumentProps {
 }
 
 export function CvPreviewDocument({ model, ref }: CvPreviewDocumentProps) {
+  const { t } = useTranslation();
+
   return (
     <div
       ref={ref}
@@ -39,8 +44,8 @@ export function CvPreviewDocument({ model, ref }: CvPreviewDocumentProps) {
       <Split
         left={
           <>
-            <Field label="Education">{model.education || '—'}</Field>
-            <Field label="Language proficiency">
+            <Field label={t('common.education')}>{model.education || '—'}</Field>
+            <Field label={t('preview.languageProficiency')}>
               {model.languages.length ? (
                 <ul>
                   {model.languages.map((language) => (
@@ -53,7 +58,7 @@ export function CvPreviewDocument({ model, ref }: CvPreviewDocumentProps) {
                 '—'
               )}
             </Field>
-            <Field label="Domains">
+            <Field label={t('preview.domains')}>
               {model.domains.length ? (
                 <ul>
                   {model.domains.map((domain) => (
@@ -79,7 +84,7 @@ export function CvPreviewDocument({ model, ref }: CvPreviewDocumentProps) {
 
       {model.projects.length > 0 && (
         <section className="mt-16">
-          <h2 className="mb-8 text-4xl">Projects</h2>
+          <h2 className="mb-8 text-4xl">{t('preview.projects')}</h2>
 
           <div className="flex flex-col gap-10">
             {model.projects.map((project) => (
@@ -93,11 +98,11 @@ export function CvPreviewDocument({ model, ref }: CvPreviewDocumentProps) {
                   }
                 >
                   {project.roles.length > 0 && (
-                    <Field label="Project roles">{project.roles.join(', ')}</Field>
+                    <Field label={t('preview.projectRoles')}>{project.roles.join(', ')}</Field>
                   )}
-                  <Field label="Period">{project.period}</Field>
+                  <Field label={t('preview.period')}>{project.period}</Field>
                   {project.responsibilities.length > 0 && (
-                    <Field label="Responsibilities">
+                    <Field label={t('preview.responsibilities')}>
                       <ul className="marker:text-foreground list-disc pl-4">
                         {project.responsibilities.map((item, index) => (
                           <li key={`${item}-${index}`}>{item}</li>
@@ -106,7 +111,9 @@ export function CvPreviewDocument({ model, ref }: CvPreviewDocumentProps) {
                     </Field>
                   )}
                   {project.environment.length > 0 && (
-                    <Field label="Environment">{project.environment.join(', ')}.</Field>
+                    <Field label={t('preview.environment')}>
+                      {project.environment.join(', ')}.
+                    </Field>
                   )}
                 </Split>
               </article>
@@ -117,18 +124,20 @@ export function CvPreviewDocument({ model, ref }: CvPreviewDocumentProps) {
 
       {model.skillTables.length > 0 && (
         <section className="mt-14">
-          <h2 className="text-foreground mb-8 text-4xl">Professional skills</h2>
+          <h2 className="text-foreground mb-8 text-4xl">{t('preview.professionalSkills')}</h2>
 
           <table className="w-full border-collapse">
             <thead>
               <tr className="border-primary border-b text-sm tracking-wide uppercase">
                 <th colSpan={2} className="pt-2.5 pl-4 text-left align-top font-medium">
-                  Skill
+                  {t('preview.skill')}
                 </th>
                 <th className="w-35 px-8 py-2.5 text-center align-top font-medium">
-                  Experience in years
+                  {t('preview.experienceInYears')}
                 </th>
-                <th className="w-35 px-8 py-2.5 text-center align-top font-medium">Last used</th>
+                <th className="w-35 px-8 py-2.5 text-center align-top font-medium">
+                  {t('preview.lastUsed')}
+                </th>
               </tr>
             </thead>
 

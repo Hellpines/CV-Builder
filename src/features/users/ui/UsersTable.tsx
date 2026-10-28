@@ -3,17 +3,10 @@
 import { ArrowUp, ArrowDown, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { Button } from '@/components/ui/button';
 import { User } from '@/shared/types/user';
 import type { SortDirection, SortKey } from '../types/UserTypes';
-
-const headData: { key: SortKey; label: string }[] = [
-  { key: 'firstName', label: 'First Name' },
-  { key: 'lastName', label: 'Last Name' },
-  { key: 'email', label: 'Email' },
-  { key: 'department', label: 'Department' },
-  { key: 'position', label: 'Position' },
-];
 
 interface UsersTableProps {
   data: User[];
@@ -23,7 +16,16 @@ interface UsersTableProps {
 }
 
 export default function UsersTable({ data, sortKey, sortDirection, onSort }: UsersTableProps) {
+  const { t } = useTranslation();
   const router = useRouter();
+
+  const headData: { key: SortKey; label: string }[] = [
+    { key: 'firstName', label: t('common.firstName') },
+    { key: 'lastName', label: t('common.lastName') },
+    { key: 'email', label: t('common.email') },
+    { key: 'department', label: t('common.department') },
+    { key: 'position', label: t('common.position') },
+  ];
 
   return (
     <div className="w-full overflow-x-auto">
@@ -108,7 +110,7 @@ export default function UsersTable({ data, sortKey, sortDirection, onSort }: Use
                           router.push(`/users/${user.id}`);
                         }}
                         className="flex h-10 w-10 items-center justify-center p-2"
-                        aria-label="View employee details"
+                        aria-label={t('user.viewEmployee')}
                       >
                         <ChevronRight size={18} />
                       </Button>
@@ -123,7 +125,7 @@ export default function UsersTable({ data, sortKey, sortDirection, onSort }: Use
                 colSpan={7}
                 className="text-primary-foreground absolute top-1/2 left-1/2 -translate-y-1/2 text-sm"
               >
-                No users found ...
+                {t('errors.noUsersFound')}
               </td>
             </tr>
           )}

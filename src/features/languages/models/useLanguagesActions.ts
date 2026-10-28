@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { skipToken, useMutation, useQuery } from '@apollo/client/react';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import type { PickerOption } from '@/components/ui/level-modal';
 import { toast } from '@/shared/lib/toast';
 import type { LanguageProficiency, Proficiency } from '@/shared/types/user';
@@ -19,6 +20,7 @@ interface UseLanguageActionsParams {
 }
 
 export function useLanguageActions({ userId, languages, enabled }: UseLanguageActionsParams) {
+  const { t } = useTranslation();
   const { data } = useQuery(
     GET_LANGUAGES_CATALOG,
     enabled ? { variables: { params: { limit: CATALOG_LIMIT } } } : skipToken
@@ -50,9 +52,11 @@ export function useLanguageActions({ userId, languages, enabled }: UseLanguageAc
       await addLanguage({
         variables: { language: { userId, name, proficiency: proficiency as Proficiency } },
       });
-      toast.success(`${name} added successfully`);
+      toast.success(t('notifications.languageAdded', { name }));
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : `Failed to add ${name}`);
+      toast.error(
+        err instanceof Error ? err.message : t('notifications.languageAddFailed', { name })
+      );
       throw err;
     }
   };
@@ -63,9 +67,11 @@ export function useLanguageActions({ userId, languages, enabled }: UseLanguageAc
       await updateLanguage({
         variables: { language: { userId, name, proficiency: proficiency as Proficiency } },
       });
-      toast.success(`${name} updated successfully`);
+      toast.success(t('notifications.languageUpdated', { name }));
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : `Failed to update ${name}`);
+      toast.error(
+        err instanceof Error ? err.message : t('notifications.languageUpdateFailed', { name })
+      );
       throw err;
     }
   };
@@ -74,9 +80,9 @@ export function useLanguageActions({ userId, languages, enabled }: UseLanguageAc
     if (!userId) throw new Error('User not found');
     try {
       await deleteLanguage({ variables: { language: { userId, name: names } } });
-      toast.success(`${names.join(', ')} removed successfully`);
+      toast.success(t('notifications.languageRemoved', { names: names.join(', ') }));
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : 'Failed to remove language');
+      toast.error(err instanceof Error ? err.message : t('notifications.languageRemoveFailed'));
       throw err;
     }
   };

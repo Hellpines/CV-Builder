@@ -1,26 +1,12 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from 'cn';
 import { isSameDay, startOfDay } from '@/shared/lib/date';
 import { Button } from './button';
 
-const WEEKDAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-const MONTHS = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
 const YEARS_PER_PAGE = 12;
 
 type View = 'days' | 'months' | 'years';
@@ -34,7 +20,16 @@ interface CalendarProps {
 }
 
 export function Calendar({ value, onSelect, minDate, maxDate, defaultMonth }: CalendarProps) {
+  const { i18n } = useTranslation();
   const initial = value ?? defaultMonth ?? new Date();
+  const formatMonth = (monthIndex: number) =>
+    new Intl.DateTimeFormat(i18n.language, { month: 'long' }).format(new Date(2024, monthIndex, 1));
+  const months = Array.from({ length: 12 }, (_, index) => formatMonth(index));
+  const weekdays = Array.from({ length: 7 }, (_, index) =>
+    new Intl.DateTimeFormat(i18n.language, { weekday: 'short' }).format(
+      new Date(2024, 0, index + 6)
+    )
+  );
 
   const [view, setView] = useState<View>('days');
   const [cursor, setCursor] = useState(
@@ -97,7 +92,7 @@ export function Calendar({ value, onSelect, minDate, maxDate, defaultMonth }: Ca
               view === 'months' ? 'text-primary' : 'text-foreground'
             )}
           >
-            {MONTHS[cursor.getMonth()]}
+            {months[cursor.getMonth()]}
           </button>
           <button
             type="button"
@@ -124,7 +119,7 @@ export function Calendar({ value, onSelect, minDate, maxDate, defaultMonth }: Ca
       {view === 'days' && (
         <div>
           <div className="mb-1 grid grid-cols-7">
-            {WEEKDAYS.map((weekday, index) => (
+            {weekdays.map((weekday, index) => (
               <span
                 key={index}
                 className="text-foreground flex h-8 items-center justify-center text-xs font-medium"
@@ -168,7 +163,7 @@ export function Calendar({ value, onSelect, minDate, maxDate, defaultMonth }: Ca
 
       {view === 'months' && (
         <div className="grid grid-cols-3 gap-y-2 pt-2">
-          {MONTHS.map((month, index) => {
+          {months.map((month, index) => {
             const selected = index === cursor.getMonth();
             const disabled = isMonthDisabled(cursor.getFullYear(), index);
 

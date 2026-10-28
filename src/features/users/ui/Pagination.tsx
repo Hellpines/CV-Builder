@@ -1,6 +1,7 @@
 'use client';
 
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { cn } from 'cn';
 import {
   Select,
@@ -29,6 +30,7 @@ export function Pagination({
   onPageChange,
   onPageSizeChange,
 }: PaginationProps) {
+  const { t } = useTranslation();
   const total = Math.max(1, totalPages);
 
   const arrowClass =
@@ -36,13 +38,13 @@ export function Pagination({
 
   return (
     <div className="flex items-center justify-center gap-6">
-      <nav aria-label="Pagination" className="flex items-center gap-2">
+      <nav aria-label={t('common.pagination')} className="flex items-center gap-2">
         <Button
           variant="icon"
           className={arrowClass}
           disabled={page <= 1}
           onClick={() => onPageChange(page - 1)}
-          aria-label="Previous page"
+          aria-label={t('common.previousPage')}
         >
           <ChevronLeft size={24} />
         </Button>
@@ -75,7 +77,7 @@ export function Pagination({
           className={arrowClass}
           disabled={page >= total}
           onClick={() => onPageChange(page + 1)}
-          aria-label="Next page"
+          aria-label={t('common.nextPage')}
         >
           <ChevronRight size={24} />
         </Button>
@@ -88,7 +90,7 @@ export function Pagination({
             if (value) onPageSizeChange(Number(value));
           }}
         >
-          <SelectTrigger className="h-10 p-2 pl-3" aria-label="Rows per page">
+          <SelectTrigger className="h-10 p-2 pl-3" aria-label={t('common.rowsPerPage')}>
             <SelectValue>{pageSize}</SelectValue>
           </SelectTrigger>
           <SelectContent side="top">

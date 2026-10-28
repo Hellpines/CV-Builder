@@ -1,10 +1,12 @@
 'use client';
 
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { Button } from '@/components/ui/button';
 import { AuthPage } from './AuthPage';
 import { useVerifyForm } from '../model/useVerifyForm';
 
 export function VerifyForm() {
+  const { t } = useTranslation();
   const {
     code,
     inputRefs,
@@ -19,8 +21,8 @@ export function VerifyForm() {
 
   return (
     <AuthPage
-      title="Email verification"
-      subtitle="Enter the verification code we sent to your email."
+      title={t('auth.emailVerification')}
+      subtitle={t('auth.verificationSubtitle')}
       onSubmit={handleSubmit}
       type="forgot"
       submitButton={
@@ -31,10 +33,10 @@ export function VerifyForm() {
             className="w-40 py-4"
             disabled={loading || code.some((c) => !c)}
           >
-            {loading ? 'CONFIRMING...' : 'CONFIRM'}
+            {loading ? t('auth.confirming') : t('auth.confirm').toUpperCase()}
           </Button>
           <Button variant="ghost" onClick={handleLater} className="px-14 text-xs font-semibold">
-            LATER
+            {t('auth.later').toUpperCase()}
           </Button>
         </div>
       }

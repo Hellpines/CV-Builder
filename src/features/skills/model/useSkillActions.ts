@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { skipToken, useMutation, useQuery } from '@apollo/client/react';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import type { PickerOption } from '@/components/ui/level-modal';
 import { toast } from '@/shared/lib/toast';
 import type { Mastery, SkillMastery } from '@/shared/types/user';
@@ -19,6 +20,7 @@ interface UseSkillActionsParams {
 }
 
 export function useSkillActions({ userId, skills, enabled }: UseSkillActionsParams) {
+  const { t } = useTranslation();
   const { data } = useQuery(
     GET_SKILLS_CATALOG,
     enabled ? { variables: { params: { limit: CATALOG_LIMIT } } } : skipToken
@@ -52,9 +54,11 @@ export function useSkillActions({ userId, skills, enabled }: UseSkillActionsPara
           },
         },
       });
-      toast.success(`${skill.name} added successfully`);
+      toast.success(t('notifications.skillAdded', { name: skill.name }));
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : `Failed to add ${skill.name}`);
+      toast.error(
+        err instanceof Error ? err.message : t('notifications.skillAddFailed', { name: skill.name })
+      );
       throw err;
     }
   };
@@ -74,9 +78,11 @@ export function useSkillActions({ userId, skills, enabled }: UseSkillActionsPara
           },
         },
       });
-      toast.success(`${name} updated successfully`);
+      toast.success(t('notifications.skillUpdated', { name }));
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : `Failed to update ${name}`);
+      toast.error(
+        err instanceof Error ? err.message : t('notifications.skillUpdateFailed', { name })
+      );
       throw err;
     }
   };
@@ -85,9 +91,9 @@ export function useSkillActions({ userId, skills, enabled }: UseSkillActionsPara
     if (!userId) throw new Error('User not found');
     try {
       await deleteSkill({ variables: { skill: { userId, name: names } } });
-      toast.success(`${names.join(', ')} removed successfully`);
+      toast.success(t('notifications.skillRemoved', { names: names.join(', ') }));
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : 'Failed to remove skill');
+      toast.error(err instanceof Error ? err.message : t('notifications.skillRemoveFailed'));
       throw err;
     }
   };

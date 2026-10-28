@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { cn } from 'cn';
 import { Button } from '@/components/ui/button';
 import { toneClass, type LevelTone } from '@/components/ui/level-bar';
@@ -148,6 +149,7 @@ function LevelForm({
   onSubmit,
   onCancel,
 }: LevelFormProps) {
+  const { t } = useTranslation();
   const [isEdit] = useState(Boolean(initial));
   const [option, setOption] = useState(initial?.option ?? '');
   const [level, setLevel] = useState(initial?.level ?? '');
@@ -186,10 +188,10 @@ function LevelForm({
 
       <div className="flex justify-end gap-4">
         <Button variant="secondary" onClick={onCancel} className="w-40">
-          Cancel
+          {t('common.cancel')}
         </Button>
         <Button type="submit" variant="primary" disabled={!canSubmit} className="w-40">
-          {loading ? 'Saving...' : isEdit ? 'Update' : 'Add'}
+          {loading ? t('common.saving') : isEdit ? t('common.update') : t('common.add')}
         </Button>
       </div>
     </form>

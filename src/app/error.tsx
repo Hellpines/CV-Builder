@@ -2,23 +2,26 @@
 
 import { useEffect } from 'react';
 import { ErrorScreen } from '@/components/ui/error-screen';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 
 export default function Error({ error, reset }: { error: Error; reset: () => void }) {
+  const { t } = useTranslation();
+
   useEffect(() => {
     console.error(error);
   }, [error]);
 
   return (
     <ErrorScreen
-      title="Oops"
+      title={t('errors.genericTitle')}
       description={
         <>
-          Something went wrong. We’re already working on fixing it.
+          {t('errors.genericDescription')}
           <br />
-          Please try again or go back.
+          {t('errors.genericHint')}
         </>
       }
-      actionLabel="Retry"
+      actionLabel={t('common.retry')}
       onAction={reset}
     />
   );

@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { AppLoader } from '@/components/ui/app-loader';
 import { LevelsPanel, type LevelsPanelLabels } from '@/components/ui/levels-panel';
 import { useAuthStore } from '@/features/auth/model/useAuthStore';
@@ -7,23 +8,8 @@ import { MASTERY_OPTIONS } from '../model/skillLevels';
 import { useSkillActions } from '../model/useSkillActions';
 import { useSkills } from '../model/useSkills';
 
-const labels: LevelsPanelLabels = {
-  add: 'Add skill',
-  remove: 'Remove skills',
-  addTitle: 'Add skill',
-  editTitle: 'Update skill',
-  removeTitle: 'Remove skill',
-  removeMessage: (count) =>
-    `Are you sure you want to remove ${count} ${count === 1 ? 'skill' : 'skills'}?`,
-  optionLabel: 'Skill',
-  levelLabel: 'Skill mastery',
-  optionRequired: 'Skill is required',
-  levelRequired: 'Skill mastery is required',
-  duplicate: 'Skill already exists',
-  empty: 'No skills yet',
-};
-
 export function SkillsPage({ userId }: { userId?: string }) {
+  const { t } = useTranslation();
   const currentUserId = useAuthStore((state) => state.user?.id);
   const readOnly = userId !== undefined && userId !== 'me' && userId !== currentUserId;
 
@@ -33,6 +19,22 @@ export function SkillsPage({ userId }: { userId?: string }) {
     skills,
     enabled: !readOnly,
   });
+
+  const labels: LevelsPanelLabels = {
+    add: t('skills.add'),
+    remove: t('skills.remove'),
+    addTitle: t('skills.addTitle'),
+    editTitle: t('skills.editTitle'),
+    removeTitle: t('skills.removeTitle'),
+    removeMessage: (count) =>
+      t(count === 1 ? 'skills.removeMessage_one' : 'skills.removeMessage_other', { count }),
+    optionLabel: t('skills.optionLabel'),
+    levelLabel: t('skills.levelLabel'),
+    optionRequired: t('skills.optionRequired'),
+    levelRequired: t('skills.levelRequired'),
+    duplicate: t('skills.duplicate'),
+    empty: t('skills.empty'),
+  };
 
   if (error) {
     return <div className="text-primary pt-6">Error loading skills: {error.message}</div>;
