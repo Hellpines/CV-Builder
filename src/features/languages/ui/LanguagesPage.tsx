@@ -1,7 +1,7 @@
 'use client';
 
-import { Loader2 } from 'lucide-react';
 import { useTranslation } from '@/shared/i18n/useTranslation';
+import { AppLoader } from '@/components/ui/app-loader';
 import { LevelsPanel, type LevelsPanelLabels } from '@/components/ui/levels-panel';
 import { useAuthStore } from '@/features/auth/model/useAuthStore';
 import { useLanguages } from '../models/useLanguages';
@@ -47,7 +47,7 @@ export function LanguagesPage({ userId }: { userId?: string }) {
   }
 
   if (loading) {
-    return <Loader2 size={48} className="text-primary-foreground mx-auto mt-20 animate-spin" />;
+    return <AppLoader size={48} />;
   }
 
   return (

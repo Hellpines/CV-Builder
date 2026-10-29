@@ -1,7 +1,7 @@
 'use client';
 
-import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { AppLoader } from '@/components/ui/app-loader';
 import { LevelsPanel } from '@/components/ui/levels-panel';
 import { MASTERY_OPTIONS } from '../model/skillLevels';
 import { useCvSkills } from '../model/useCvSkills';
@@ -24,7 +24,7 @@ export function CvSkillsPage({ cvId }: { cvId: string }) {
   }
 
   if (loading) {
-    return <Loader2 size={48} className="text-primary-foreground mx-auto mt-20 animate-spin" />;
+    return <AppLoader size={48} />;
   }
 
   return (

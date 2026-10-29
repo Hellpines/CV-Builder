@@ -15,7 +15,7 @@ export function calculateSkillUsage(
 ): SkillUsage {
   const key = normalize(skillName);
   const usedIn = projects.filter((project) =>
-    project.environment.some((tech) => normalize(tech) === key)
+    (project.environment ?? []).some((tech) => normalize(tech) === key)
   );
 
   if (!usedIn.length) return { years: null, lastUsed: null };

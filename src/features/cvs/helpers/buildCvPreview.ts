@@ -41,16 +41,16 @@ export function buildCvPreview(
     domains.push(domain);
   }
 
-  const { byRoot, byCategory } = groupPreviewSkills(cv.skills, categories);
+  const { byRoot, byCategory } = groupPreviewSkills(cv.skills ?? [], categories);
 
   const previewProjects: PreviewProject[] = projects.map((project) => ({
     id: project.id,
     name: project.name,
     description: project.description,
-    roles: project.roles,
+    roles: project.roles ?? [],
     period: formatPeriod(project),
-    responsibilities: project.responsibilities,
-    environment: project.environment,
+    responsibilities: project.responsibilities ?? [],
+    environment: project.environment ?? [],
   }));
 
   return {

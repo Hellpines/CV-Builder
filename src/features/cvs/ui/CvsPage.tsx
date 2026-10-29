@@ -7,6 +7,7 @@ import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ConfirmModal } from '@/components/ui/confirm-modal';
 import { Pagination } from '@/features/users/ui/Pagination';
+import { useIsCompact } from '@/shared/hooks/useIsCompact';
 import { useCvActions } from '../model/useCvActions';
 import { useCvs } from '../model/useCvs';
 import type { CvFormValues, CvListItem } from '../types/CvTypes';
@@ -22,6 +23,7 @@ const MIN_PAGE_SIZE = 10;
 export function CvsPage() {
   const { t } = useTranslation();
   const router = useRouter();
+  const isCompact = useIsCompact();
   const cvs = useCvs();
   const actions = useCvActions(cvs.refetch);
 
@@ -57,11 +59,16 @@ export function CvsPage() {
         <SearchInput value={cvs.search} onChange={cvs.setSearch} className="pl-5" />
         <Button
           variant="primaryV2"
-          className="mr-5 flex w-55 items-center justify-center gap-2"
+          className={
+            isCompact
+              ? 'mr-5 flex size-10 items-center justify-center p-0'
+              : 'mr-5 flex w-55 items-center justify-center gap-2'
+          }
           onClick={() => setModal({ type: 'create' })}
+          aria-label={t('cv.create')}
         >
           <Plus size={20} />
-          {t('cv.create')}
+          {!isCompact && t('cv.create')}
         </Button>
       </div>
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { useAuthStore } from '@/features/auth/model/useAuthStore';
-import { AuthLoader } from '@/features/auth/ui/AuthLoader';
+import { AppLoader } from '@/components/ui/app-loader';
 import { usePathname, useRouter } from 'next/navigation';
 import { ReactNode, useEffect } from 'react';
 
@@ -40,7 +40,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
 
   return (
     <div className="bg-background flex min-h-screen items-center justify-center">
-      {showLoader && <AuthLoader />}
+      {showLoader && <AppLoader />}
       {children}
     </div>
   );

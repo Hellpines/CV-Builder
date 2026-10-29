@@ -1,5 +1,5 @@
 import { useAuthStore } from '@/features/auth/model/useAuthStore';
-import { ApolloClient, ApolloLink, HttpLink, InMemoryCache, FetchResult } from '@apollo/client';
+import { ApolloClient, ApolloLink, HttpLink, InMemoryCache } from '@apollo/client';
 import { CombinedGraphQLErrors } from '@apollo/client/errors';
 import { ErrorLink } from '@apollo/client/link/error';
 import { from, Observable } from 'rxjs';
@@ -25,7 +25,7 @@ const authLink = new ApolloLink((operation, forward) => {
   return forward(operation);
 });
 
-let isRefreshing = false;
+let refreshPromise: Promise<string> | null = null;
 
 interface UpdateTokenResponse {
   data?: {
@@ -40,6 +40,54 @@ interface GraphQLErrorItem {
   extensions?: {
     code?: string;
   };
+}
+
+function setAuthHeader(
+  operation: {
+    setContext: (updater: (prev: { headers?: Record<string, string> }) => object) => void;
+  },
+  accessToken: string
+) {
+  operation.setContext(({ headers = {} }) => ({
+    headers: {
+      ...headers,
+      authorization: `Bearer ${accessToken}`,
+    },
+  }));
+}
+
+async function refreshAccessToken(refreshToken: string): Promise<string> {
+  const res = await fetch(graphqlUri, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${refreshToken}`,
+    },
+    body: JSON.stringify({
+      query: `
+        mutation UpdateToken {
+          updateToken {
+            access_token
+            refresh_token
+          }
+        }
+      `,
+    }),
+  });
+
+  const result: UpdateTokenResponse = await res.json();
+  const tokens = result.data?.updateToken;
+
+  if (!tokens?.access_token || !tokens?.refresh_token) {
+    throw new Error('Refresh token mutation returned no tokens');
+  }
+
+  useAuthStore.setState({
+    accessToken: tokens.access_token,
+    refreshToken: tokens.refresh_token,
+  });
+
+  return tokens.access_token;
 }
 
 const errorLink: ApolloLink = new ErrorLink(({ error, operation, forward }) => {
@@ -62,61 +110,23 @@ const errorLink: ApolloLink = new ErrorLink(({ error, operation, forward }) => {
     return;
   }
 
-  if (isRefreshing) {
-    return;
+  if (!refreshPromise) {
+    refreshPromise = refreshAccessToken(refreshToken).finally(() => {
+      refreshPromise = null;
+    });
   }
 
-  isRefreshing = true;
-
   return from(
-    (async (): Promise<string> => {
-      try {
-        const res = await fetch(graphqlUri, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${refreshToken}`,
-          },
-          body: JSON.stringify({
-            query: `
-              mutation UpdateToken {
-                updateToken {
-                  access_token
-                  refresh_token
-                }
-              }
-            `,
-          }),
-        });
-
-        const result: UpdateTokenResponse = await res.json();
-        const tokens = result.data?.updateToken;
-
-        if (!tokens?.access_token || !tokens?.refresh_token) {
-          throw new Error('Refresh token mutation returned no tokens');
-        }
-
-        useAuthStore.setState({
-          accessToken: tokens.access_token,
-          refreshToken: tokens.refresh_token,
-        });
-
-        operation.setContext(({ headers = {} }: { headers?: Record<string, string> }) => ({
-          headers: {
-            ...headers,
-            authorization: `Bearer ${tokens.access_token}`,
-          },
-        }));
-
-        return tokens.access_token;
-      } catch (refreshError) {
-        useAuthStore.getState().logout();
-        throw refreshError;
-      } finally {
-        isRefreshing = false;
-      }
-    })()
-  ).pipe(switchMap((): Observable<ApolloLink.Result> => forward(operation)));
+    refreshPromise.catch((refreshError) => {
+      useAuthStore.getState().logout();
+      throw refreshError;
+    })
+  ).pipe(
+    switchMap((accessToken): Observable<ApolloLink.Result> => {
+      setAuthHeader(operation, accessToken);
+      return forward(operation);
+    })
+  );
 });
 
 export const client = new ApolloClient({

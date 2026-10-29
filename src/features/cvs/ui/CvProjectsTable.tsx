@@ -10,18 +10,19 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useIsCompact } from '@/shared/hooks/useIsCompact';
 import { formatDate, parseDate } from '@/shared/lib/date';
 import type { CvProjectItem, CvProjectSortKey, CvSortDirection } from '../types/CvProjectTypes';
 
-const COLUMNS = 5;
+function SkeletonRows({ colSpan, showDomain }: { colSpan: number; showDomain: boolean }) {
+  const skeletonCells = showDomain ? 4 : 3;
 
-function SkeletonRows() {
   return (
     <>
       {[0, 1, 2].map((index) => (
         <tbody key={index} className="border-muted border-b" aria-hidden="true">
           <tr>
-            {[0, 1, 2, 3].map((cell) => (
+            {Array.from({ length: skeletonCells }, (_, cell) => (
               <td key={cell} className="px-4 py-5">
                 <div className="bg-muted/40 h-4 w-2/3 animate-pulse rounded" />
               </td>
@@ -29,7 +30,7 @@ function SkeletonRows() {
             <td />
           </tr>
           <tr>
-            <td colSpan={COLUMNS} className="px-4 pb-6">
+            <td colSpan={colSpan} className="px-4 pb-6">
               <div className="bg-muted/30 h-4 w-full animate-pulse rounded" />
             </td>
           </tr>
@@ -105,34 +106,41 @@ export function CvProjectsTable({
   onDelete,
 }: CvProjectsTableProps) {
   const { t } = useTranslation();
+  const isCompact = useIsCompact();
+  const showDomain = !isCompact;
+  const colSpan = showDomain ? 5 : 4;
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
 
   const sortProps = { activeKey: sortKey, direction: sortDirection, onSort };
 
   return (
     <div className="w-full overflow-x-auto">
-      <table className="w-full min-w-180 border-collapse text-left">
+      <table
+        className={cn('w-full border-collapse text-left', showDomain ? 'min-w-180' : 'min-w-0')}
+      >
         <thead className="border-muted border-b">
           <tr className="text-foreground text-sm">
             <SortableHead
               label={t('common.name')}
               sortKey="name"
-              className="w-[30%]"
+              className={showDomain ? 'w-[30%]' : 'w-[40%]'}
               {...sortProps}
             />
-            <th scope="col" className="w-[24%] px-4 py-3 font-medium">
-              {t('cv.projectDomain')}
-            </th>
+            {showDomain && (
+              <th scope="col" className="w-[24%] px-4 py-3 font-medium">
+                {t('cv.projectDomain')}
+              </th>
+            )}
             <SortableHead
               label={t('common.startDate')}
               sortKey="startDate"
-              className="w-[18%]"
+              className={showDomain ? 'w-[18%]' : 'w-[28%]'}
               {...sortProps}
             />
             <SortableHead
               label={t('common.endDate')}
               sortKey="endDate"
-              className="w-[18%]"
+              className={showDomain ? 'w-[18%]' : 'w-[28%]'}
               {...sortProps}
             />
             <th scope="col" className="w-14 px-4 py-3">
@@ -142,13 +150,13 @@ export function CvProjectsTable({
         </thead>
 
         {loading ? (
-          <SkeletonRows />
+          <SkeletonRows colSpan={colSpan} showDomain={showDomain} />
         ) : items.length ? (
           items.map((item) => (
             <tbody key={item.id} className="border-muted border-b">
               <tr className="text-foreground text-sm">
                 <td className="px-4 py-5">{item.name}</td>
-                <td className="px-4 py-5">{item.domain}</td>
+                {showDomain && <td className="px-4 py-5">{item.domain}</td>}
                 <td className="px-4 py-5">{formatDate(parseDate(item.start_date))}</td>
                 <td className="px-4 py-5">
                   {item.end_date ? formatDate(parseDate(item.end_date)) : t('cv.tillNow')}
@@ -182,7 +190,7 @@ export function CvProjectsTable({
               </tr>
               <tr>
                 <td
-                  colSpan={COLUMNS}
+                  colSpan={colSpan}
                   className="text-primary-foreground/70 px-4 pb-4 text-sm leading-relaxed"
                 >
                   {item.description}
@@ -190,7 +198,7 @@ export function CvProjectsTable({
               </tr>
               {item.responsibilities.length ? (
                 <tr>
-                  <td colSpan={COLUMNS} className="px-4 pb-5">
+                  <td colSpan={colSpan} className="px-4 pb-5">
                     <ul className="flex flex-wrap gap-2">
                       {item.responsibilities.map((responsibility, index) => (
                         <li
@@ -210,7 +218,7 @@ export function CvProjectsTable({
           <tbody>
             <tr>
               <td
-                colSpan={COLUMNS}
+                colSpan={colSpan}
                 className="text-primary-foreground px-4 py-16 text-center text-sm"
               >
                 {emptyText}

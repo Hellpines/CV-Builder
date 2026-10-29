@@ -1,0 +1,28 @@
+﻿import { useMemo } from 'react';
+import { skipToken, useQuery } from '@apollo/client/react';
+import { GET_CV_PREVIEW, GET_PREVIEW_CATEGORIES } from '../api/CvPreviewQueries';
+import { buildCvPreview } from '../helpers/buildCvPreview';
+
+export function useCvPreview(cvId?: string) {
+  const cvQuery = useQuery(
+    GET_CV_PREVIEW,
+    cvId ? { variables: { cvId }, fetchPolicy: 'cache-and-network' } : skipToken
+  );
+  const categoriesQuery = useQuery(GET_PREVIEW_CATEGORIES);
+
+  const cv = cvQuery.data?.cv;
+  const categories = categoriesQuery.data?.skillCategories;
+
+  const model = useMemo(
+    () => (cv && cv.user && categories ? buildCvPreview(cv, categories) : null),
+    [cv, categories]
+  );
+
+  return {
+    model,
+    initialLoading: (cvQuery.loading && !cvQuery.data) || (categoriesQuery.loading && !categories),
+    error: cvQuery.error ?? categoriesQuery.error,
+    refetch: () =>
+      Promise.all([cvQuery.refetch(), categoriesQuery.refetch()]).catch(() => undefined),
+  };
+}

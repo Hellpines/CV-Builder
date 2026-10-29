@@ -140,7 +140,7 @@ function CvProjectForm({
           responsibilities: splitLines(values.responsibilities),
         });
       }}
-      className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2"
+      className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2"
     >
       <SelectField
         label={t('common.name')}
@@ -187,7 +187,7 @@ function CvProjectForm({
 
       <div className="sm:col-span-2">
         <Textarea
-          className="min-h-28"
+          className="max-h-32 min-h-20"
           placeholder={t('common.description')}
           value={project?.description ?? ''}
           disabled
@@ -283,7 +283,7 @@ export function CvProjectModal({
       open={open}
       onOpenChange={onOpenChange}
       title={mode === 'add' ? t('cv.projectCreate') : t('cv.projectUpdate')}
-      className="w-215 overflow-y-auto"
+      className="w-215"
     >
       <CvProjectForm
         mode={mode}

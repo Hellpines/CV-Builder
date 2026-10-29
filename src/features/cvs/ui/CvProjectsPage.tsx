@@ -6,6 +6,7 @@ import { useTranslation } from '@/shared/i18n/useTranslation';
 import { Button } from '@/components/ui/button';
 import { ConfirmModal } from '@/components/ui/confirm-modal';
 import { SearchInput } from '@/components/ui/search-input';
+import { useIsCompact } from '@/shared/hooks/useIsCompact';
 import { parseDate, toISODate } from '@/shared/lib/date';
 import { useCvProjectActions } from '../model/useCvProjectActions';
 import { useCvProjects } from '../model/useCvProjects';
@@ -21,6 +22,7 @@ type ModalState =
 
 export function CvProjectsPage({ cvId }: { cvId: string }) {
   const { t } = useTranslation();
+  const isCompact = useIsCompact();
   const list = useCvProjects(cvId);
   const actions = useCvProjectActions(cvId);
 
@@ -58,11 +60,14 @@ export function CvProjectsPage({ cvId }: { cvId: string }) {
         <SearchInput value={list.search} onChange={list.setSearch} className="pl-5" />
         <Button
           variant="primaryV2"
-          className="flex items-center gap-2"
+          className={
+            isCompact ? 'flex size-10 items-center justify-center p-0' : 'flex items-center gap-2'
+          }
           onClick={() => setModal({ type: 'add' })}
+          aria-label={t('cv.projectCreate')}
         >
           <Plus size={20} />
-          {t('cv.projectCreate')}
+          {!isCompact && t('cv.projectCreate')}
         </Button>
       </div>
 

@@ -22,7 +22,7 @@ export function CvLayout({ children }: { children: ReactNode }) {
 
   return (
     <div className="flex min-h-full flex-col">
-      <Tabs items={tabs} className="gap-8" />
+      <Tabs items={tabs} />
       {children}
     </div>
   );

@@ -10,9 +10,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useIsCompact } from '@/shared/hooks/useIsCompact';
 import type { CvListItem, CvSortDirection } from '../types/CvTypes';
 
-function SkeletonRows() {
+function SkeletonRows({ colSpan, showEmployee }: { colSpan: number; showEmployee: boolean }) {
   return (
     <>
       {[0, 1, 2].map((index) => (
@@ -24,13 +25,15 @@ function SkeletonRows() {
             <td className="px-4 py-5">
               <div className="bg-muted/40 h-4 w-2/3 animate-pulse rounded" />
             </td>
-            <td className="px-4 py-5">
-              <div className="bg-muted/40 h-4 w-3/4 animate-pulse rounded" />
-            </td>
+            {showEmployee && (
+              <td className="px-4 py-5">
+                <div className="bg-muted/40 h-4 w-3/4 animate-pulse rounded" />
+              </td>
+            )}
             <td />
           </tr>
           <tr>
-            <td colSpan={4} className="px-4 pb-6">
+            <td colSpan={colSpan} className="px-4 pb-6">
               <div className="bg-muted/30 h-4 w-full animate-pulse rounded" />
             </td>
           </tr>
@@ -66,6 +69,9 @@ export function CvsTable({
   onDelete,
 }: CvsTableProps) {
   const { t } = useTranslation();
+  const isCompact = useIsCompact();
+  const showEmployee = !isCompact;
+  const colSpan = showEmployee ? 4 : 3;
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
 
   return (
@@ -94,9 +100,11 @@ export function CvsTable({
             <th scope="col" className="w-[25%] px-4 py-5 font-medium">
               {t('common.education')}
             </th>
-            <th scope="col" className="px-4 py-5 font-medium">
-              {t('user.employee')}
-            </th>
+            {showEmployee && (
+              <th scope="col" className="px-4 py-5 font-medium">
+                {t('user.employee')}
+              </th>
+            )}
             <th scope="col" className="w-14 px-4 py-5">
               <span className="sr-only">{t('common.actions')}</span>
             </th>
@@ -104,14 +112,16 @@ export function CvsTable({
         </thead>
 
         {loading ? (
-          <SkeletonRows />
+          <SkeletonRows colSpan={colSpan} showEmployee={showEmployee} />
         ) : items.length ? (
           items.map((cv) => (
             <tbody key={cv.id} className="border-muted border-b">
               <tr className="text-foreground text-sm">
                 <td className="px-4 py-7">{cv.name}</td>
                 <td className="px-4 py-7">{cv.education ?? ''}</td>
-                <td className="px-4 py-7">{cv.user?.email ?? fallbackEmail ?? ''}</td>
+                {showEmployee && (
+                  <td className="px-4 py-7">{cv.user?.email ?? fallbackEmail ?? ''}</td>
+                )}
                 <td className="px-4 py-1 text-right">
                   <DropdownMenu
                     open={openMenuId === cv.id}
@@ -143,7 +153,10 @@ export function CvsTable({
                 </td>
               </tr>
               <tr>
-                <td colSpan={4} className="text-foreground/50 px-4 pb-5 text-sm leading-relaxed">
+                <td
+                  colSpan={colSpan}
+                  className="text-foreground/50 px-4 pb-5 text-sm leading-relaxed"
+                >
                   {cv.description}
                 </td>
               </tr>
@@ -152,7 +165,10 @@ export function CvsTable({
         ) : (
           <tbody>
             <tr>
-              <td colSpan={4} className="text-primary-foreground px-4 py-16 text-center text-sm">
+              <td
+                colSpan={colSpan}
+                className="text-primary-foreground px-4 py-16 text-center text-sm"
+              >
                 {emptyText}
               </td>
             </tr>

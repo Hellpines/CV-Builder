@@ -27,11 +27,25 @@ export const useAuthStore = create<AuthState>()(
     {
       name: 'auth-storage',
       storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({
+        accessToken: state.accessToken,
+        refreshToken: state.refreshToken,
+        user: state.user,
+        verificationRequested: state.verificationRequested,
+      }),
       onRehydrateStorage: () => (state) => {
-        if (state) {
-          state.setHasHydrated(true);
-        }
+        state?.setHasHydrated(true);
       },
     }
   )
 );
+
+if (typeof window !== 'undefined') {
+  useAuthStore.persist.onFinishHydration(() => {
+    useAuthStore.setState({ _hasHydrated: true });
+  });
+
+  if (useAuthStore.persist.hasHydrated()) {
+    useAuthStore.setState({ _hasHydrated: true });
+  }
+}

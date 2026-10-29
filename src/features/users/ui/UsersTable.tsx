@@ -23,13 +23,15 @@ export default function UsersTable({ data, sortKey, sortDirection, onSort }: Use
   const router = useRouter();
   const isCompact = useIsCompact();
 
-  const headData: { key: SortKey; label: string }[] = [
-    { key: 'firstName', label: t('common.firstName') },
-    { key: 'lastName', label: t('common.lastName') },
-    { key: 'email', label: t('common.email') },
-    { key: 'department', label: t('common.department') },
-    { key: 'position', label: t('common.position') },
-  ].filter(({ key }) => !isCompact || !COMPACT_HIDDEN_COLUMNS.includes(key));
+  const headData = (
+    [
+      { key: 'firstName', label: t('common.firstName') },
+      { key: 'lastName', label: t('common.lastName') },
+      { key: 'email', label: t('common.email') },
+      { key: 'department', label: t('common.department') },
+      { key: 'position', label: t('common.position') },
+    ] as { key: SortKey; label: string }[]
+  ).filter(({ key }) => !isCompact || !COMPACT_HIDDEN_COLUMNS.includes(key));
 
   const colSpan = isCompact ? 5 : 7;
 
