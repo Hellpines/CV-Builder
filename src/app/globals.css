@@ -41,8 +41,10 @@
   --color-select-text: var(--select-text);
   --color-select-label: var(--select-label);
   --color-select-hover: var(--select-hover);
+  --color-select-hover-text: var(--select-hover-text);
   --color-select-selected: var(--select-selected);
   --color-select-selected-text: var(--select-selected-text);
+  --color-select-trigger-open: var(--select-trigger-open);
   --color-select-disabled-background: var(--select-disabled-background);
   --color-select-disabled-text: var(--select-disabled-text);
   --color-foreground: var(--foreground);
@@ -119,8 +121,10 @@
   --select-text: #2e2e2e;
   --select-label: #626262;
   --select-hover: #aeaeae;
+  --select-hover-text: #2e2e2e;
   --select-selected: #626262;
   --select-selected-text: #f5f5f7;
+  --select-trigger-open: transparent;
   --select-disabled-background: #626262;
   --select-disabled-text: #aeaeae;
 
@@ -189,9 +193,11 @@
 
   --select-text: #f5f5f7;
   --select-hover: #626262;
+  --select-hover-text: #f5f5f7;
   --select-label: #aeaeae;
   --select-selected: #f5f5f7;
   --select-selected-text: #2e2e2e;
+  --select-trigger-open: #454545;
   --select-disabled-background: #626262;
   --select-disabled-text: #aeaeae;
 

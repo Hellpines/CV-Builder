@@ -71,10 +71,9 @@ function PickerField({
       </label>
       <Select
         disabled={disabled}
-        value={null}
+        value={value || null}
         onValueChange={(next) => {
-          if (!next) return;
-          onChange(String(next) === String(value) ? '' : String(next));
+          if (next) onChange(String(next));
         }}
         onOpenChange={(open) => {
           if (!open) setTouched(true);
@@ -102,15 +101,7 @@ function PickerField({
         </SelectTrigger>
         <SelectContent>
           {options.map((option) => (
-            <SelectItem
-              key={option.value}
-              value={option.value}
-              className={
-                option.value === value
-                  ? 'bg-select-selected text-select-selected-text data-highlighted:bg-select-selected data-highlighted:text-select-selected-text'
-                  : undefined
-              }
-            >
+            <SelectItem key={option.value} value={option.value}>
               <OptionLabel option={option} />
             </SelectItem>
           ))}

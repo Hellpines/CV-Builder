@@ -86,8 +86,8 @@ export function MultiSelect({
               'flex min-h-12 w-full items-center justify-between gap-1.5 border bg-transparent px-3 py-2 text-left text-sm transition-colors outline-none select-none',
               invalid
                 ? 'border-primary text-primary'
-                : 'border-muted text-foreground hover:border-border focus-visible:border-border',
-              open && !invalid && 'border-border',
+                : 'border-muted text-select-text hover:border-border focus-visible:border-border',
+              open && !invalid && 'border-border bg-select-trigger-open',
               'data-disabled:border-muted data-disabled:bg-input-disabled-background data-disabled:text-primary-foreground data-disabled:hover:border-muted data-disabled:cursor-not-allowed',
               className
             )}
@@ -98,7 +98,7 @@ export function MultiSelect({
                   <span
                     className={cn(
                       'truncate',
-                      disabled ? 'text-primary-foreground' : 'text-foreground'
+                      disabled ? 'text-input-disabled-text' : 'text-foreground'
                     )}
                   >
                     {selected.map((opt) => opt.label).join(', ')}
@@ -155,7 +155,7 @@ export function MultiSelect({
               className={cn(
                 'pointer-events-none shrink-0 transition-transform duration-200',
                 open && 'rotate-180',
-                invalid ? 'text-primary' : 'text-primary-foreground'
+                invalid ? 'text-primary' : 'text-select-text'
               )}
             />
           </SelectPrimitive.Trigger>
@@ -183,16 +183,23 @@ function MultiSelectItem({ className, children, value, ...props }: SelectPrimiti
       value={value}
       data-slot="multi-select-item"
       className={cn(
-        'text-foreground relative flex w-full cursor-default items-center gap-3 p-3 text-sm transition-colors outline-none select-none',
-        'data-highlighted:bg-muted data-highlighted:text-foreground',
-        'data-selected:bg-select-selected data-selected:text-select-selected-text',
-        'data-selected:data-highlighted:bg-select-selected data-selected:data-highlighted:text-select-selected-text',
+        'group/item text-foreground relative flex w-full cursor-default items-center gap-3 p-3 text-sm transition-colors outline-none select-none',
+        'data-highlighted:bg-select-hover data-highlighted:text-select-hover-text',
+        'aria-selected:bg-select-selected aria-selected:text-select-selected-text',
+        'aria-selected:data-highlighted:bg-select-selected aria-selected:data-highlighted:text-select-selected-text',
         'data-disabled:pointer-events-none data-disabled:opacity-50',
         className
       )}
       {...props}
     >
-      <span className="border-border bg-background text-foreground flex size-5 shrink-0 items-center justify-center border">
+      <span
+        className={cn(
+          'border-border flex size-5 shrink-0 items-center justify-center border bg-transparent',
+          'group-data-highlighted/item:bg-select-hover group-data-highlighted/item:text-select-hover-text',
+          'group-aria-selected/item:border-select-selected-text group-aria-selected/item:bg-select-selected group-aria-selected/item:text-select-selected-text',
+          'group-aria-selected/item:group-data-highlighted/item:bg-select-selected group-aria-selected/item:group-data-highlighted/item:text-select-selected-text'
+        )}
+      >
         <SelectPrimitive.ItemIndicator>
           <CheckIcon className="size-4" />
         </SelectPrimitive.ItemIndicator>

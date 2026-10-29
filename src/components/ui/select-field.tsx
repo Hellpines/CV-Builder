@@ -46,16 +46,13 @@ export function SelectField({
 
   const valueClasses = cn(
     disabled
-      ? 'text-primary-foreground'
+      ? 'text-select-disabled-text'
       : selected
         ? 'text-foreground'
         : invalid
           ? 'text-primary'
           : 'text-placeholder'
   );
-
-  const selectedItemClasses =
-    'bg-select-selected text-select-selected-text data-highlighted:bg-select-selected data-highlighted:text-select-selected-text';
 
   return (
     <div className="relative w-full">
@@ -80,11 +77,7 @@ export function SelectField({
         </SelectTrigger>
         <SelectContent>
           {options.map((option) => (
-            <SelectItem
-              key={option.value}
-              value={option.value}
-              className={option.value === value ? selectedItemClasses : undefined}
-            >
+            <SelectItem key={option.value} value={option.value}>
               {option.label}
             </SelectItem>
           ))}

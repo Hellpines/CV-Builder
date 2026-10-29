@@ -36,11 +36,6 @@ export function FormSelect({
 }: FormSelectProps) {
   const selected = options.find((o) => String(o.id) === String(value));
 
-  const handleChange = (val: string | null) => {
-    if (!val) return;
-    onChange(String(val) === String(value) ? '' : String(val));
-  };
-
   return (
     <div className="flex flex-col">
       <label
@@ -50,7 +45,13 @@ export function FormSelect({
       >
         {label}
       </label>
-      <Select disabled={disabled} value={null} onValueChange={handleChange}>
+      <Select
+        disabled={disabled}
+        value={value ? String(value) : null}
+        onValueChange={(val) => {
+          if (val) onChange(String(val));
+        }}
+      >
         <SelectTrigger
           className="h-12 w-full"
           invalid={invalid}
@@ -71,22 +72,11 @@ export function FormSelect({
           </SelectValue>
         </SelectTrigger>
         <SelectContent>
-          {options.map((opt) => {
-            const isSelected = String(opt.id) === String(value);
-            return (
-              <SelectItem
-                key={opt.id}
-                value={String(opt.id)}
-                className={
-                  isSelected
-                    ? 'bg-select-selected text-select-selected-text data-highlighted:bg-select-selected data-highlighted:text-select-selected-text'
-                    : undefined
-                }
-              >
-                {opt.name}
-              </SelectItem>
-            );
-          })}
+          {options.map((opt) => (
+            <SelectItem key={opt.id} value={String(opt.id)}>
+              {opt.name}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
     </div>
