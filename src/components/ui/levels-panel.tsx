@@ -203,7 +203,7 @@ export function LevelsPanel({
                 </Button>
                 <Button
                   variant="primaryV2"
-                  className="flex w-60 items-center justify-center gap-2"
+                  className="flex items-center justify-center gap-2"
                   disabled={!hasItems}
                   onClick={() => setSelectionMode(true)}
                 >

@@ -34,6 +34,7 @@ interface UpdateTokenResponse {
       refresh_token: string;
     };
   };
+  errors?: Array<{ message?: string }>;
 }
 
 interface GraphQLErrorItem {
@@ -76,6 +77,11 @@ async function refreshAccessToken(refreshToken: string): Promise<string> {
   });
 
   const result: UpdateTokenResponse = await res.json();
+
+  if (result.errors?.length) {
+    throw new Error(result.errors[0]?.message || 'Token refresh failed');
+  }
+
   const tokens = result.data?.updateToken;
 
   if (!tokens?.access_token || !tokens?.refresh_token) {
@@ -88,6 +94,12 @@ async function refreshAccessToken(refreshToken: string): Promise<string> {
   });
 
   return tokens.access_token;
+}
+
+function forceLogout() {
+  useAuthStore.getState().logout();
+  refreshPromise = null;
+  void client.clearStore().catch(() => undefined);
 }
 
 const errorLink: ApolloLink = new ErrorLink(({ error, operation, forward }) => {
@@ -103,10 +115,15 @@ const errorLink: ApolloLink = new ErrorLink(({ error, operation, forward }) => {
     return;
   }
 
+  if (operation.getContext().skipAuthRefresh) {
+    forceLogout();
+    return;
+  }
+
   const refreshToken = useAuthStore.getState().refreshToken;
 
   if (!refreshToken) {
-    useAuthStore.getState().logout();
+    forceLogout();
     return;
   }
 
@@ -118,11 +135,12 @@ const errorLink: ApolloLink = new ErrorLink(({ error, operation, forward }) => {
 
   return from(
     refreshPromise.catch((refreshError) => {
-      useAuthStore.getState().logout();
+      forceLogout();
       throw refreshError;
     })
   ).pipe(
     switchMap((accessToken): Observable<ApolloLink.Result> => {
+      operation.setContext((prev) => ({ ...prev, skipAuthRefresh: true }));
       setAuthHeader(operation, accessToken);
       return forward(operation);
     })
