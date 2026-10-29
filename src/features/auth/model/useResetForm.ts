@@ -27,7 +27,11 @@ export function useResetForm() {
       router.replace('/forgot-password');
       return;
     }
-    useAuthStore.setState({ accessToken: token });
+
+    const { accessToken, user } = useAuthStore.getState();
+    if (accessToken && !user) {
+      useAuthStore.setState({ accessToken: null, refreshToken: null });
+    }
   }, [token, router]);
 
   const [resetPassword, { loading: resetLoading }] = useMutation(RESET_PASSWORD_MUTATION, {
@@ -78,7 +82,13 @@ export function useResetForm() {
     setLinkError(null);
     setGeneralError(null);
 
-    if (!password || password.length < 6 || !confirmPassword || password !== confirmPassword) {
+    if (
+      !token ||
+      !password ||
+      password.length < 6 ||
+      !confirmPassword ||
+      password !== confirmPassword
+    ) {
       return;
     }
 
@@ -90,20 +100,23 @@ export function useResetForm() {
             confirmPassword,
           },
         },
+        context: {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        },
       });
 
-      if (token) {
-        const payload = parseJwt(token);
-        const email = payload?.email;
+      const payload = parseJwt(token);
+      const email = payload?.email;
 
-        if (email) {
-          await login({
-            variables: {
-              auth: { email, password },
-            },
-          });
-          return;
-        }
+      if (email) {
+        await login({
+          variables: {
+            auth: { email, password },
+          },
+        });
+        return;
       }
 
       router.push('/login');

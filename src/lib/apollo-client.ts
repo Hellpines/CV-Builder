@@ -18,7 +18,7 @@ const authLink = new ApolloLink((operation, forward) => {
   operation.setContext(({ headers = {} }: { headers?: Record<string, string> }) => ({
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : '',
+      authorization: headers.authorization || (token ? `Bearer ${token}` : ''),
     },
   }));
 
