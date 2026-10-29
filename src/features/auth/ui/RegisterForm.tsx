@@ -42,7 +42,7 @@ export function RegisterForm() {
           <Button
             type="submit"
             variant="primary"
-            className="w-55 py-4"
+            className="w-80 min-w-80 py-4 whitespace-nowrap"
             disabled={loading || !isFormValid}
           >
             {loading ? t('auth.loading') : t('auth.createAccount').toUpperCase()}
@@ -51,7 +51,7 @@ export function RegisterForm() {
       }
       footer={
         <Link href="/login">
-          <Button variant="ghost" className="px-12 text-xs font-semibold tracking-wider">
+          <Button variant="ghost" className="w-80 min-w-80 py-4 whitespace-nowrap">
             {t('auth.haveAccount').toUpperCase()}
           </Button>
         </Link>

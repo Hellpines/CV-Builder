@@ -32,7 +32,12 @@ export function ForgotForm() {
             {formError && (
               <p className="text-primary text-center text-sm font-medium">{formError}</p>
             )}
-            <Button type="submit" variant="primary" className="w-55 py-4" disabled={loading}>
+            <Button
+              type="submit"
+              variant="primary"
+              className="w-80 min-w-80 py-4 whitespace-nowrap"
+              disabled={loading}
+            >
               {loading ? t('auth.sending') : t('auth.resetPassword').toUpperCase()}
             </Button>
           </div>
@@ -40,7 +45,7 @@ export function ForgotForm() {
       }
       footer={
         <Link href="/login">
-          <Button variant="ghost" className="w-55 py-4">
+          <Button variant="ghost" className="w-80 min-w-80 py-4 whitespace-nowrap">
             {t('common.cancel').toUpperCase()}
           </Button>
         </Link>

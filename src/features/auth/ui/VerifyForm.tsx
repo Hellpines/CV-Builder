@@ -30,12 +30,16 @@ export function VerifyForm() {
           <Button
             type="submit"
             variant="primary"
-            className="w-40 py-4"
+            className="w-80 min-w-80 py-4 whitespace-nowrap"
             disabled={loading || code.some((c) => !c)}
           >
             {loading ? t('auth.confirming') : t('auth.confirm').toUpperCase()}
           </Button>
-          <Button variant="ghost" onClick={handleLater} className="px-14 text-xs font-semibold">
+          <Button
+            variant="ghost"
+            onClick={handleLater}
+            className="w-80 min-w-80 py-4 whitespace-nowrap"
+          >
             {t('auth.later').toUpperCase()}
           </Button>
         </div>

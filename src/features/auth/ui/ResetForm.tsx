@@ -36,14 +36,19 @@ export function ResetForm() {
           {generalError && (
             <p className="text-primary text-center text-sm font-medium">{generalError}</p>
           )}
-          <Button type="submit" variant="primary" className="py-4" disabled={loading}>
+          <Button
+            type="submit"
+            variant="primary"
+            className="w-80 min-w-80 py-4 whitespace-nowrap"
+            disabled={loading}
+          >
             {loading ? t('auth.saving') : t('auth.confirm').toUpperCase()}
           </Button>
         </div>
       }
       footer={
         <Link href="/login">
-          <Button variant="ghost" className="px-10">
+          <Button variant="ghost" className="w-80 min-w-80 py-4 whitespace-nowrap">
             {t('auth.signIn').toUpperCase()}
           </Button>
         </Link>
