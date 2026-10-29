@@ -8,10 +8,26 @@ function subscribe(callback: () => void) {
   return () => mql.removeEventListener('change', callback);
 }
 
-export function useIsMobile() {
+function getSnapshot() {
+  return window.matchMedia(QUERY).matches;
+}
+
+function getServerSnapshot() {
+  return false;
+}
+
+const subscribeToClient = () => () => {};
+
+function useIsClient() {
   return useSyncExternalStore(
-    subscribe,
-    () => window.matchMedia(QUERY).matches,
+    subscribeToClient,
+    () => true,
     () => false
   );
+}
+
+export function useIsMobile() {
+  const isClient = useIsClient();
+  const matches = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  return isClient && matches;
 }

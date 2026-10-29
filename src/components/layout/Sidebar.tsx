@@ -34,13 +34,12 @@ function getDarkModeSnapshot() {
 
 export default function Sidebar() {
   const { t } = useTranslation();
-  const [isOpen, setIsOpen] = useState(true);
+  const [userOpen, setUserOpen] = useState<boolean | null>(null);
   const pathname = usePathname();
   const isCompact = useIsCompact();
   const isDarkMode = useSyncExternalStore(subscribeToDarkMode, getDarkModeSnapshot, () => false);
-
-  const showLabels = isOpen && !isCompact;
-  const isFullyHidden = isCompact && !isOpen;
+  const isOpen = userOpen ?? !isCompact;
+  const isOverlayOpen = isCompact && isOpen;
 
   const logoSrc = isDarkMode ? '/logo-light.svg' : '/logo-dark.svg';
   const navItems = [
@@ -51,74 +50,106 @@ export default function Sidebar() {
   ] as const;
 
   const handleSidebar = () => {
-    setIsOpen((prevState) => !prevState);
+    setUserOpen(!isOpen);
   };
 
-  const sidebarWidth = isCompact ? (isOpen ? 'w-14' : 'w-0') : isOpen ? 'w-50' : 'w-14';
+  const closeSidebar = () => {
+    if (isOverlayOpen) setUserOpen(false);
+  };
 
-  const togglePosition = isFullyHidden ? 'left-0' : isOpen ? '-right-4' : '-right-6';
+  const layoutWidth = isCompact ? 'w-14' : isOpen ? 'w-50' : 'w-14';
+  const panelWidth = isOpen ? 'w-50' : 'w-14';
+  const labelClass = [
+    'overflow-hidden whitespace-nowrap transition-[max-width,opacity] duration-400',
+    isOpen ? 'max-w-40 opacity-100' : 'max-w-0 opacity-0',
+  ].join(' ');
 
   return (
-    <div
-      className={[
-        'sticky top-0 z-2 h-screen shrink-0 self-start overflow-visible transition-[width] duration-400',
-        sidebarWidth,
-      ].join(' ')}
-    >
-      <aside
+    <>
+      {isOverlayOpen ? (
+        <button
+          type="button"
+          aria-label={t('sidebar.toggleClose')}
+          className="fixed inset-0 z-2 cursor-default bg-black/50"
+          onClick={closeSidebar}
+        />
+      ) : null}
+
+      <div
         className={[
-          'relative h-full w-full min-w-0 overflow-hidden transition-opacity duration-400',
-          isFullyHidden ? 'pointer-events-none opacity-0' : 'opacity-100',
+          'sticky top-0 z-3 h-screen shrink-0 self-start overflow-visible transition-[width] duration-400',
+          layoutWidth,
         ].join(' ')}
-        aria-hidden={isFullyHidden}
       >
-        <div className={`flex h-full flex-col ${showLabels ? 'w-50' : 'w-14'}`}>
-          <div className="flex items-center gap-4 p-4">
-            <Image src={logoSrc} alt={t('sidebar.cvBuilderLogo')} width={24} height={24} />
-            {showLabels && (
-              <h2 className="text-foreground text-lg whitespace-nowrap">CV Builder</h2>
-            )}
+        <aside
+          className={[
+            'bg-background relative h-full min-w-0 transition-[width] duration-400',
+            isOverlayOpen ? 'fixed top-0 left-0 z-3 h-screen shadow-md' : 'w-full',
+            panelWidth,
+          ].join(' ')}
+        >
+          <div className="h-full overflow-hidden">
+            <div
+              className={[
+                'relative flex h-full flex-col transition-[width] duration-400',
+                panelWidth,
+              ].join(' ')}
+            >
+              <div className="flex items-center gap-4 overflow-hidden p-4">
+                <Image
+                  src={logoSrc}
+                  alt={t('sidebar.cvBuilderLogo')}
+                  width={24}
+                  height={24}
+                  className="shrink-0"
+                />
+                <h2 className={['text-foreground text-lg', labelClass].join(' ')}>CV Builder</h2>
+              </div>
+
+              <nav className="space-y-2">
+                {navItems.map(({ href, labelKey, Icon }) => {
+                  const isActive = pathname === href || pathname.startsWith(href);
+                  const label = t(labelKey);
+
+                  return (
+                    <Link
+                      key={href}
+                      href={href}
+                      onClick={closeSidebar}
+                      className={[
+                        'flex cursor-pointer items-center gap-4 overflow-hidden rounded-r-[200px] p-4 transition-colors',
+                        isActive
+                          ? 'bg-primary-hover text-nav-link-selected'
+                          : 'text-nav-link hover:bg-primary-hover hover:text-nav-link-selected',
+                      ].join(' ')}
+                    >
+                      <Icon className="shrink-0" />
+                      <span className={labelClass}>{label}</span>
+                    </Link>
+                  );
+                })}
+              </nav>
+
+              <div className="absolute bottom-16 left-0 w-full overflow-hidden px-2">
+                <UserMenu isOpen={isOpen} />
+              </div>
+            </div>
           </div>
 
-          <nav className="space-y-2">
-            {navItems.map(({ href, labelKey, Icon }) => {
-              const isActive = pathname === href || pathname.startsWith(href);
-              const label = t(labelKey);
-
-              return (
-                <Link
-                  key={href}
-                  href={href}
-                  tabIndex={isFullyHidden ? -1 : undefined}
-                  className={[
-                    'flex cursor-pointer items-center gap-4 rounded-r-[200px] p-4 whitespace-nowrap transition-colors',
-                    isActive
-                      ? 'bg-primary-hover text-foreground'
-                      : 'hover:bg-primary-hover hover:text-foreground',
-                  ].join(' ')}
-                >
-                  <Icon className={isActive ? 'text-foreground' : ''} />
-                  {showLabels ? <span>{label}</span> : null}
-                </Link>
-              );
-            })}
-          </nav>
-        </div>
-
-        <div className="absolute bottom-16 left-0 w-50 px-2">
-          <UserMenu isOpen={showLabels} />
-        </div>
-      </aside>
-
-      <Button
-        onClick={handleSidebar}
-        variant="icon"
-        className={['absolute top-9 z-1 p-1 transition-all duration-400', togglePosition].join(' ')}
-        aria-label={isOpen ? t('sidebar.toggleClose') : t('sidebar.toggleOpen')}
-        aria-expanded={isOpen}
-      >
-        {isOpen ? <ChevronLeft size={24} /> : <ChevronRight size={24} />}
-      </Button>
-    </div>
+          <Button
+            onClick={handleSidebar}
+            variant="icon"
+            className={[
+              'absolute top-9 z-4 p-1 transition-all duration-400',
+              isOpen ? 'bg-background -right-4' : '-right-6',
+            ].join(' ')}
+            aria-label={isOpen ? t('sidebar.toggleClose') : t('sidebar.toggleOpen')}
+            aria-expanded={isOpen}
+          >
+            {isOpen ? <ChevronLeft size={24} /> : <ChevronRight size={24} />}
+          </Button>
+        </aside>
+      </div>
+    </>
   );
 }

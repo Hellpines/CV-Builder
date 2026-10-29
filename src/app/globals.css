@@ -47,6 +47,8 @@
   --color-select-disabled-text: var(--select-disabled-text);
   --color-foreground: var(--foreground);
   --color-background: var(--background);
+  --color-nav-link: var(--nav-link);
+  --color-nav-link-selected: var(--nav-link-selected);
 
   --color-success: var(--success);
   --color-success-text: var(--success-text);
@@ -135,6 +137,9 @@
   --info-text: #145b7b;
   --info-border: #145b7b;
 
+  --nav-link: #626262;
+  --nav-link-selected: #2e2e2e;
+
   --radius: 0.625rem;
 }
 
@@ -202,4 +207,7 @@
   --info: #29b6f6;
   --info-text: #145b7b;
   --info-border: #145b7b;
+
+  --nav-link: #aeaeae;
+  --nav-link-selected: #f5f5f7;
 }
