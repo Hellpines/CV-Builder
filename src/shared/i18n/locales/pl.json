@@ -226,7 +226,9 @@
     "passwordTooShort": "Hasło musi mieć co najmniej 6 znaków",
     "confirmPasswordRequired": "Potwierdzenie hasła jest wymagane",
     "passwordsMismatch": "Hasła nie pasują do siebie",
-    "invalidEmail": "Nieprawidłowy adres e-mail"
+    "invalidEmail": "Nieprawidłowy adres e-mail",
+    "firstNameRequired": "Imię jest wymagane",
+    "lastNameRequired": "Nazwisko jest wymagane"
   },
   "errors": {
     "loadUsers": "Nie udało się załadować użytkowników",

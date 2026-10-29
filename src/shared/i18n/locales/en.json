@@ -226,7 +226,9 @@
     "passwordTooShort": "Password must be at least 6 characters",
     "confirmPasswordRequired": "Confirm password is required",
     "passwordsMismatch": "Passwords do not match",
-    "invalidEmail": "Invalid email address"
+    "invalidEmail": "Invalid email address",
+    "firstNameRequired": "First name is required",
+    "lastNameRequired": "Last name is required"
   },
   "errors": {
     "loadUsers": "Failed to load users",

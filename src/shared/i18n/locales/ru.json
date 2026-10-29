@@ -226,7 +226,9 @@
     "passwordTooShort": "Пароль должен содержать минимум 6 символов",
     "confirmPasswordRequired": "Подтверждение пароля обязательно",
     "passwordsMismatch": "Пароли не совпадают",
-    "invalidEmail": "Неверный email"
+    "invalidEmail": "Неверный email",
+    "firstNameRequired": "Имя обязательно",
+    "lastNameRequired": "Фамилия обязательна"
   },
   "errors": {
     "loadUsers": "Не удалось загрузить пользователей",

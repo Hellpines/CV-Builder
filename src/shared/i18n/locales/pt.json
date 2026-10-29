@@ -226,7 +226,9 @@
     "passwordTooShort": "A senha deve ter pelo menos 6 caracteres",
     "confirmPasswordRequired": "A confirmação da senha é obrigatória",
     "passwordsMismatch": "As senhas não coincidem",
-    "invalidEmail": "E-mail inválido"
+    "invalidEmail": "E-mail inválido",
+    "firstNameRequired": "O nome é obrigatório",
+    "lastNameRequired": "O sobrenome é obrigatório"
   },
   "errors": {
     "loadUsers": "Falha ao carregar usuários",

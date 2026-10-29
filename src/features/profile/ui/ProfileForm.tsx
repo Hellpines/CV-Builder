@@ -46,13 +46,16 @@ export default function ProfileForm({
   const { handleVerifyEmail, sendingCode } = useVerifyEmail(userData?.email);
   const authIsVerified = useAuthStore((state) => state.user?.is_verified);
   const [submitted, setSubmitted] = useState(false);
+  const [touched, setTouched] = useState({ firstName: false, lastName: false });
 
+  const firstNameInvalid = (submitted || touched.firstName) && !firstName.trim();
+  const lastNameInvalid = (submitted || touched.lastName) && !lastName.trim();
   const departmentInvalid = submitted && !departmentId;
   const positionInvalid = submitted && !positionId;
 
   const onUpdate = () => {
     setSubmitted(true);
-    if (!departmentId || !positionId) return;
+    if (!firstName.trim() || !lastName.trim() || !departmentId || !positionId) return;
     handleSave();
   };
 
@@ -94,7 +97,7 @@ export default function ProfileForm({
         />
 
         <div className="flex flex-col">
-          <h1 className="text-foregroundb-2 text-xl">
+          <h1 className="text-foreground mb-2 text-xl">
             {profileFirstName} {profileLastName}
           </h1>
           <p className="text-primary-foreground mb-0.5 text-sm">{userData?.email}</p>
@@ -112,7 +115,12 @@ export default function ProfileForm({
           placeholder={t('common.firstName')}
           value={firstName}
           disabled={!isEditable}
-          onChange={(e) => setFirstName(e.target.value)}
+          invalid={firstNameInvalid}
+          helperText={firstNameInvalid ? t('validation.firstNameRequired') : undefined}
+          onChange={(e) => {
+            setFirstName(e.target.value);
+            setTouched((prev) => ({ ...prev, firstName: true }));
+          }}
         />
 
         <Input
@@ -120,7 +128,12 @@ export default function ProfileForm({
           placeholder={t('common.lastName')}
           value={lastName}
           disabled={!isEditable}
-          onChange={(e) => setLastName(e.target.value)}
+          invalid={lastNameInvalid}
+          helperText={lastNameInvalid ? t('validation.lastNameRequired') : undefined}
+          onChange={(e) => {
+            setLastName(e.target.value);
+            setTouched((prev) => ({ ...prev, lastName: true }));
+          }}
         />
 
         <FormSelect
