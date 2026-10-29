@@ -187,10 +187,10 @@ function LevelForm({
       {error ? <p className="text-primary text-sm">{error}</p> : null}
 
       <div className="flex justify-end gap-4">
-        <Button variant="secondary" onClick={onCancel} className="w-40">
+        <Button variant="secondary" onClick={onCancel} className="">
           {t('common.cancel')}
         </Button>
-        <Button type="submit" variant="primary" disabled={!canSubmit} className="w-40">
+        <Button type="submit" variant="primary" disabled={!canSubmit} className="">
           {loading ? t('common.saving') : isEdit ? t('common.update') : t('common.add')}
         </Button>
       </div>

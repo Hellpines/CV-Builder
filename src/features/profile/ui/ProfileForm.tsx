@@ -109,7 +109,7 @@ export default function ProfileForm({
         </div>
       </div>
 
-      <div className="relative mx-auto grid w-full max-w-212.5 grid-cols-2 gap-6">
+      <div className="relative mx-auto grid w-full max-w-212.5 grid-cols-1 gap-6 min-[901px]:grid-cols-2">
         <Input
           type="text"
           placeholder={t('common.firstName')}

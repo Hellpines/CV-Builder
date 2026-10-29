@@ -167,14 +167,14 @@ export function LevelsPanel({
               <>
                 <Button
                   variant="secondary"
-                  className="text-primary-foreground w-54 justify-center"
+                  className="text-primary-foreground justify-center"
                   onClick={exitSelection}
                 >
                   {t('common.cancel')}
                 </Button>
                 <Button
                   variant={selected.length ? 'primary' : 'primaryV2'}
-                  className="flex w-60 items-center justify-center gap-2"
+                  className="flex items-center justify-center gap-2"
                   disabled={!selected.length}
                   onClick={() => setModal({ type: 'confirm' })}
                 >
@@ -195,7 +195,7 @@ export function LevelsPanel({
               <>
                 <Button
                   variant="ghost"
-                  className="text-primary-foreground flex w-54 items-center justify-center gap-2"
+                  className="text-primary-foreground flex items-center justify-center gap-2"
                   onClick={() => setModal({ type: 'add' })}
                 >
                   <Plus size={20} />

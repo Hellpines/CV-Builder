@@ -7,6 +7,8 @@ import { ReactNode, useEffect } from 'react';
 
 const PUBLIC_PATHS = ['/login', '/register', '/forgot-password', '/reset-password'];
 
+const ALWAYS_ACCESSIBLE_PATHS = ['/reset-password'];
+
 export default function AuthLayout({ children }: { children: ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -18,7 +20,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
 
   let redirectTo: string | null = null;
 
-  if (_hasHydrated) {
+  if (_hasHydrated && !ALWAYS_ACCESSIBLE_PATHS.includes(pathname)) {
     if (!accessToken) {
       if (!PUBLIC_PATHS.includes(pathname)) redirectTo = '/login';
     } else if (pathname === '/verify-email') {

@@ -3,6 +3,7 @@
 import { ArrowUp, ArrowDown, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useIsCompact } from '@/shared/hooks/useIsCompact';
 import { useTranslation } from '@/shared/i18n/useTranslation';
 import { Button } from '@/components/ui/button';
 import { User } from '@/shared/types/user';
@@ -15,9 +16,12 @@ interface UsersTableProps {
   onSort: (key: SortKey) => void;
 }
 
+const COMPACT_HIDDEN_COLUMNS: SortKey[] = ['email', 'position'];
+
 export default function UsersTable({ data, sortKey, sortDirection, onSort }: UsersTableProps) {
   const { t } = useTranslation();
   const router = useRouter();
+  const isCompact = useIsCompact();
 
   const headData: { key: SortKey; label: string }[] = [
     { key: 'firstName', label: t('common.firstName') },
@@ -25,7 +29,9 @@ export default function UsersTable({ data, sortKey, sortDirection, onSort }: Use
     { key: 'email', label: t('common.email') },
     { key: 'department', label: t('common.department') },
     { key: 'position', label: t('common.position') },
-  ];
+  ].filter(({ key }) => !isCompact || !COMPACT_HIDDEN_COLUMNS.includes(key));
+
+  const colSpan = isCompact ? 5 : 7;
 
   return (
     <div className="w-full overflow-x-auto">
@@ -97,9 +103,11 @@ export default function UsersTable({ data, sortKey, sortDirection, onSort }: Use
 
                   <td className="border-muted border-b p-4">{firstName}</td>
                   <td className="border-muted border-b p-4">{lastName}</td>
-                  <td className="border-muted border-b p-4">{user.email}</td>
+                  {!isCompact && <td className="border-muted border-b p-4">{user.email}</td>}
                   <td className="border-muted border-b p-4">{user.department?.name || ''}</td>
-                  <td className="border-muted border-b p-4">{user.position?.name || ''}</td>
+                  {!isCompact && (
+                    <td className="border-muted border-b p-4">{user.position?.name || ''}</td>
+                  )}
 
                   <td className="border-muted border-b px-4 py-4 align-middle">
                     <div className="flex justify-end">
@@ -122,7 +130,7 @@ export default function UsersTable({ data, sortKey, sortDirection, onSort }: Use
           ) : (
             <tr>
               <td
-                colSpan={7}
+                colSpan={colSpan}
                 className="text-primary-foreground absolute top-1/2 left-1/2 -translate-y-1/2 text-sm"
               >
                 {t('errors.noUsersFound')}
