@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { AuthPage } from './AuthPage';
 import { PasswordInput } from './PasswordInput';
-import { useRegisterForm } from '../model/useRegisterForm';
+import { useRegisterForm } from '../models/useRegisterForm';
 
 export function RegisterForm() {
   const { t } = useTranslation();

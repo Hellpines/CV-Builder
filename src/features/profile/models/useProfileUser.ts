@@ -1,7 +1,7 @@
 import { useParams } from 'next/navigation';
 import { skipToken, useQuery } from '@apollo/client/react';
 import { GET_USER_PROFILE } from '../api/ProfileQueries';
-import { useAuthStore } from '@/features/auth/model/useAuthStore';
+import { useAuthStore } from '@/features/auth/models/useAuthStore';
 
 export function useProfileUser() {
   const params = useParams();

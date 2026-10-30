@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { PasswordInput } from '@/features/auth/ui/PasswordInput';
 import { useTranslation } from '@/shared/i18n/useTranslation';
-import { usePasswordForm } from '../model/usePasswordForm';
+import { usePasswordForm } from '../models/usePasswordForm';
 
 export function PasswordSection() {
   const { t } = useTranslation();

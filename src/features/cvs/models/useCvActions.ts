@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client/react';
 import { useTranslation } from '@/shared/i18n/useTranslation';
-import { useAuthStore } from '@/features/auth/model/useAuthStore';
+import { useAuthStore } from '@/features/auth/models/useAuthStore';
 import { toast } from '@/shared/lib/toast';
 import { CREATE_CV_MUTATION, DELETE_CV_MUTATION, UPDATE_CV_MUTATION } from '../api/CvMutations';
 import type { CvFormValues } from '../types/CvTypes';

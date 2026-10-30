@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { skipToken, useQuery } from '@apollo/client/react';
-import { useAuthStore } from '@/features/auth/model/useAuthStore';
+import { useAuthStore } from '@/features/auth/models/useAuthStore';
 import { useDebouncedValue } from '@/shared/hooks/useDebouncedValue';
 import { GET_USER_CVS } from '../api/CvQueries';
 import type { CvSortDirection } from '../types/CvTypes';

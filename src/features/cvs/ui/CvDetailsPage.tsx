@@ -5,8 +5,8 @@ import { useTranslation } from '@/shared/i18n/useTranslation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { useCv } from '../model/useCv';
-import { useCvActions } from '../model/useCvActions';
+import { useCv } from '../models/useCv';
+import { useCvActions } from '../models/useCvActions';
 import type { CvFormValues, CvListItem } from '../types/CvTypes';
 
 const MAX_LENGTH = 255;

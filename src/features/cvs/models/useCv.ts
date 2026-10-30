@@ -1,6 +1,6 @@
 import { useParams } from 'next/navigation';
 import { skipToken, useQuery } from '@apollo/client/react';
-import { useAuthStore } from '../../auth/model/useAuthStore';
+import { useAuthStore } from '../../auth/models/useAuthStore';
 import { GET_CV_DETAILS } from '../api/CvDetailsQueries';
 
 export function useCv() {

@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslation } from '@/shared/i18n/useTranslation';
-import { useProfileData } from '../model/useProfileData';
+import { useProfileData } from '../models/useProfileData';
 import ProfileForm from './ProfileForm';
 
 export function ProfilePage() {

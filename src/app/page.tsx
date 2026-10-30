@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuthStore } from '@/features/auth/model/useAuthStore';
+import { useAuthStore } from '@/features/auth/models/useAuthStore';
 
 export default function Page() {
   const router = useRouter();

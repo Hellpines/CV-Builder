@@ -7,7 +7,7 @@ import {
   UPLOAD_AVATAR_MUTATION,
   DELETE_AVATAR_MUTATION,
 } from '../api/ProfileMutations';
-import { useAuthStore } from '@/features/auth/model/useAuthStore';
+import { useAuthStore } from '@/features/auth/models/useAuthStore';
 import { User } from '@/shared/types/user';
 import { toast } from '@/shared/lib/toast';
 

@@ -55,11 +55,11 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
+      "node ./node_modules/eslint/bin/eslint.js --fix",
+      "node ./node_modules/prettier/bin/prettier.cjs --write"
     ],
     "*.{json,md,css,scss}": [
-      "prettier --write"
+      "node ./node_modules/prettier/bin/prettier.cjs --write"
     ]
   },
   "packageManager": "pnpm@12.10.1"

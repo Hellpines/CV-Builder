@@ -3,7 +3,7 @@
 import { useTranslation } from '@/shared/i18n/useTranslation';
 import { AppLoader } from '@/components/ui/app-loader';
 import { LevelsPanel, type LevelsPanelLabels } from '@/components/ui/levels-panel';
-import { useAuthStore } from '@/features/auth/model/useAuthStore';
+import { useAuthStore } from '@/features/auth/models/useAuthStore';
 import { useLanguages } from '../models/useLanguages';
 import { useLanguageActions } from '../models/useLanguagesActions';
 import { PROFICIENCY_OPTIONS } from '../models/languagesLevels';

@@ -4,12 +4,12 @@ import { useState } from 'react';
 import { useTranslation } from '@/shared/i18n/useTranslation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { useProfileForm } from '../model/useProfileForm';
+import { useProfileForm } from '../models/useProfileForm';
 import { User } from '@/shared/types/user';
 import { FormSelect, Option } from './FormSelect';
 import { AvatarUpload } from './AvatarUpload';
-import { useAuthStore } from '@/features/auth/model/useAuthStore';
-import { useVerifyEmail } from '../model/useVerifyEmail';
+import { useAuthStore } from '@/features/auth/models/useAuthStore';
+import { useVerifyEmail } from '../models/useVerifyEmail';
 
 interface ProfileFormProps {
   userData?: User;

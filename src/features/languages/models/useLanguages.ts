@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { skipToken, useQuery } from '@apollo/client/react';
 import { i18n } from '@/shared/i18n/i18n';
 import type { LevelGroup } from '@/components/ui/levels-panel';
-import { useAuthStore } from '@/features/auth/model/useAuthStore';
+import { useAuthStore } from '@/features/auth/models/useAuthStore';
 import { GET_PROFILE_LANGUAGES } from '../api/LanguageQueries';
 import { PROFICIENCY_BY_VALUE, PROFICIENCY_LEVELS } from './languagesLevels';
 

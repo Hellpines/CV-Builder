@@ -1,4 +1,4 @@
-import { useAuthStore } from '@/features/auth/model/useAuthStore';
+import { useAuthStore } from '@/features/auth/models/useAuthStore';
 import { ApolloClient, ApolloLink, HttpLink, InMemoryCache } from '@apollo/client';
 import { CombinedGraphQLErrors } from '@apollo/client/errors';
 import { ErrorLink } from '@apollo/client/link/error';

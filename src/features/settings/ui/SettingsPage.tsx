@@ -5,7 +5,7 @@ import { SelectField } from '@/components/ui/select-field';
 import { useTheme } from '@/shared/hooks/useTheme';
 import type { Theme } from '@/shared/lib/theme';
 import { useLanguage } from '@/shared/i18n/useLanguage';
-import { THEME_OPTIONS } from '../model/themeOptions';
+import { THEME_OPTIONS } from '../models/themeOptions';
 import { PasswordSection } from './PasswordSection';
 
 export default function SettingsPage() {

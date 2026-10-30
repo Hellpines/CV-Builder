@@ -5,7 +5,7 @@ import { useTranslation } from '@/shared/i18n/useTranslation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { AuthPage } from './AuthPage';
-import { useForgotForm } from '../model/useForgotForm';
+import { useForgotForm } from '../models/useForgotForm';
 
 export function ForgotForm() {
   const { t } = useTranslation();

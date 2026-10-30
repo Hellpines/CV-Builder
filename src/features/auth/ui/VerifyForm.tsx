@@ -3,7 +3,7 @@
 import { useTranslation } from '@/shared/i18n/useTranslation';
 import { Button } from '@/components/ui/button';
 import { AuthPage } from './AuthPage';
-import { useVerifyForm } from '../model/useVerifyForm';
+import { useVerifyForm } from '../models/useVerifyForm';
 
 export function VerifyForm() {
   const { t } = useTranslation();

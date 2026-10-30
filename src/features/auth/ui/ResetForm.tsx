@@ -5,7 +5,7 @@ import { useTranslation } from '@/shared/i18n/useTranslation';
 import { Button } from '@/components/ui/button';
 import { AuthPage } from './AuthPage';
 import { PasswordInput } from './PasswordInput';
-import { useResetForm } from '../model/useResetForm';
+import { useResetForm } from '../models/useResetForm';
 
 export function ResetForm() {
   const { t } = useTranslation();

@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuthStore } from '@/features/auth/model/useAuthStore';
+import { useAuthStore } from '@/features/auth/models/useAuthStore';
 import Sidebar from '@/components/layout/Sidebar';
 import { AppLoader } from '@/components/ui/app-loader';
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs';

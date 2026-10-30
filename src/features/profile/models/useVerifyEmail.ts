@@ -2,7 +2,7 @@ import { useMutation } from '@apollo/client/react';
 import { useRouter } from 'next/navigation';
 import { useTranslation } from '@/shared/i18n/useTranslation';
 import { SEND_VERIFICATION_MUTATION } from '@/features/auth/api/AuthMutations';
-import { useAuthStore } from '@/features/auth/model/useAuthStore';
+import { useAuthStore } from '@/features/auth/models/useAuthStore';
 import { toast } from '@/shared/lib/toast';
 
 export function useVerifyEmail(email?: string) {

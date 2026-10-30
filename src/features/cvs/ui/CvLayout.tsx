@@ -4,7 +4,7 @@ import type { ReactNode } from 'react';
 import { notFound } from 'next/navigation';
 import { useTranslation } from '@/shared/i18n/useTranslation';
 import { Tabs } from '@/components/ui/tabs';
-import { useCv } from '../model/useCv';
+import { useCv } from '../models/useCv';
 
 export function CvLayout({ children }: { children: ReactNode }) {
   const { t } = useTranslation();

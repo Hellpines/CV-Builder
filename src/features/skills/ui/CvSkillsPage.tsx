@@ -3,10 +3,10 @@
 import { Button } from '@/components/ui/button';
 import { AppLoader } from '@/components/ui/app-loader';
 import { LevelsPanel } from '@/components/ui/levels-panel';
-import { MASTERY_OPTIONS } from '../model/skillLevels';
-import { useCvSkills } from '../model/useCvSkills';
-import { useCvSkillActions } from '../model/useCvSkillActions';
-import { SKILL_LABELS } from '../model/skillLabels';
+import { MASTERY_OPTIONS } from '../models/skillLevels';
+import { useCvSkills } from '../models/useCvSkills';
+import { useCvSkillActions } from '../models/useCvSkillActions';
+import { SKILL_LABELS } from '../models/skillLabels';
 
 export function CvSkillsPage({ cvId }: { cvId: string }) {
   const { skills, groups, loading, error, refetch } = useCvSkills(cvId);

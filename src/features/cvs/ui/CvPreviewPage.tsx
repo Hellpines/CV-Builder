@@ -3,8 +3,8 @@
 import { useRef } from 'react';
 import { useTranslation } from '@/shared/i18n/useTranslation';
 import { Button } from '@/components/ui/button';
-import { useCvPdfExport } from '../model/useCvPdfExport';
-import { useCvPreview } from '../model/useCvPreview';
+import { useCvPdfExport } from '../models/useCvPdfExport';
+import { useCvPreview } from '../models/useCvPreview';
 import { CvPreviewDocument } from './CvPreviewDocument';
 
 function PreviewSkeleton() {

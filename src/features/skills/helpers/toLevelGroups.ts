@@ -1,6 +1,6 @@
 import type { LevelGroup } from '@/components/ui/levels-panel';
 import type { SkillMastery } from '@/shared/types/user';
-import { MASTERY_BY_VALUE, MASTERY_LEVELS } from '../model/skillLevels';
+import { MASTERY_BY_VALUE, MASTERY_LEVELS } from '../models/skillLevels';
 import type { SkillCategory } from '../types/SkillTypes';
 import { groupSkills } from './groupSkills';
 

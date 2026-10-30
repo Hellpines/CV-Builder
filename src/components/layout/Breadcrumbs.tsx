@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ChevronRight, User as UserIcon } from 'lucide-react';
 import { useTranslation } from '@/shared/i18n/useTranslation';
-import { useProfileUser } from '@/features/profile/model/useProfileUser';
-import { useCv } from '@/features/cvs/model/useCv';
+import { useProfileUser } from '@/features/profile/models/useProfileUser';
+import { useCv } from '@/features/cvs/models/useCv';
 
 const sections: Record<string, string> = {
   users: 'nav.employees',

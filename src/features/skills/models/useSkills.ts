@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { skipToken, useQuery } from '@apollo/client/react';
 import type { LevelGroup } from '@/components/ui/levels-panel';
-import { useAuthStore } from '@/features/auth/model/useAuthStore';
+import { useAuthStore } from '@/features/auth/models/useAuthStore';
 import { GET_PROFILE_SKILLS, GET_SKILL_CATEGORIES } from '../api/SkillQueries';
 import { groupSkills } from '../helpers/groupSkills';
 import { MASTERY_BY_VALUE, MASTERY_LEVELS } from './skillLevels';

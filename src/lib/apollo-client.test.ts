@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { useAuthStore } from '@/features/auth/model/useAuthStore';
+import { useAuthStore } from '@/features/auth/models/useAuthStore';
 import { client } from './apollo-client';
 
 const PING = gql`

@@ -3,10 +3,10 @@
 import { useTranslation } from '@/shared/i18n/useTranslation';
 import { AppLoader } from '@/components/ui/app-loader';
 import { LevelsPanel, type LevelsPanelLabels } from '@/components/ui/levels-panel';
-import { useAuthStore } from '@/features/auth/model/useAuthStore';
-import { MASTERY_OPTIONS } from '../model/skillLevels';
-import { useSkillActions } from '../model/useSkillActions';
-import { useSkills } from '../model/useSkills';
+import { useAuthStore } from '@/features/auth/models/useAuthStore';
+import { MASTERY_OPTIONS } from '../models/skillLevels';
+import { useSkillActions } from '../models/useSkillActions';
+import { useSkills } from '../models/useSkills';
 
 export function SkillsPage({ userId }: { userId?: string }) {
   const { t } = useTranslation();
