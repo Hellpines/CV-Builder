@@ -25,9 +25,9 @@ export function useCvProjectActions(cvId?: string) {
   const [updateProject] = useMutation(UPDATE_CV_PROJECT_MUTATION);
   const [removeProject] = useMutation(REMOVE_CV_PROJECT_MUTATION);
 
-  const catalog = useMemo(() => catalogData?.projects.items ?? [], [catalogData]);
+  const catalog = useMemo(() => catalogData?.projects?.items ?? [], [catalogData]);
   const roles = useMemo(
-    () => Array.from(new Set((rolesData?.positions.items ?? []).map((item) => item.name))),
+    () => Array.from(new Set((rolesData?.positions?.items ?? []).map((item) => item.name))),
     [rolesData]
   );
 

@@ -62,15 +62,13 @@ export function useVerifyForm() {
 
     if (value.length > 1) {
       const pastedCode = value.replace(/\D/g, '').slice(0, 6).split('');
-      const newCode = [...code];
-
-      pastedCode.forEach((digit, i) => {
-        if (index + i < 6) {
-          newCode[index + i] = digit;
-        }
+      setCode((prev) => {
+        const next = [...prev];
+        pastedCode.forEach((digit, offset) => {
+          if (index + offset < 6) next[index + offset] = digit;
+        });
+        return next;
       });
-
-      setCode(newCode);
 
       const nextIndex = Math.min(index + pastedCode.length, 5);
       inputRefs.current[nextIndex]?.focus();
@@ -78,9 +76,11 @@ export function useVerifyForm() {
     }
 
     const cleanedValue = value.replace(/\D/g, '');
-    const newCode = [...code];
-    newCode[index] = cleanedValue;
-    setCode(newCode);
+    setCode((prev) => {
+      const next = [...prev];
+      next[index] = cleanedValue;
+      return next;
+    });
 
     if (cleanedValue && index < 5) {
       inputRefs.current[index + 1]?.focus();
@@ -90,16 +90,20 @@ export function useVerifyForm() {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
     if (e.key === 'Backspace') {
       clearErrors();
-      if (!code[index] && index > 0) {
-        const newCode = [...code];
-        newCode[index - 1] = '';
-        setCode(newCode);
-        inputRefs.current[index - 1]?.focus();
-      } else if (code[index]) {
-        const newCode = [...code];
-        newCode[index] = '';
-        setCode(newCode);
-      }
+      setCode((prev) => {
+        if (!prev[index] && index > 0) {
+          const next = [...prev];
+          next[index - 1] = '';
+          inputRefs.current[index - 1]?.focus();
+          return next;
+        }
+        if (prev[index]) {
+          const next = [...prev];
+          next[index] = '';
+          return next;
+        }
+        return prev;
+      });
     }
   };
 

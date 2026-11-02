@@ -47,7 +47,7 @@ vi.mock('@/shared/lib/toast', () => ({ toast }));
 
 vi.mock('@/features/auth/models/useAuthStore', () => ({
   useAuthStore: {
-    getState: (...args: unknown[]) => authGetState(...args),
+    getState: (...args: Parameters<typeof authGetState>) => authGetState(...args),
   },
 }));
 
@@ -322,7 +322,7 @@ describe('useProfileForm', () => {
 
   it('does not sync auth store when auth user id differs', async () => {
     authGetState.mockReturnValue({
-      user: { id: 'other', profile: { first_name: 'X' } },
+      user: { id: 'other', profile: { first_name: 'X', last_name: 'Y' } },
       updateUser: updateAuthUser,
     });
 

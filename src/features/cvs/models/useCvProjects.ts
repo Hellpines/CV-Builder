@@ -16,7 +16,7 @@ export function useCvProjects(cvId?: string) {
   const [sortKey, setSortKey] = useState<CvProjectSortKey | null>(null);
   const [sortDirection, setSortDirection] = useState<CvSortDirection>('asc');
 
-  const allItems = useMemo(() => data?.cv.projects ?? [], [data]);
+  const allItems = useMemo(() => data?.cv?.projects ?? [], [data]);
   const query = search.trim().toLowerCase();
 
   const items = useMemo(() => {

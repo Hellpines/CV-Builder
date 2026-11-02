@@ -51,7 +51,9 @@ export function CvProjectsPage({ cvId }: { cvId: string }) {
   const editItem = modal?.type === 'edit' ? modal.item : undefined;
   const deleteItem = modal?.type === 'delete' ? modal.item : undefined;
 
-  const addedIds = new Set(list.allItems.map((item) => item.project.id));
+  const addedIds = new Set(
+    list.allItems.flatMap((item) => (item.project?.id ? [item.project.id] : []))
+  );
   const availableProjects = actions.catalog.filter((project) => !addedIds.has(project.id));
 
   return (

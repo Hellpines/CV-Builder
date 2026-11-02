@@ -2,7 +2,7 @@
 
 import { Select as SelectPrimitive } from '@base-ui/react/select';
 import { cn } from 'cn';
-import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from 'lucide-react';
+import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react';
 
 const Select = SelectPrimitive.Root;
 
@@ -140,7 +140,7 @@ function SelectItem({ className, children, value, ...props }: SelectPrimitive.It
       value={value}
       data-slot="select-item"
       className={cn(
-        'group/item text-foreground relative flex w-full cursor-default items-center gap-3 p-3 text-sm transition-colors outline-none select-none',
+        'group/item text-foreground relative flex w-full cursor-default items-center gap-2 p-3 text-sm transition-colors outline-none select-none',
         'data-highlighted:bg-select-hover data-highlighted:text-select-hover-text',
         'aria-selected:bg-select-selected aria-selected:text-select-selected-text',
         'aria-selected:data-highlighted:bg-select-selected aria-selected:data-highlighted:text-select-selected-text',
@@ -150,18 +150,6 @@ function SelectItem({ className, children, value, ...props }: SelectPrimitive.It
       )}
       {...props}
     >
-      <span
-        className={cn(
-          'border-border flex size-5 shrink-0 items-center justify-center border bg-transparent',
-          'group-data-highlighted/item:bg-select-hover group-data-highlighted/item:text-select-hover-text',
-          'group-aria-selected/item:border-select-selected-text group-aria-selected/item:bg-select-selected group-aria-selected/item:text-select-selected-text',
-          'group-aria-selected/item:group-data-highlighted/item:bg-select-selected group-aria-selected/item:group-data-highlighted/item:text-select-selected-text'
-        )}
-      >
-        <SelectPrimitive.ItemIndicator>
-          <CheckIcon className="size-4" />
-        </SelectPrimitive.ItemIndicator>
-      </span>
       <SelectPrimitive.ItemText className="flex flex-1 shrink-0 gap-2 whitespace-nowrap">
         {children}
       </SelectPrimitive.ItemText>

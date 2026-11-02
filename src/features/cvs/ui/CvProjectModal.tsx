@@ -155,7 +155,7 @@ function CvProjectForm({
       />
       <Input
         className="h-12 text-sm"
-        placeholder={t('common.responsibilities')}
+        placeholder={t('cv.domain')}
         disabled
         value={project?.domain ?? ''}
         readOnly
