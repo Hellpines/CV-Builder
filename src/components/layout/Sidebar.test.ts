@@ -98,7 +98,6 @@ describe('Sidebar', () => {
     expect(screen.getByTestId('user-menu')).toHaveAttribute('data-open', 'true');
     expect(screen.getByLabelText('sidebar.toggleClose')).toHaveAttribute('aria-expanded', 'true');
 
-    // desktop: nav click should not collapse (closeSidebar no-ops without overlay)
     fireEvent.click(screen.getByRole('link', { name: /nav.skills/ }));
     expect(screen.getByTestId('user-menu')).toHaveAttribute('data-open', 'true');
   });

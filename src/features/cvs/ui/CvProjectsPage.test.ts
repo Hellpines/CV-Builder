@@ -59,6 +59,7 @@ vi.mock('./CvProjectModal', () => ({
     open,
     mode,
     onSubmit,
+    onOpenChange,
     error,
   }: {
     open: boolean;
@@ -70,6 +71,7 @@ vi.mock('./CvProjectModal', () => ({
       roles: string[];
       responsibilities: string[];
     }) => void;
+    onOpenChange: (open: boolean) => void;
     error?: string;
   }) =>
     open
@@ -91,7 +93,9 @@ vi.mock('./CvProjectModal', () => ({
                 }),
             },
             'submit-project'
-          )
+          ),
+          h('button', { type: 'button', onClick: () => onOpenChange(false) }, 'close-project'),
+          h('button', { type: 'button', onClick: () => onOpenChange(true) }, 'keep-project')
         )
       : null,
 }));
@@ -99,10 +103,12 @@ vi.mock('@/components/ui/confirm-modal', () => ({
   ConfirmModal: ({
     open,
     onConfirm,
+    onOpenChange,
     message,
   }: {
     open: boolean;
     onConfirm: () => void;
+    onOpenChange: (open: boolean) => void;
     message: string;
   }) =>
     open
@@ -110,7 +116,9 @@ vi.mock('@/components/ui/confirm-modal', () => ({
           'div',
           { 'data-testid': 'confirm' },
           h('p', null, message),
-          h('button', { type: 'button', onClick: onConfirm }, 'confirm-delete')
+          h('button', { type: 'button', onClick: onConfirm }, 'confirm-delete'),
+          h('button', { type: 'button', onClick: () => onOpenChange(false) }, 'close-confirm'),
+          h('button', { type: 'button', onClick: () => onOpenChange(true) }, 'keep-confirm')
         )
       : null,
 }));
@@ -211,5 +219,23 @@ describe('CvProjectsPage', () => {
     fireEvent.click(screen.getByLabelText('cv.projectCreate'));
     fireEvent.click(screen.getByText('submit-project'));
     await waitFor(() => expect(screen.getByText('blocked')).toBeInTheDocument());
+  });
+
+  it('closes project and confirm modals via onOpenChange', () => {
+    render(h(CvProjectsPage, { cvId: 'c1' }));
+
+    fireEvent.click(screen.getByLabelText('cv.projectCreate'));
+    expect(screen.getByTestId('project-modal')).toBeInTheDocument();
+    fireEvent.click(screen.getByText('keep-project'));
+    expect(screen.getByTestId('project-modal')).toBeInTheDocument();
+    fireEvent.click(screen.getByText('close-project'));
+    expect(screen.queryByTestId('project-modal')).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByText('delete'));
+    expect(screen.getByTestId('confirm')).toBeInTheDocument();
+    fireEvent.click(screen.getByText('keep-confirm'));
+    expect(screen.getByTestId('confirm')).toBeInTheDocument();
+    fireEvent.click(screen.getByText('close-confirm'));
+    expect(screen.queryByTestId('confirm')).not.toBeInTheDocument();
   });
 });

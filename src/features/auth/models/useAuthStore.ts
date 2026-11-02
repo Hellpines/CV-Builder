@@ -40,12 +40,16 @@ export const useAuthStore = create<AuthState>()(
   )
 );
 
-if (typeof window !== 'undefined') {
-  useAuthStore.persist.onFinishHydration(() => {
-    useAuthStore.setState({ _hasHydrated: true });
+export function syncAuthHydration(store: typeof useAuthStore = useAuthStore) {
+  store.persist.onFinishHydration(() => {
+    store.setState({ _hasHydrated: true });
   });
 
-  if (useAuthStore.persist.hasHydrated()) {
-    useAuthStore.setState({ _hasHydrated: true });
+  if (store.persist.hasHydrated()) {
+    store.setState({ _hasHydrated: true });
   }
+}
+
+if (typeof window !== 'undefined') {
+  syncAuthHydration();
 }

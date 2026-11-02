@@ -1,6 +1,6 @@
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { User } from '@/shared/types/user';
-import { useAuthStore } from './useAuthStore';
+import { syncAuthHydration, useAuthStore } from './useAuthStore';
 
 const user = {
   id: 'u1',
@@ -34,6 +34,36 @@ describe('useAuthStore', () => {
     useAuthStore.setState({ _hasHydrated: false });
     await useAuthStore.persist.rehydrate();
     expect(useAuthStore.getState()._hasHydrated).toBe(true);
+  });
+
+  it('syncAuthHydration marks hydrated on finish and when already hydrated', () => {
+    const setState = vi.fn();
+    const listeners: Array<() => void> = [];
+
+    syncAuthHydration({
+      setState,
+      persist: {
+        onFinishHydration: (cb: () => void) => {
+          listeners.push(cb);
+          return () => undefined;
+        },
+        hasHydrated: () => false,
+      },
+    } as unknown as typeof useAuthStore);
+
+    expect(setState).not.toHaveBeenCalled();
+    listeners[0]?.();
+    expect(setState).toHaveBeenCalledWith({ _hasHydrated: true });
+
+    setState.mockClear();
+    syncAuthHydration({
+      setState,
+      persist: {
+        onFinishHydration: () => () => undefined,
+        hasHydrated: () => true,
+      },
+    } as unknown as typeof useAuthStore);
+    expect(setState).toHaveBeenCalledWith({ _hasHydrated: true });
   });
 
   it('starts with empty auth state', () => {

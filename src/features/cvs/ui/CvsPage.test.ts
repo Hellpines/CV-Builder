@@ -80,7 +80,8 @@ vi.mock('./CvFormModal', () => ({
             },
             'submit-form'
           ),
-          h('button', { type: 'button', onClick: () => onOpenChange(false) }, 'close-form')
+          h('button', { type: 'button', onClick: () => onOpenChange(false) }, 'close-form'),
+          h('button', { type: 'button', onClick: () => onOpenChange(true) }, 'keep-form')
         )
       : null,
 }));
@@ -88,10 +89,12 @@ vi.mock('@/components/ui/confirm-modal', () => ({
   ConfirmModal: ({
     open,
     onConfirm,
+    onOpenChange,
     message,
   }: {
     open: boolean;
     onConfirm: () => void;
+    onOpenChange: (open: boolean) => void;
     message: string;
   }) =>
     open
@@ -99,7 +102,9 @@ vi.mock('@/components/ui/confirm-modal', () => ({
           'div',
           { 'data-testid': 'confirm' },
           h('p', null, message),
-          h('button', { type: 'button', onClick: onConfirm }, 'confirm-delete')
+          h('button', { type: 'button', onClick: onConfirm }, 'confirm-delete'),
+          h('button', { type: 'button', onClick: () => onOpenChange(false) }, 'close-confirm'),
+          h('button', { type: 'button', onClick: () => onOpenChange(true) }, 'keep-confirm')
         )
       : null,
 }));
@@ -198,5 +203,23 @@ describe('CvsPage', () => {
     fireEvent.click(screen.getByLabelText('cv.create'));
     fireEvent.click(screen.getByText('submit-form'));
     await waitFor(() => expect(screen.getByText('nope')).toBeInTheDocument());
+  });
+
+  it('closes form and confirm modals via onOpenChange', () => {
+    render(h(CvsPage));
+
+    fireEvent.click(screen.getByLabelText('cv.create'));
+    expect(screen.getByTestId('form-modal')).toBeInTheDocument();
+    fireEvent.click(screen.getByText('keep-form'));
+    expect(screen.getByTestId('form-modal')).toBeInTheDocument();
+    fireEvent.click(screen.getByText('close-form'));
+    expect(screen.queryByTestId('form-modal')).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByText('delete'));
+    expect(screen.getByTestId('confirm')).toBeInTheDocument();
+    fireEvent.click(screen.getByText('keep-confirm'));
+    expect(screen.getByTestId('confirm')).toBeInTheDocument();
+    fireEvent.click(screen.getByText('close-confirm'));
+    expect(screen.queryByTestId('confirm')).not.toBeInTheDocument();
   });
 });

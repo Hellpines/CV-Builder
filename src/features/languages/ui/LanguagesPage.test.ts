@@ -26,8 +26,19 @@ vi.mock('@/components/ui/app-loader', () => ({
   AppLoader: () => h('div', { 'data-testid': 'loader' }),
 }));
 vi.mock('@/components/ui/levels-panel', () => ({
-  LevelsPanel: ({ readOnly }: { readOnly: boolean }) =>
-    h('div', { 'data-testid': 'levels', 'data-readonly': String(readOnly) }),
+  LevelsPanel: ({
+    readOnly,
+    labels,
+  }: {
+    readOnly: boolean;
+    labels: { removeMessage: (count: number) => string };
+  }) =>
+    h('div', {
+      'data-testid': 'levels',
+      'data-readonly': String(readOnly),
+      'data-msg-one': labels.removeMessage(1),
+      'data-msg-other': labels.removeMessage(3),
+    }),
 }));
 
 import { LanguagesPage } from './LanguagesPage';
@@ -77,7 +88,10 @@ describe('LanguagesPage', () => {
     });
 
     const { rerender } = render(h(LanguagesPage, { userId: 'me' }));
-    expect(screen.getByTestId('levels')).toHaveAttribute('data-readonly', 'false');
+    const levels = screen.getByTestId('levels');
+    expect(levels).toHaveAttribute('data-readonly', 'false');
+    expect(levels).toHaveAttribute('data-msg-one', 'languages.removeMessage_one:1');
+    expect(levels).toHaveAttribute('data-msg-other', 'languages.removeMessage_other:3');
 
     rerender(h(LanguagesPage, { userId: 'other' }));
     expect(screen.getByTestId('levels')).toHaveAttribute('data-readonly', 'true');

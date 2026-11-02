@@ -196,6 +196,40 @@ describe('ProfileForm', () => {
     expect(removeAvatar).toHaveBeenCalled();
   });
 
+  it('updates first/last name and marks fields touched', () => {
+    const setFirstName = vi.fn();
+    const setLastName = vi.fn();
+
+    useProfileForm.mockReturnValue(
+      mockForm({
+        firstName: '',
+        lastName: '',
+        setFirstName,
+        setLastName,
+      })
+    );
+
+    render(
+      h(ProfileForm, {
+        userData: user,
+        departments: [],
+        positions: [],
+        isEditable: true,
+      })
+    );
+
+    const [firstNameInput, lastNameInput] = screen.getAllByRole('textbox');
+
+    fireEvent.change(firstNameInput, { target: { value: 'Ada' } });
+    expect(setFirstName).toHaveBeenCalledWith('Ada');
+
+    fireEvent.change(lastNameInput, { target: { value: 'Lovelace' } });
+    expect(setLastName).toHaveBeenCalledWith('Lovelace');
+
+    expect(screen.getByText('validation.firstNameRequired')).toBeInTheDocument();
+    expect(screen.getByText('validation.lastNameRequired')).toBeInTheDocument();
+  });
+
   it('saves when valid and hides actions when read-only', () => {
     const handleSave = vi.fn();
     useProfileForm.mockReturnValue(mockForm({ handleSave, loading: true }));
