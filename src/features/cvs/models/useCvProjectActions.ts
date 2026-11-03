@@ -1,0 +1,68 @@
+import { useMemo } from 'react';
+import { useMutation, useQuery } from '@apollo/client/react';
+import { useTranslation } from '@/shared/i18n/useTranslation';
+import { toast } from '@/shared/lib/toast';
+import {
+  ADD_CV_PROJECT_MUTATION,
+  REMOVE_CV_PROJECT_MUTATION,
+  UPDATE_CV_PROJECT_MUTATION,
+} from '../api/CvProjectMutations';
+import { GET_PROJECTS_CATALOG, GET_ROLE_OPTIONS } from '../api/CvProjectQueries';
+import type { CvProjectPayload } from '../types/CvProjectTypes';
+
+const OPTIONS_LIMIT = 100;
+
+export function useCvProjectActions(cvId?: string) {
+  const { t } = useTranslation();
+  const { data: catalogData } = useQuery(GET_PROJECTS_CATALOG, {
+    variables: { params: { limit: OPTIONS_LIMIT } },
+  });
+  const { data: rolesData } = useQuery(GET_ROLE_OPTIONS, {
+    variables: { params: { limit: OPTIONS_LIMIT } },
+  });
+
+  const [addProject] = useMutation(ADD_CV_PROJECT_MUTATION);
+  const [updateProject] = useMutation(UPDATE_CV_PROJECT_MUTATION);
+  const [removeProject] = useMutation(REMOVE_CV_PROJECT_MUTATION);
+
+  const catalog = useMemo(() => catalogData?.projects?.items ?? [], [catalogData]);
+  const roles = useMemo(
+    () => Array.from(new Set((rolesData?.positions?.items ?? []).map((item) => item.name))),
+    [rolesData]
+  );
+
+  const add = async (payload: CvProjectPayload) => {
+    if (!cvId) throw new Error('CV not found');
+    try {
+      await addProject({ variables: { project: { cvId, ...payload } } });
+      toast.success(t('notifications.projectAdded'));
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : t('notifications.projectAddFailed'));
+      throw err;
+    }
+  };
+
+  const update = async (payload: CvProjectPayload) => {
+    if (!cvId) throw new Error('CV not found');
+    try {
+      await updateProject({ variables: { project: { cvId, ...payload } } });
+      toast.success(t('notifications.projectUpdated'));
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : t('notifications.projectUpdateFailed'));
+      throw err;
+    }
+  };
+
+  const remove = async (projectId: string) => {
+    if (!cvId) throw new Error('CV not found');
+    try {
+      await removeProject({ variables: { project: { cvId, projectId } } });
+      toast.success(t('notifications.projectRemoved'));
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : t('notifications.projectRemoveFailed'));
+      throw err;
+    }
+  };
+
+  return { catalog, roles, add, update, remove };
+}

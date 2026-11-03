@@ -1,0 +1,47 @@
+'use client';
+
+import { useAuthStore } from '@/features/auth/models/useAuthStore';
+import { AppLoader } from '@/components/ui/app-loader';
+import { usePathname, useRouter } from 'next/navigation';
+import { ReactNode, useEffect } from 'react';
+
+const PUBLIC_PATHS = ['/login', '/register', '/forgot-password', '/reset-password'];
+
+const ALWAYS_ACCESSIBLE_PATHS = ['/reset-password'];
+
+export default function AuthLayout({ children }: { children: ReactNode }) {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const { accessToken, user, verificationRequested, _hasHydrated } = useAuthStore();
+
+  const isVerified = user?.is_verified === true;
+  const canVerify = verificationRequested && !isVerified;
+
+  let redirectTo: string | null = null;
+
+  if (_hasHydrated && !ALWAYS_ACCESSIBLE_PATHS.includes(pathname)) {
+    if (!accessToken) {
+      if (!PUBLIC_PATHS.includes(pathname)) redirectTo = '/login';
+    } else if (pathname === '/verify-email') {
+      if (!canVerify) redirectTo = '/users';
+    } else {
+      redirectTo = canVerify ? '/verify-email' : '/users';
+    }
+  }
+
+  useEffect(() => {
+    if (redirectTo) {
+      router.replace(redirectTo);
+    }
+  }, [redirectTo, router]);
+
+  const showLoader = !_hasHydrated || Boolean(redirectTo);
+
+  return (
+    <div className="bg-background flex min-h-screen items-center justify-center">
+      {showLoader && <AppLoader />}
+      {children}
+    </div>
+  );
+}

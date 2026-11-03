@@ -1,10 +1,165 @@
-import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
+import { useAuthStore } from '@/features/auth/models/useAuthStore';
+import { ApolloClient, ApolloLink, HttpLink, InMemoryCache } from '@apollo/client';
+import { CombinedGraphQLErrors } from '@apollo/client/errors';
+import { ErrorLink } from '@apollo/client/link/error';
+import { from, Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
-export const createApolloClient = () => {
-  return new ApolloClient({
-    link: new HttpLink({
-      uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT || 'http://localhost:3001/graphql',
+const graphqlUri = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'http://localhost:3001/api/graphql';
+
+const httpLink = new HttpLink({
+  uri: graphqlUri,
+  credentials: 'include',
+});
+
+const authLink = new ApolloLink((operation, forward) => {
+  const token = useAuthStore.getState().accessToken;
+
+  operation.setContext(({ headers = {} }: { headers?: Record<string, string> }) => ({
+    headers: {
+      ...headers,
+      authorization: headers.authorization || (token ? `Bearer ${token}` : ''),
+    },
+  }));
+
+  return forward(operation);
+});
+
+let refreshPromise: Promise<string> | null = null;
+
+interface UpdateTokenResponse {
+  data?: {
+    updateToken: {
+      access_token: string;
+      refresh_token: string;
+    };
+  };
+  errors?: Array<{ message?: string }>;
+}
+
+interface GraphQLErrorItem {
+  extensions?: {
+    code?: string;
+  };
+}
+
+function setAuthHeader(
+  operation: {
+    setContext: (updater: (prev: { headers?: Record<string, string> }) => object) => void;
+  },
+  accessToken: string
+) {
+  operation.setContext(({ headers = {} }) => ({
+    headers: {
+      ...headers,
+      authorization: `Bearer ${accessToken}`,
+    },
+  }));
+}
+
+async function refreshAccessToken(refreshToken: string): Promise<string> {
+  const res = await fetch(graphqlUri, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${refreshToken}`,
+    },
+    body: JSON.stringify({
+      query: `
+        mutation UpdateToken {
+          updateToken {
+            access_token
+            refresh_token
+          }
+        }
+      `,
     }),
-    cache: new InMemoryCache(),
   });
-};
+
+  const result: UpdateTokenResponse = await res.json();
+
+  if (result.errors?.length) {
+    throw new Error(result.errors[0]?.message || 'Token refresh failed');
+  }
+
+  const tokens = result.data?.updateToken;
+
+  if (!tokens?.access_token || !tokens?.refresh_token) {
+    throw new Error('Refresh token mutation returned no tokens');
+  }
+
+  useAuthStore.setState({
+    accessToken: tokens.access_token,
+    refreshToken: tokens.refresh_token,
+  });
+
+  return tokens.access_token;
+}
+
+function forceLogout() {
+  useAuthStore.getState().logout();
+  refreshPromise = null;
+  void client.clearStore().catch(() => undefined);
+}
+
+const errorLink: ApolloLink = new ErrorLink(({ error, operation, forward }) => {
+  if (!CombinedGraphQLErrors.is(error)) {
+    return;
+  }
+
+  const unauthorizedError = error.errors.find(
+    (item: GraphQLErrorItem) => item.extensions?.code === 'UNAUTHENTICATED'
+  );
+
+  if (!unauthorizedError) {
+    return;
+  }
+
+  if (operation.getContext().skipAuthRefresh) {
+    forceLogout();
+    return;
+  }
+
+  const refreshToken = useAuthStore.getState().refreshToken;
+
+  if (!refreshToken) {
+    forceLogout();
+    return;
+  }
+
+  if (!refreshPromise) {
+    refreshPromise = refreshAccessToken(refreshToken).finally(() => {
+      refreshPromise = null;
+    });
+  }
+
+  return from(
+    refreshPromise.catch((refreshError) => {
+      forceLogout();
+      throw refreshError;
+    })
+  ).pipe(
+    switchMap((accessToken): Observable<ApolloLink.Result> => {
+      operation.setContext((prev) => ({ ...prev, skipAuthRefresh: true }));
+      setAuthHeader(operation, accessToken);
+      return forward(operation);
+    })
+  );
+});
+
+export const client = new ApolloClient({
+  link: ApolloLink.from([errorLink, authLink, httpLink]),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          cv: {
+            merge(existing, incoming, { mergeObjects }) {
+              return mergeObjects(existing, incoming);
+            },
+          },
+        },
+      },
+    },
+  }),
+});
