@@ -86,7 +86,7 @@ export function CvsPage() {
             fallbackEmail={cvs.email}
             loading={cvs.initialLoading}
             busy={cvs.loading && !cvs.initialLoading}
-            emptyText={cvs.isSearching ? t('errors.noCvsFound') : t('errors.noCVsYet')}
+            emptyText={cvs.isSearching ? t('common.noResults') : t('errors.noCVsYet')}
             sortDirection={cvs.sortDirection}
             onSort={cvs.toggleSort}
             onView={(cv) => router.push(`/cvs/${cv.id}`)}
@@ -94,7 +94,7 @@ export function CvsPage() {
             onDelete={(cv) => setModal({ type: 'delete', cv })}
           />
 
-          {cvs.total > MIN_PAGE_SIZE && (
+          {cvs.items.length > 0 && cvs.total > MIN_PAGE_SIZE && (
             <Pagination
               page={cvs.page}
               totalPages={cvs.totalPages}

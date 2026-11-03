@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useIsCompact } from '@/shared/hooks/useIsCompact';
 import { useTranslation } from '@/shared/i18n/useTranslation';
 import { Button } from '@/components/ui/button';
+import { TableEmptyRow } from '@/components/ui/table-empty-row';
 import { User } from '@/shared/types/user';
 import type { SortDirection, SortKey } from '../types/UserTypes';
 
@@ -130,14 +131,7 @@ export default function UsersTable({ data, sortKey, sortDirection, onSort }: Use
               );
             })
           ) : (
-            <tr>
-              <td
-                colSpan={colSpan}
-                className="text-primary-foreground absolute top-1/2 left-1/2 -translate-y-1/2 text-sm"
-              >
-                {t('errors.noUsersFound')}
-              </td>
-            </tr>
+            <TableEmptyRow colSpan={colSpan}>{t('common.noResults')}</TableEmptyRow>
           )}
         </tbody>
       </table>

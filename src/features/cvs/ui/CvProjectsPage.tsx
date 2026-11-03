@@ -84,7 +84,7 @@ export function CvProjectsPage({ cvId }: { cvId: string }) {
         <CvProjectsTable
           items={list.items}
           loading={list.initialLoading}
-          emptyText={list.isSearching ? t('cv.noProjectsFound') : t('cv.noProjectsAddedYet')}
+          emptyText={list.isSearching ? t('common.noResults') : t('cv.noProjectsAddedYet')}
           sortKey={list.sortKey}
           sortDirection={list.sortDirection}
           onSort={list.toggleSort}

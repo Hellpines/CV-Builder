@@ -10,6 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { TableEmptyRow } from '@/components/ui/table-empty-row';
 import { useIsCompact } from '@/shared/hooks/useIsCompact';
 import type { CvListItem, CvSortDirection } from '../types/CvTypes';
 
@@ -164,14 +165,7 @@ export function CvsTable({
           ))
         ) : (
           <tbody>
-            <tr>
-              <td
-                colSpan={colSpan}
-                className="text-primary-foreground px-4 py-16 text-center text-sm"
-              >
-                {emptyText}
-              </td>
-            </tr>
+            <TableEmptyRow colSpan={colSpan}>{emptyText}</TableEmptyRow>
           </tbody>
         )}
       </table>

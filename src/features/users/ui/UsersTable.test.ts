@@ -93,7 +93,8 @@ describe('UsersTable', () => {
         onSort: vi.fn(),
       })
     );
-    expect(screen.getByText('errors.noUsersFound')).toBeInTheDocument();
+    expect(screen.getByText('common.noResults')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'common.firstName' })).toBeInTheDocument();
 
     rerender(
       h(UsersTable, {

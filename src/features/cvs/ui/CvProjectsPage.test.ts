@@ -194,7 +194,7 @@ describe('CvProjectsPage', () => {
     useCvProjects.mockReturnValue(mockList({ isSearching: true }));
 
     render(h(CvProjectsPage, { cvId: 'c1' }));
-    expect(screen.getByText('cv.noProjectsFound')).toBeInTheDocument();
+    expect(screen.getByText('common.noResults')).toBeInTheDocument();
 
     fireEvent.click(screen.getByText('edit'));
     expect(screen.getByTestId('project-modal')).toHaveAttribute('data-mode', 'edit');

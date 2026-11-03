@@ -61,6 +61,6 @@ test.describe('CVs / list CRUD', () => {
   test('searches CVs by name', async ({ page }) => {
     await page.goto('/cvs');
     await page.getByRole('textbox', { name: 'Search' }).fill('Unknown');
-    await expect(page.getByText('No CVs found')).toBeVisible();
+    await expect(page.getByText('No results')).toBeVisible();
   });
 });

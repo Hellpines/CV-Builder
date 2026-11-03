@@ -203,4 +203,23 @@ describe('UsersPage', () => {
     expect(screen.queryByTestId('loader')).not.toBeInTheDocument();
     expect(screen.getByTestId('users-table')).toBeInTheDocument();
   });
+
+  it('hides pagination when there are no users', () => {
+    useQuery.mockReturnValue({
+      data: {
+        users: {
+          items: [],
+          total_pages: 0,
+          total: 0,
+        },
+      },
+      previousData: undefined,
+      loading: false,
+      error: undefined,
+    });
+
+    render(h(UsersPage));
+    expect(screen.getByTestId('users-table')).toBeInTheDocument();
+    expect(screen.queryByTestId('pagination')).not.toBeInTheDocument();
+  });
 });

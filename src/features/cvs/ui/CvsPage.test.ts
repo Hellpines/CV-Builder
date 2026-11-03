@@ -177,7 +177,7 @@ describe('CvsPage', () => {
 
     render(h(CvsPage));
     expect(screen.getByTestId('pagination')).toBeInTheDocument();
-    expect(screen.getByText('errors.noCvsFound')).toBeInTheDocument();
+    expect(screen.getByText('common.noResults')).toBeInTheDocument();
 
     fireEvent.click(screen.getByText('view'));
     expect(push).toHaveBeenCalledWith('/cvs/c1');
@@ -191,6 +191,13 @@ describe('CvsPage', () => {
     expect(screen.getByText('errors.deleteCvMessage:Frontend')).toBeInTheDocument();
     fireEvent.click(screen.getByText('confirm-delete'));
     await waitFor(() => expect(remove).toHaveBeenCalledWith('c1'));
+  });
+
+  it('hides pagination when the table is empty', () => {
+    useCvs.mockReturnValue(mockCvs({ items: [], total: 0, isSearching: false }));
+    render(h(CvsPage));
+    expect(screen.getByText('errors.noCVsYet')).toBeInTheDocument();
+    expect(screen.queryByTestId('pagination')).not.toBeInTheDocument();
   });
 
   it('surfaces action errors', async () => {

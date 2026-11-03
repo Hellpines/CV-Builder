@@ -90,13 +90,15 @@ export function UsersPage() {
             />
           </div>
 
-          <Pagination
-            page={page}
-            totalPages={result.total_pages}
-            pageSize={limit}
-            onPageChange={setPage}
-            onPageSizeChange={handleLimitChange}
-          />
+          {users.length > 0 && (
+            <Pagination
+              page={page}
+              totalPages={result.total_pages}
+              pageSize={limit}
+              onPageChange={setPage}
+              onPageSizeChange={handleLimitChange}
+            />
+          )}
         </>
       )}
     </div>
