@@ -28,7 +28,7 @@ export function Modal({ open, onOpenChange, title, children, className }: ModalP
           <Dialog.Title className="text-foreground mb-6 shrink-0 text-xl font-medium">
             {title}
           </Dialog.Title>
-          <div className="min-h-0 flex-1 overflow-y-auto">{children}</div>
+          <div className="min-h-0 flex-1 overflow-y-auto pt-5">{children}</div>
           <Dialog.Close
             aria-label="Close"
             className="text-foreground hover:text-foreground absolute top-4 right-4 cursor-pointer transition-colors"
