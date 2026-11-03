@@ -1,6 +1,6 @@
 import { createElement as h } from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { act, fireEvent, render, screen } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 const { useQuery } = vi.hoisted(() => ({
   useQuery: vi.fn(),
@@ -70,7 +70,12 @@ import { GET_USERS } from '../api/UserQueries';
 
 describe('UsersPage', () => {
   beforeEach(() => {
+    vi.useFakeTimers();
     useQuery.mockReset();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
   });
 
   it('shows loader while first loading', () => {
@@ -123,6 +128,20 @@ describe('UsersPage', () => {
     );
 
     fireEvent.change(screen.getByTestId('search'), { target: { value: 'ann' } });
+    expect(useQuery).toHaveBeenLastCalledWith(
+      GET_USERS,
+      expect.objectContaining({
+        variables: expect.objectContaining({
+          params: expect.objectContaining({ page: 1 }),
+        }),
+      })
+    );
+    expect(useQuery.mock.lastCall?.[1]?.variables?.params?.search).toBeUndefined();
+
+    act(() => {
+      vi.advanceTimersByTime(300);
+    });
+
     expect(useQuery).toHaveBeenLastCalledWith(
       GET_USERS,
       expect.objectContaining({

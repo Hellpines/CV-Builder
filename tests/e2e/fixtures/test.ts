@@ -9,7 +9,6 @@ type Fixtures = {
 };
 
 export const test = base.extend<Fixtures>({
-  // Second arg is Playwright's fixture callback — rename so eslint doesn't treat it as React `use`.
   api: async ({ page }, provide) => {
     const store = createStore();
     await mockGraphQl(page, store);

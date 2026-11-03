@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 const { useQuery, skipToken } = vi.hoisted(() => ({
   useQuery: vi.fn(),
@@ -42,6 +42,7 @@ describe('useCvProjects', () => {
   const refetch = vi.fn();
 
   beforeEach(() => {
+    vi.useFakeTimers();
     useQuery.mockReset();
     refetch.mockReset();
     useQuery.mockReturnValue({
@@ -50,6 +51,10 @@ describe('useCvProjects', () => {
       error: undefined,
       refetch,
     });
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
   });
 
   it('skips the query when cvId is missing', () => {
@@ -80,7 +85,7 @@ describe('useCvProjects', () => {
     expect(result.current.initialLoading).toBe(true);
   });
 
-  it('filters by name or domain search', () => {
+  it('debounces search and filters by name or domain', () => {
     useQuery.mockReturnValue({
       data: { cv: { projects } },
       loading: false,
@@ -94,11 +99,24 @@ describe('useCvProjects', () => {
       result.current.setSearch('  health  ');
     });
 
+    expect(result.current.search).toBe('  health  ');
+    expect(result.current.isSearching).toBe(false);
+    expect(result.current.items.map((item) => item.id)).toEqual(['1', '2', '3']);
+
+    act(() => {
+      vi.advanceTimersByTime(300);
+    });
+
     expect(result.current.isSearching).toBe(true);
     expect(result.current.items.map((item) => item.id)).toEqual(['2']);
 
     act(() => {
       result.current.setSearch('fin');
+    });
+    expect(result.current.items.map((item) => item.id)).toEqual(['2']);
+
+    act(() => {
+      vi.advanceTimersByTime(300);
     });
     expect(result.current.items.map((item) => item.id)).toEqual(['1']);
   });

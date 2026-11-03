@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { skipToken, useQuery } from '@apollo/client/react';
+import { useDebouncedValue } from '@/shared/hooks/useDebouncedValue';
 import { parseDate } from '@/shared/lib/date';
 import { GET_CV_PROJECTS } from '../api/CvProjectQueries';
 import type { CvProjectSortKey, CvSortDirection } from '../types/CvProjectTypes';
@@ -16,8 +17,9 @@ export function useCvProjects(cvId?: string) {
   const [sortKey, setSortKey] = useState<CvProjectSortKey | null>(null);
   const [sortDirection, setSortDirection] = useState<CvSortDirection>('asc');
 
+  const debouncedSearch = useDebouncedValue(search.trim(), 300);
   const allItems = useMemo(() => data?.cv?.projects ?? [], [data]);
-  const query = search.trim().toLowerCase();
+  const query = debouncedSearch.toLowerCase();
 
   const items = useMemo(() => {
     const filtered = query
@@ -63,7 +65,7 @@ export function useCvProjects(cvId?: string) {
     items,
     search,
     setSearch,
-    isSearching: Boolean(query),
+    isSearching: Boolean(debouncedSearch),
     sortKey,
     sortDirection,
     toggleSort,

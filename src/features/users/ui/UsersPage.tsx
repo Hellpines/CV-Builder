@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { useTranslation } from '@/shared/i18n/useTranslation';
+import { useDebouncedValue } from '@/shared/hooks/useDebouncedValue';
 import { AppLoader } from '@/components/ui/app-loader';
 import UsersTable from './UsersTable';
 import { useQuery } from '@apollo/client/react';
@@ -30,10 +31,12 @@ export function UsersPage() {
   const [sortKey, setSortKey] = useState<SortKey | null>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
 
+  const debouncedSearch = useDebouncedValue(searchQuery.trim(), 300);
+
   const { data, previousData, loading, error } = useQuery(GET_USERS, {
     variables: {
       params: {
-        search: searchQuery.trim() || undefined,
+        search: debouncedSearch || undefined,
         page,
         limit,
         sort_by: sortKey ? SORT_FIELDS[sortKey] : undefined,
